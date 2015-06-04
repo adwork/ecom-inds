@@ -89,12 +89,4 @@ class LoginForm extends CFormModel
 		else
 			return false;
 	}
-
-	public function checkCaptcha($attribute,$params)
-	{
-		if($this->verifyCode!=Yii::app()->session['security_code'])
-			$this->addErrors(array('verifyCode'=>'Incorrect verification code.'));
-		else
-			unset(Yii::app()->session['security_code']);
-	}
 }

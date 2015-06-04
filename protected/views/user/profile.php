@@ -15,7 +15,8 @@
 					?>
 					<?php echo $form->textFieldRow($model, 'u_email', array('class'=>'span4')); ?>
 					
-					<?php echo $form->textFieldRow($model, 'u_username', array('class'=>'span4')); ?>
+					<?php echo $form->textFieldRow($model, 'u_first_name', array('class'=>'span4')); ?>
+					<?php echo $form->textFieldRow($model, 'u_last_name', array('class'=>'span4')); ?>
 					
 					<?php 
 						if($model->u_gender==''){

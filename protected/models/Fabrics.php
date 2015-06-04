@@ -30,6 +30,7 @@ class Fabrics extends CActiveRecord
 			array('fab_name, fab_image', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
+			array('fab_price', 'safe'),
 			array('fab_id, fab_name, fab_image', 'safe', 'on'=>'search'),
 		);
 	}
@@ -53,6 +54,7 @@ class Fabrics extends CActiveRecord
 		return array(
 			'fab_name' => 'Fabric Name',
 			'fab_image' => 'Fabric Image',
+			'fab_price' => 'Fabric Price'
 		);
 	}
 

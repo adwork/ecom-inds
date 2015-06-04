@@ -26,10 +26,11 @@ class Buttons extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('but_name, but_image', 'required'),
+			array('but_name', 'required'),
 			array('but_name, but_image', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
+			array('but_price', 'safe'),
 			array('but_id, but_name, but_image', 'safe', 'on'=>'search'),
 		);
 	}
@@ -53,6 +54,7 @@ class Buttons extends CActiveRecord
 		return array(
 			'but_name' => 'Button Name',
 			'but_image' => 'Button Image',
+			'but_price' => 'Button Price'
 		);
 	}
 

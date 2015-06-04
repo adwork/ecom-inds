@@ -10,11 +10,11 @@ class User extends CActiveRecord
 	 * @var string $profile
 	 */
 	public $u_repeat_password;
-	public $verifyCode;
 	public $terms_conditions;
 	public $old_password;
 	public $new_password;
 	public $new_repeat_password;
+	public $u_username;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return CActiveRecord the static model class
@@ -36,8 +36,6 @@ class User extends CActiveRecord
 		$criteria=new CDbCriteria;		
 		
 		$criteria->compare('u_email',$this->u_email,true);
-		$criteria->compare('u_username',$this->u_username,true);
-		
 		$criteria->addCondition("u_role <> 'admin'",'AND');
 		
 		return new CActiveDataProvider($this, array(
@@ -55,24 +53,22 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.		
 		$rules = array(			
-			array('u_username, u_email, u_password, u_repeat_password, u_gender', 'required','on'=>'insert,admininsert'),			
-			array('u_username, u_email', 'length', 'max'=>50,'on'=>'insert,admininsert,useredit,adminprofile'),			
+			array('u_first_name, u_last_name, u_email, u_password, u_repeat_password, u_gender', 'required','on'=>'insert,admininsert'),			
+			array('u_email', 'length', 'max'=>50,'on'=>'insert,admininsert,useredit,adminprofile'),			
 			array('u_password, u_repeat_password', 'required', 'on'=>'resetpass'),
 			array('u_password', 'length', 'min'=>6, 'max'=>32,'on'=>'insert,admininsert,resetpass'),
 			array('u_repeat_password', 'compare', 'compareAttribute'=>'u_password','on'=>'insert,admininsert,resetpass'),
 			array('u_email', 'email'),
 			array('u_email', 'unique'),			
-			array('verifyCode', 'checkCaptcha','on'=>'insert'),
-			array('verifyCode', 'required','on'=>'insert'),
 			array('terms_conditions','required','on'=>'insert','message'=>'Please agree terms and conditions'),			
-			array('u_email, u_username, u_gender','required','on'=>'adminprofile'),
-			array('u_username, u_gender','required','on'=>'useredit'),
+			array('u_email, u_gender','required','on'=>'adminprofile'),
+			array('u_gender','required','on'=>'useredit'),
 			//RESET PASSWORD RULES
 			array('old_password, new_password, new_repeat_password','required','on'=>'changepassword'),
 			array('old_password','verifyPassword','on'=>'changepassword'),
 			array('old_password, new_password, new_repeat_password', 'length', 'min'=>6, 'max'=>32,'on'=>'changepassword'),
 			array('new_repeat_password','compare','compareAttribute'=>'new_password','on'=>'changepassword'),
-			array('u_username, u_email, u_password, u_repeat_password, u_gender, verifyCode, terms_conditions, old_password, new_password, new_repeat_password', 'safe'),
+			array('u_email, u_first_name, u_last_name, u_password, u_repeat_password, u_gender, terms_conditions, old_password, new_password, new_repeat_password', 'safe'),
 		);
 		
 		return $rules;
@@ -97,12 +93,12 @@ class User extends CActiveRecord
 	{
 		return array(
 			'u_id' => 'Id',
-			'u_username' => 'Username',			
+			'u_first_name' => 'First name',
+			'u_last_name' => 'Last name',
 			'u_email' => 'Email',			
 			'u_password' => 'Password',		
 			'u_repeat_password' => 'Confirm Password',			
 			'u_gender' => 'Gender',			
-			'verifyCode'=>'Security Code',
 			'terms_conditions'=>'I agree',
 			//CHANGE PASSWORD	
 			'old_password'=>'Old Password',
@@ -183,14 +179,6 @@ class User extends CActiveRecord
 		);
 	}
 
-	public function checkCaptcha($attribute,$params)
-	{
-		if($this->verifyCode!=Yii::app()->session['security_code'])
-			$this->addErrors(array('verifyCode'=>'Incorrect verification code.'));
-		else
-			unset(Yii::app()->session['security_code']);
-	}
-	
 	public function verifyPassword($attribute,$params){
 		if(!CPasswordHelper::verifyPassword($this->old_password,$this->u_password)){
 			$this->addErrors(array('old_password'=>'Incorrect old password.'));
@@ -213,7 +201,7 @@ class User extends CActiveRecord
 	}
 
 	public function checkStatus(){
-		return $this->findByPk(Yii::app()->user->id,array('select'=>'u_username,u_status'));
+		return $this->findByPk(Yii::app()->user->id,array('select'=>'u_status,u_first_name,u_last_name'));
 	}
 
 	public function userlist() {

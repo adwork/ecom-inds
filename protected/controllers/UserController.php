@@ -9,61 +9,6 @@ class UserController extends Controller
 	public $layout='main';
 	
 	/**
-	 * Declares class-based actions.
-	 */
-	public function actions()
-	{
-		return array(
-			// captcha action renders the CAPTCHA image displayed on the contact page
-			'captcha'=>array(
-				'class'=>'CCaptchaAction',
-				'backColor'=>0xFFFFFF,				
-				'transparent'=>true,				
-			),	
-			'page'=>array(
-				'class'=>'CViewAction',
-			),		
-		);
-	}
-	
-	/**
-	 * @return array action filters
-	 */
-	public function filters()
-	{
-		return array(
-			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
-		);
-	}
-
-	/**
-	 * Specifies the access control rules.
-	 * This method is used by the 'accessControl' filter.
-	 * @return array access control rules
-	 */
-	/*public function accessRules()
-	{
-		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','findstate'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('signup','update'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
-			),
-			array('deny',  // deny all users
-				'users'=>array('*'),
-			),
-		);
-	}*/
-
-	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
@@ -80,45 +25,22 @@ class UserController extends Controller
 			if(isset($_POST['User'])){
 				$salt = md5(uniqid(rand(), true));
 				$_POST['User']['u_verkey'] = $salt;
-				$model->attributes=$_POST['User'];				
-				
-				if(isset($_POST['user_image']) && !empty($_POST['user_image'])){
-					$model->u_image = $this->UploadImage($_POST['user_image'],'user');						
-				}		
+				$model->attributes=$_POST['User'];
 				$model->u_status = 1;	
 				if($model->save()){
-					if($model->u_role=='seller'){
-						$default_folder = array(
-							array('uf_user_id'=>$model->u_id,'uf_folder_name'=>'Score','uf_created'=>new CDbExpression('NOW()'),'uf_modified'=>new CDbExpression('NOW()')),
-							array('uf_user_id'=>$model->u_id,'uf_folder_name'=>'Film/TV','uf_created'=>new CDbExpression('NOW()'),'uf_modified'=>new CDbExpression('NOW()')),
-							array('uf_user_id'=>$model->u_id,'uf_folder_name'=>'Commercials','uf_created'=>new CDbExpression('NOW()'),'uf_modified'=>new CDbExpression('NOW()')),
-							array('uf_user_id'=>$model->u_id,'uf_folder_name'=>'Theme Songs','uf_created'=>new CDbExpression('NOW()'),'uf_modified'=>new CDbExpression('NOW()')),
-							array('uf_user_id'=>$model->u_id,'uf_folder_name'=>'Jingles','uf_created'=>new CDbExpression('NOW()'),'uf_modified'=>new CDbExpression('NOW()')),
-							array('uf_user_id'=>$model->u_id,'uf_folder_name'=>'Remixes','uf_created'=>new CDbExpression('NOW()'),'uf_modified'=>new CDbExpression('NOW()')),
-							array('uf_user_id'=>$model->u_id,'uf_folder_name'=>'Covers','uf_created'=>new CDbExpression('NOW()'),'uf_modified'=>new CDbExpression('NOW()')),
-							array('uf_user_id'=>$model->u_id,'uf_folder_name'=>'Original Composition','uf_created'=>new CDbExpression('NOW()'),'uf_modified'=>new CDbExpression('NOW()')),
-						);
-
-						$this->insertSeveral('{{user_folder}}',$default_folder);
-					}					
-
 					$username = $model->u_first_name.' '.$model->u_last_name;
 					$request = 	array('{verification_link}'=>$salt,'{username}'=>$username);
 					if($this->sendEmail(1,$model->u_email,$request)){
-						Yii::app()->user->setFlash('popupmsg','A verification link has been sent to your registered email address, Please verify to access your '.Yii::app()->params['title'].' account.');
+						Yii::app()->user->setFlash('success','A verification link has been sent to your registered email address, Please verify to access your '.Yii::app()->params['title'].' account.');
 					}else{
-						Yii::app()->user->setFlash('popupmsg','Error in sending verification mail. Please contact site administrator.');
+						Yii::app()->user->setFlash('error','Error in sending verification mail. Please contact site administrator.');
 					}
 					$this->redirect(array('/'));
 				}
 			}
 			
-			$pro_type = Yii::app()->params['pro_type'];		
-			$organisation_type = Yii::app()->params['organisation_type'];
 			$this->render('signup',array(
-				'model'=>$model,
-				'pro_type'=>$pro_type,
-				'organisation_type'=>$organisation_type
+				'model'=>$model,				
 			));
 		}else{
 			$this->redirect(array('/dashboard'));

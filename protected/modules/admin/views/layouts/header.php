@@ -22,7 +22,7 @@
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <?php echo CHtml::link('<i class="fa fa-sign-out fa-fw"></i> Logout',array('site/logout')); ?>
+                    <?php echo CHtml::link('<i class="fa fa-sign-out fa-fw"></i> Logout',array('user/logout')); ?>
                 </li>
             </ul>            
         </li>        

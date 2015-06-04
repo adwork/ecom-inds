@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 15, 2015 at 07:17 AM
+-- Generation Time: Jun 04, 2015 at 08:39 AM
 -- Server version: 5.5.41-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.7
 
@@ -41,7 +41,9 @@ CREATE TABLE IF NOT EXISTS `inds_authassignment` (
 INSERT INTO `inds_authassignment` (`itemname`, `userid`, `bizrule`, `data`) VALUES
 ('admin', '1', NULL, NULL),
 ('member', '2', NULL, NULL),
-('member', '3', NULL, 'N;');
+('member', '3', NULL, 'N;'),
+('member', '4', NULL, 'N;'),
+('member', '5', NULL, 'N;');
 
 -- --------------------------------------------------------
 
@@ -82,6 +84,10 @@ INSERT INTO `inds_authitem` (`name`, `type`, `description`, `bizrule`, `data`) V
 ('AdminFabricsDelete', 1, NULL, NULL, NULL),
 ('AdminFabricsIndex', 1, NULL, NULL, NULL),
 ('AdminFabricsUpdate', 1, NULL, NULL, NULL),
+('AdminItemsCreate', 1, NULL, NULL, NULL),
+('AdminItemsDelete', 1, NULL, NULL, NULL),
+('AdminItemsIndex', 1, NULL, NULL, NULL),
+('AdminItemsUpdate', 1, NULL, NULL, NULL),
 ('AdminProductsAddimages', 1, '', '', 's:0:"";'),
 ('AdminProductsAddsizes', 1, '', '', 's:0:"";'),
 ('AdminProductsCreate', 1, '', '', 's:0:"";'),
@@ -110,6 +116,7 @@ INSERT INTO `inds_authitem` (`name`, `type`, `description`, `bizrule`, `data`) V
 ('guest', 2, NULL, NULL, NULL),
 ('member', 2, NULL, NULL, NULL),
 ('RightsDefaultIndex', 1, NULL, NULL, NULL),
+('SiteIndex', 1, NULL, NULL, NULL),
 ('SiteLogin', 1, '', '', 's:0:"";'),
 ('SiteLogout', 1, '', '', 's:0:"";'),
 ('SiteSettimezone', 1, '', '', 's:0:"";'),
@@ -117,7 +124,8 @@ INSERT INTO `inds_authitem` (`name`, `type`, `description`, `bizrule`, `data`) V
 ('UserDashboard', 1, '', '', 's:0:"";'),
 ('UserForgotpassword', 1, '', '', 's:0:"";'),
 ('UserProfile', 1, '', '', 's:0:"";'),
-('UserResetpassword', 1, '', '', 's:0:"";');
+('UserResetpassword', 1, '', '', 's:0:"";'),
+('UserSignup', 1, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -155,6 +163,10 @@ INSERT INTO `inds_authitemchild` (`parent`, `child`) VALUES
 ('admin', 'AdminFabricsDelete'),
 ('admin', 'AdminFabricsIndex'),
 ('admin', 'AdminFabricsUpdate'),
+('admin', 'AdminItemsCreate'),
+('admin', 'AdminItemsDelete'),
+('admin', 'AdminItemsIndex'),
+('admin', 'AdminItemsUpdate'),
 ('admin', 'AdminProductsAddimages'),
 ('admin', 'AdminProductsAddsizes'),
 ('admin', 'AdminProductsCreate'),
@@ -181,6 +193,7 @@ INSERT INTO `inds_authitemchild` (`parent`, `child`) VALUES
 ('admin', 'AdminUserStatus'),
 ('admin', 'AdminUserUserlist'),
 ('guest', 'RightsDefaultIndex'),
+('guest', 'SiteIndex'),
 ('guest', 'SiteLogin'),
 ('member', 'SiteLogout'),
 ('guest', 'SiteSettimezone'),
@@ -188,7 +201,8 @@ INSERT INTO `inds_authitemchild` (`parent`, `child`) VALUES
 ('member', 'UserDashboard'),
 ('guest', 'UserForgotpassword'),
 ('member', 'UserProfile'),
-('guest', 'UserResetpassword');
+('guest', 'UserResetpassword'),
+('guest', 'UserSignup');
 
 -- --------------------------------------------------------
 
@@ -200,22 +214,16 @@ CREATE TABLE IF NOT EXISTS `inds_buttons` (
   `but_id` int(11) NOT NULL AUTO_INCREMENT,
   `but_name` varchar(255) NOT NULL,
   `but_image` varchar(255) NOT NULL,
+  `but_price` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`but_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `inds_buttons`
 --
 
-INSERT INTO `inds_buttons` (`but_id`, `but_name`, `but_image`) VALUES
-(1, 'first', '5552bc1a4212a.png'),
-(2, 'erwewerwe', '5553ee90e7cde.png'),
-(3, 'werrwer', '5553ee9b31fac.png'),
-(4, 'tttttt', '5553eea692c59.png'),
-(5, 'bcvbcvb', '5553eeb42d062.png'),
-(6, 'gggggg', '5553eec1c34fe.png'),
-(7, 'dsfsdfsdf', '5553ef2f5189b.png'),
-(8, 'sdfsf', '5553ef3a51944.png');
+INSERT INTO `inds_buttons` (`but_id`, `but_name`, `but_image`, `but_price`) VALUES
+(1, 'button1', '', 100);
 
 -- --------------------------------------------------------
 
@@ -231,15 +239,14 @@ CREATE TABLE IF NOT EXISTS `inds_categories` (
   `cat_meta_keyword` text,
   `cat_meta_description` text,
   PRIMARY KEY (`cat_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `inds_categories`
 --
 
 INSERT INTO `inds_categories` (`cat_id`, `cat_name`, `cat_description`, `cat_meta_title`, `cat_meta_keyword`, `cat_meta_description`) VALUES
-(1, 'Cloths', 'Cloths', NULL, NULL, NULL),
-(2, 'Shirts', 'Shirts', NULL, NULL, NULL);
+(1, 'Category', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -306,16 +313,18 @@ CREATE TABLE IF NOT EXISTS `inds_fabrics` (
   `fab_id` int(11) NOT NULL AUTO_INCREMENT,
   `fab_name` varchar(255) NOT NULL,
   `fab_image` varchar(255) NOT NULL,
+  `fab_price` double NOT NULL,
+  `fab_color` tinyint(2) NOT NULL COMMENT '1=White,2=Black,3=Blue,4=Pink,5=Red,6=Yellow,7=Brown,8=Purple,9=Grey,10=Beige,11=Green,12=Orange,13=Maroon',
+  `fab_pattern` tinyint(2) NOT NULL COMMENT '1=Stripes, 2=Checks, 3=Solid, 4=Prints & Others',
   PRIMARY KEY (`fab_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `inds_fabrics`
 --
 
-INSERT INTO `inds_fabrics` (`fab_id`, `fab_name`, `fab_image`) VALUES
-(1, 'Cotton fff', '5552bb3349e3d.png'),
-(3, 'safsdfsdfdf', '5552ba7f1a470.png');
+INSERT INTO `inds_fabrics` (`fab_id`, `fab_name`, `fab_image`, `fab_price`, `fab_color`, `fab_pattern`) VALUES
+(1, 'Linnen', '', 600, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -328,19 +337,38 @@ CREATE TABLE IF NOT EXISTS `inds_fabric_buttons` (
   `fbt_fabric_id` int(11) NOT NULL,
   `fbt_button_id` int(11) NOT NULL,
   PRIMARY KEY (`fbt_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `inds_fabric_buttons`
+-- Table structure for table `inds_items`
 --
 
-INSERT INTO `inds_fabric_buttons` (`fbt_id`, `fbt_fabric_id`, `fbt_button_id`) VALUES
-(16, 1, 7),
-(15, 1, 4),
-(14, 1, 3),
-(13, 1, 2),
-(12, 1, 1),
-(17, 1, 8);
+CREATE TABLE IF NOT EXISTS `inds_items` (
+  `itm_id` int(11) NOT NULL AUTO_INCREMENT,
+  `itm_name` varchar(255) NOT NULL,
+  `itm_subcategory_id` int(11) NOT NULL,
+  `itm_fabric_id` int(11) DEFAULT '0',
+  `itm_price` double NOT NULL,
+  `itm_size` varchar(200) NOT NULL,
+  `itm_qty` int(11) NOT NULL,
+  `itm_photo` varchar(200) NOT NULL,
+  `itm_details` text,
+  `itm_meta_title` varchar(255) NOT NULL,
+  `itm_meta_keyword` text NOT NULL,
+  `itm_meta_description` text NOT NULL,
+  `itm_created` datetime NOT NULL,
+  `itm_modified` datetime NOT NULL,
+  PRIMARY KEY (`itm_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `inds_items`
+--
+
+INSERT INTO `inds_items` (`itm_id`, `itm_name`, `itm_subcategory_id`, `itm_fabric_id`, `itm_price`, `itm_size`, `itm_qty`, `itm_photo`, `itm_details`, `itm_meta_title`, `itm_meta_keyword`, `itm_meta_description`, `itm_created`, `itm_modified`) VALUES
+(1, 'Sherwani', 1, 1, 1000, 'XXl', 10, '556e5d216b8b2.png', 'Sherwani', 'Sherwani', 'Sherwani', 'Sherwani', '2015-06-03 01:49:21', '2015-06-03 01:49:21');
 
 -- --------------------------------------------------------
 
@@ -385,15 +413,14 @@ CREATE TABLE IF NOT EXISTS `inds_subcategories` (
   `sub_cat_keyword` text,
   `sub_meta_description` text,
   PRIMARY KEY (`sub_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `inds_subcategories`
 --
 
 INSERT INTO `inds_subcategories` (`sub_id`, `sub_cat_id`, `sub_cat_name`, `sub_cat_description`, `sub_cat_title`, `sub_cat_keyword`, `sub_meta_description`) VALUES
-(1, 1, 'eeee', 'asdasdasd', 'asdasdsad', 'asdasdas', 'sdfsdfsdfdsf'),
-(2, 2, 'sdasd', 'asdasd', 'asdasdasd', 'asdasdasd', 'sdfsdfsdfsdfsdf fsdfsdfsdf');
+(1, 1, 'Subcategory', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -403,7 +430,8 @@ INSERT INTO `inds_subcategories` (`sub_id`, `sub_cat_id`, `sub_cat_name`, `sub_c
 
 CREATE TABLE IF NOT EXISTS `inds_user` (
   `u_id` int(11) NOT NULL AUTO_INCREMENT,
-  `u_username` varchar(150) DEFAULT NULL,
+  `u_first_name` varchar(200) NOT NULL,
+  `u_last_name` varchar(200) NOT NULL,
   `u_email` varchar(200) DEFAULT NULL,
   `u_password` varchar(200) NOT NULL,
   `u_role` enum('admin','member') NOT NULL DEFAULT 'member',
@@ -416,16 +444,15 @@ CREATE TABLE IF NOT EXISTS `inds_user` (
   `u_created` datetime NOT NULL,
   `u_modified` datetime NOT NULL,
   PRIMARY KEY (`u_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `inds_user`
 --
 
-INSERT INTO `inds_user` (`u_id`, `u_username`, `u_email`, `u_password`, `u_role`, `u_gender`, `u_status`, `u_mail_verify`, `u_verkey`, `u_scrkey`, `u_last_login_date`, `u_created`, `u_modified`) VALUES
-(1, 'indianstylo admin', 'admin@indianstylo.com', '$2a$13$mFlSnpEY4X7.gf3ff4UKdeeZhgIskbSYyIVPWaUn7x2icbsUs11Aa', 'admin', 1, 1, 1, NULL, '496788dbd0201735a4737f0c59d90fd6', '2015-01-29 16:36:09', '2014-12-23 02:20:00', '2015-01-29 16:36:09'),
-(2, 'ecom user', 'user@ecomm.com', '$2a$13$IKC3KRpl7vrYnvE5hgNiu.RuE1DRN/CQ.JLy7Frs5CgbapZAmfjo2', 'member', 1, 1, 1, NULL, '', '2014-12-22 13:06:17', '2014-12-25 09:20:00', '2014-12-22 13:06:17'),
-(3, 'durgesh', 'durgesh@gmail.com', '$2a$13$2uAwZnnNwI.o5f1KchCpEuP6XDvioKmcErKr3enHOO5A7l2JWvEIK', 'member', 1, 1, 0, NULL, NULL, '1970-01-03 01:30:00', '2014-12-24 13:42:22', '2014-12-22 12:14:44');
+INSERT INTO `inds_user` (`u_id`, `u_first_name`, `u_last_name`, `u_email`, `u_password`, `u_role`, `u_gender`, `u_status`, `u_mail_verify`, `u_verkey`, `u_scrkey`, `u_last_login_date`, `u_created`, `u_modified`) VALUES
+(1, 'Indian', 'Stylo', 'admin@indianstylo.com', '$2a$13$mFlSnpEY4X7.gf3ff4UKdeeZhgIskbSYyIVPWaUn7x2icbsUs11Aa', 'admin', 1, 1, 1, NULL, '496788dbd0201735a4737f0c59d90fd6', '2015-06-03 01:26:27', '2014-12-23 02:20:00', '2015-06-04 02:58:41'),
+(5, 'Durgesh', 'Narayan', 'durgesh@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2015-06-04 03:04:45', '2015-06-04 02:51:57', '2015-06-04 03:04:45');
 
 --
 -- Constraints for dumped tables

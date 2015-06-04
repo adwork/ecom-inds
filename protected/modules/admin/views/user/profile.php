@@ -17,7 +17,10 @@
 							<?php echo $form->textFieldRow($model, 'u_email', array('class'=>'form-control')); ?>							
 						</div>
 						<div>
-							<?php echo $form->textFieldRow($model, 'u_username', array('class'=>'form-control')); ?>
+							<?php echo $form->textFieldRow($model, 'u_first_name', array('class'=>'form-control')); ?>
+						</div>
+						<div>
+							<?php echo $form->textFieldRow($model, 'u_last_name', array('class'=>'form-control')); ?>
 						</div>
 						<div>&nbsp;</div>
 						<div class="form-actions">

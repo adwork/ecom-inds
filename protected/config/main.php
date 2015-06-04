@@ -19,7 +19,7 @@ return array(
 		'application.extensions.EAjaxUpload.*',
 	),
 
-	'defaultController'=>'site/login',
+	'defaultController'=>'site/index',
 	
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool		

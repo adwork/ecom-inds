@@ -94,7 +94,7 @@ class Controller extends CController
 				}	
 			}
 
-			$this->loggedusername = $user->u_username;
+			$this->loggedusername = $user->u_first_name.' '.$user->u_last_name;
 		}	
 		return parent::beforeAction($this->getAction());
 	}

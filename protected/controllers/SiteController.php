@@ -71,6 +71,10 @@ class SiteController extends Controller
 			'model'=>$model,
 		));	
 	}
+
+	public function actionIndex(){
+		$this->render('index');
+	}
 	/**
 	 * Logs out the current user and redirect to homepage.
 	 */

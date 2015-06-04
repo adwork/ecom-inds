@@ -12,6 +12,7 @@ $buttons = '';
 $seoPages = '';
 $sitesetting = '';
 $subcategories = '';
+$items = '';
 if($page=='UserIndex')
     $dashboard = 'active-menu';
 else if($page=='CmspageIndex')
@@ -29,6 +30,8 @@ else if($page=='ButtonsIndex' || $page=='ButtonsCreate' || $page=='ButtonsUpdate
 else if($page=='SeopagesIndex' || $page=='ButtonsUpdate')
     $seoPages = 'active-menu';
 else if($page=='UserSitesettings')
+    $sitesetting = 'active-menu';
+else if($page=='ItemsIndex')
     $sitesetting = 'active-menu';
 ?>
 <nav class="navbar-default navbar-side" role="navigation">
@@ -66,12 +69,17 @@ else if($page=='UserSitesettings')
             </li>
             <li>
                 <?php
+                echo CHtml::link('<i class="fa fa-tasks"></i> Products',array('/admin/items/index'),array('class' => $items));
+                ?>
+            </li>
+            <li>
+                <?php
                 echo CHtml::link('<i class="fa fa-times-circle-o"></i> Buttons',array('/admin/buttons/index'),array('class' => $buttons));
                 ?>
             </li>
             <li>
                 <?php
-                echo CHtml::link('<i class="fa fa-tags"></i> Seo Pages',array('/admin/seoPages/index'),array('class' => $seoPages));
+                echo CHtml::link('<i class="fa fa-tags"></i> Seo Manager',array('/admin/seoPages/index'),array('class' => $seoPages));
                 ?>
             </li>
             <li>

@@ -1,1 +1,1 @@
-<?php echo 'HELLO';?>
+<h1>Indian Stylo Dashboard</h1>
