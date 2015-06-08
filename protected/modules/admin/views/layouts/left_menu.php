@@ -15,6 +15,8 @@ $subcategories = '';
 $items = '';
 if($page=='UserIndex')
     $dashboard = 'active-menu';
+else if($page=='UserUserlist' || $page=='UserAdd' || $page=='UserEdit')
+    $userlist = 'active-menu';
 else if($page=='CmspageIndex')
     $cmspage = 'active-menu';
 else if($page=='EmailmanagerIndex')
@@ -44,13 +46,8 @@ else if($page=='ItemsIndex')
             </li>
             <li>
                 <?php
-                echo CHtml::link('<i class="fa fa-file-text"></i> CMS Pages',array('/admin/cmspage/index'),array('class' => $cmspage));
-                ?>
-            </li>
-            <li>
-                <?php
-                echo CHtml::link('<i class="fa fa-envelope-o"></i> Email Manager',array('/admin/emailmanager/index'),array('class' => $emailmanager));
-                ?>
+                echo CHtml::link('<i class="fa fa-user"></i> User Manager',array('/admin/user/userlist'),array('class' => $userlist));
+                ?>                
             </li>
             <li>
                 <?php
@@ -64,22 +61,33 @@ else if($page=='ItemsIndex')
             </li>
             <li>
                 <?php
-                echo CHtml::link('<i class="fa fa-tasks"></i> Fabrics',array('/admin/fabrics/index'),array('class' => $fabric));
-                ?>
-            </li>
-            <li>
-                <?php
                 echo CHtml::link('<i class="fa fa-tasks"></i> Products',array('/admin/items/index'),array('class' => $items));
                 ?>
             </li>
             <li>
                 <?php
+                echo CHtml::link('<i class="fa fa-tasks"></i> Fabrics',array('/admin/fabrics/index'),array('class' => $fabric));
+                ?>
+            </li>            
+            <li>
+                <?php
                 echo CHtml::link('<i class="fa fa-times-circle-o"></i> Buttons',array('/admin/buttons/index'),array('class' => $buttons));
+                ?>
+            </li>
+            
+            <li>
+                <?php
+                echo CHtml::link('<i class="fa fa-envelope-o"></i> Email Manager',array('/admin/emailmanager/index'),array('class' => $emailmanager));
                 ?>
             </li>
             <li>
                 <?php
-                echo CHtml::link('<i class="fa fa-tags"></i> Seo Manager',array('/admin/seoPages/index'),array('class' => $seoPages));
+                echo CHtml::link('<i class="fa fa-file-text"></i> CMS Pages',array('/admin/cmspage/index'),array('class' => $cmspage));
+                ?>
+            </li>
+            <li>
+                <?php
+                echo CHtml::link('<i class="fa fa-tags"></i> Seo Manager',array('/admin/seopages/index'),array('class' => $seoPages));
                 ?>
             </li>
             <li>

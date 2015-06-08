@@ -5,7 +5,7 @@
                 <div style="float:left;">Seo Pages</div>
                 <div style="float:right">
                 	<?php
-                	echo CHtml::link('Add Page',array('/admin/seoPages/create'),array('class' => 'btn btn-primary'));
+                	// echo CHtml::link('Add Page',array('/admin/seoPages/create'),array('class' => 'btn btn-primary'));
                 	?>
                 </div>
                 <div style="clear:both;"></div>

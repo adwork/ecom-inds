@@ -69,11 +69,23 @@ return array(
 		), //end of request
 		// uncomment the following to use a MySQL database
 		
-		'db'=>array(				
+		/*'db'=>array(				
 			'connectionString' => 'mysql:host=localhost;dbname=indianstylodb',
 			'emulatePrepare' => true,
 			'username' => 'root',
-			'password' => 'qaz#123',
+			// 'password' => 'qaz#123',
+			'password' => '',
+			'charset' => 'utf8',
+			'tablePrefix' => 'inds_',			
+			'enableParamLogging' => true,
+			'enableProfiling'=>true,
+			'initSQLs'=>array("set time_zone='+00:00';"),
+		),*/
+		'db'=>array(				
+			'connectionString' => 'mysql:host=mysql6.000webhost.com;dbname=a2830131_sedesig',
+			'emulatePrepare' => true,
+			'username' => 'a2830131_sedesig',
+			'password' => 'A@da$D!&!gn',
 			'charset' => 'utf8',
 			'tablePrefix' => 'inds_',			
 			'enableParamLogging' => true,

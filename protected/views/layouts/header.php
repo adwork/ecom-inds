@@ -14,6 +14,7 @@
                 array('label'=>$this->loggedusername, 'visible'=>Yii::app()->user->checkAccess('member'), 'url'=>'#', 'items'=>array(
                     array('label'=>'Dashboard', 'url'=>array('user/dashboard')),
                     array('label'=>'Profile', 'url'=>array('user/profile')),                    
+                    array('label'=>'Editor', 'url'=>array('/editor')),
                 	array('label'=>'Change Password', 'url'=>array('user/changepassword')),
                     '---',
                     array('label'=>'Logout', 'url'=>array('site/logout')),
