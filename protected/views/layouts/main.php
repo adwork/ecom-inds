@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" >
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
     <?php 
   		//THEME ASSETS
@@ -64,11 +65,11 @@
 </html>
 <script>
   $(document).ready(function(){
-  	$.scribitz.init({
+  	/*$.scribitz.init({
 			'baseUrl' 	: '<?php echo Yii::app()->request->baseUrl.'/'; ?>',			
 			'TimeOffSet' :'<?php echo Yii::app()->session['TimeOffSet']; ?>',
 			'admin':false
-	  }); 	
+	  });*/ 	
     <?php if(Yii::app()->user->hasFlash('popupmsg')){?>
         $.jGrowl("<?php echo Yii::app()->user->getFlash('popupmsg'); ?>",{sticky:true,position:'top-right',closer:false});       
     <?php }?>

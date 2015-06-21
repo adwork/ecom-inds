@@ -14,7 +14,8 @@
 
 			<?php 
 			$categoryData = Subcategories::model()->findAll();
-			$categories = CHtml::listData($categoryData,'sub_cat_id','sub_cat_name');
+			$categories = CHtml::listData($categoryData,'sub_id','sub_cat_name');
+			//prd($categories);
 			echo $form->dropDownListRow($model,'itm_subcategory_id',$categories,array('class'=>'form-control','empty' => 'Select Subcategory')); 
 			?>
 
