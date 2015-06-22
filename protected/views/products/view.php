@@ -5,10 +5,14 @@
     width: 30%;
     min-height: 500px;
   }
+  .productdetails .image img{
+  	width: 100%;
+  }
   .productdetails .details{
     float: left;
     width: 65%;
     min-height: 500px;
+    margin-left: 2%;
   }
   .productdetails .details .name{
   	font-weight: bold;
@@ -26,10 +30,17 @@
   	width: 50%;
   	text-align: right;
   }
+  .imagezoom-view{
+  	background: none !important;
+  }
 </style>
+<?php
+$cs = Yii::app()->clientScript;		
+$cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/imagezoom.js');
+?>
 <div class="productdetails">
-	<div class="image">
-		<img src="<?php echo Yii::app()->baseUrl; ?>/storage/products/<?php echo $model->itm_photo; ?>" style="height:500px;">
+	<div class="image thumb-image">
+		<img src="<?php echo Yii::app()->baseUrl; ?>/storage/products/<?php echo $model->itm_photo; ?>" data-imagezoom="true">
 	</div>
 	<div class="details">
 		<div>&nbsp;</div>
