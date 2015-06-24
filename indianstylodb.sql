@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 21, 2015 at 04:56 PM
+-- Generation Time: Jun 24, 2015 at 08:12 AM
 -- Server version: 5.5.41-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.7
 
@@ -116,6 +116,7 @@ INSERT INTO `inds_authitem` (`name`, `type`, `description`, `bizrule`, `data`) V
 ('AdminUserUserlist', 1, '', '', 's:0:"";'),
 ('guest', 2, NULL, NULL, NULL),
 ('member', 2, NULL, NULL, NULL),
+('ProductsCart', 1, NULL, NULL, NULL),
 ('ProductsIndex', 1, NULL, NULL, NULL),
 ('ProductsView', 1, NULL, NULL, NULL),
 ('RightsDefaultIndex', 1, NULL, NULL, NULL),
@@ -196,6 +197,7 @@ INSERT INTO `inds_authitemchild` (`parent`, `child`) VALUES
 ('admin', 'AdminUserProfile'),
 ('admin', 'AdminUserStatus'),
 ('admin', 'AdminUserUserlist'),
+('guest', 'ProductsCart'),
 ('guest', 'ProductsIndex'),
 ('guest', 'ProductsView'),
 ('guest', 'RightsDefaultIndex'),

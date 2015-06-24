@@ -7,20 +7,15 @@
   		//THEME ASSETS
       $cs = Yii::app()->clientScript;		
   		$cs->registerCssFile(Yii::app()->request->baseUrl.'/css/styles.css')      	
-  		->registerCssFile(Yii::app()->request->baseUrl.'/css/bootstrap-modal.css')
-  		->registerScriptFile(Yii::app()->request->baseUrl.'/vendors/modernizr-2.6.2-respond-1.1.0.min.js')		  		
-      ->registerScriptFile(Yii::app()->request->baseUrl.'/js/bootstrap-modalmanager.js')
-      ->registerScriptFile(Yii::app()->request->baseUrl.'/js/bootstrap-modal.js')
-  		->registerScriptFile(Yii::app()->request->baseUrl.'/js/scribitz.js')
-      ->registerScriptFile(Yii::app()->request->baseUrl.'/vendors/ckeditor/ckeditor.js',CClientScript::POS_END)
+  		->registerScriptFile(Yii::app()->request->baseUrl.'/vendors/ckeditor/ckeditor.js',CClientScript::POS_END)
       ->registerScriptFile(Yii::app()->request->baseUrl.'/vendors/ckeditor/adapters/jquery.js',CClientScript::POS_END)
       ->registerCssFile(Yii::app()->request->baseUrl.'/vendors/wysiwyg/bootstrap-wysihtml5.css')
       ->registerScriptFile(Yii::app()->request->baseUrl.'/vendors/wysiwyg/wysihtml5-0.3.0.js',CClientScript::POS_END)
-      ->registerScriptFile(Yii::app()->request->baseUrl.'/vendors/wysiwyg/bootstrap-wysihtml5.js',CClientScript::POS_END)
-      ->registerScriptFile(Yii::app()->request->baseUrl.'/js/jGrowl/jquery.jgrowl.js')
-      ->registerCssFile(Yii::app()->request->baseUrl.'/js/jGrowl/jquery.jgrowl.css');
+      ->registerScriptFile(Yii::app()->request->baseUrl.'/vendors/wysiwyg/bootstrap-wysihtml5.js',CClientScript::POS_END);
       //LOAD JQUERY
-  		Yii::app()->clientScript->registerCoreScript('jquery');
+  		//Yii::app()->clientScript->registerCoreScript('jquery');
+      $cs = Yii::app()->clientScript;   
+      $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery-1.11.1.js',CClientScript::POS_HEAD);
       //LOAD BOOTSTRAP
       Yii::app()->bootstrap->register();    
   	?>

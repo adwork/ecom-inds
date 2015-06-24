@@ -20,12 +20,25 @@ class ProductsController extends Controller
 		));
 	}
 
-	public function actionView(){
+	public function actionView(){ 
 		$slug = Yii::app()->request->getParam('slug');
 		$criteria=new CDbCriteria;
 		$criteria->condition = 'itm_slug=:itm_slug';
 		$criteria->params = array(':itm_slug' => $slug);
 		$model = Items::model()->find($criteria);
 		$this->render('view',array('model' => $model));
+	}
+
+	public function actionCart(){
+		$this->layout = false;
+		$this->render('cart');
+	}
+
+	public function actionAddtocart(){
+		
+	}
+
+	public function actionCheckout(){
+		
 	}
 }
