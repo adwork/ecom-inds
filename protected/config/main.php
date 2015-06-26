@@ -69,7 +69,7 @@ return array(
 		), //end of request
 		// uncomment the following to use a MySQL database
 		
-		/*'db'=>array(				
+		'db'=>array(				
 			'connectionString' => 'mysql:host=localhost;dbname=indianstylodb',
 			'emulatePrepare' => true,
 			'username' => 'root',
@@ -79,9 +79,9 @@ return array(
 			'tablePrefix' => 'inds_',			
 			'enableParamLogging' => true,
 			'enableProfiling'=>true,
-			'initSQLs'=>array("set time_zone='+00:00';"),
-		),*/
-		'db'=>array(				
+			// 'initSQLs'=>array("set time_zone='+00:00';"),
+		),
+		/*'db'=>array(				
 			'connectionString' => 'mysql:host=mysql6.000webhost.com;dbname=a2830131_sedesig',
 			'emulatePrepare' => true,
 			'username' => 'a2830131_sedesig',
@@ -91,7 +91,7 @@ return array(
 			'enableParamLogging' => true,
 			'enableProfiling'=>true,
 			'initSQLs'=>array("set time_zone='+00:00';"),
-		),
+		),*/
 		
 		'authManager'=>array(
 			'class'=>'CDbAuthManager',
