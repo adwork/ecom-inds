@@ -58,6 +58,8 @@ class Items extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'subcatItems'=>array(self::BELONGS_TO, 'Subcategories','itm_subcategory_id'),
+			'fabItems'=>array(self::BELONGS_TO, 'Fabrics','itm_fabric_id'),
 		);
 	}
 

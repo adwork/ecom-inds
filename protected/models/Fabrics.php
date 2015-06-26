@@ -26,11 +26,11 @@ class Fabrics extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fab_name', 'required'),
+			array('fab_name,fab_color', 'required'),
 			array('fab_name, fab_image', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('fab_price', 'safe'),
+			array('fab_price,fab_pattern,fab_for', 'safe'),
 			array('fab_id, fab_name, fab_image', 'safe', 'on'=>'search'),
 		);
 	}
@@ -43,6 +43,8 @@ class Fabrics extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'fabItems'=>array(self::HAS_MANY, 'Items','itm_fabric_id'),
+			'fabButtons'=>array(self::HAS_MANY, 'FabricButtons','fbt_fabric_id'),
 		);
 	}
 
@@ -54,7 +56,10 @@ class Fabrics extends CActiveRecord
 		return array(
 			'fab_name' => 'Fabric Name',
 			'fab_image' => 'Fabric Image',
-			'fab_price' => 'Fabric Price'
+			'fab_price' => 'Fabric Price',
+			'fab_color' => 'Fabric Color',
+			'fab_pattern' => 'Fabric Pattern',
+			'fab_for' => 'Fabric for',
 		);
 	}
 

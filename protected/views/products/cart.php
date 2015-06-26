@@ -13,6 +13,7 @@
       				<th align="right">Qty.</th>
       				<th align="center">Update Qty.</th>
       				<th align="right">Total</th>
+                              <th align="center">Remove</th>
       			</tr>
       		</thead>
       		<tbody>
@@ -24,6 +25,9 @@
       					<input type="text" name="updateqty" class="span1 updateqty">
       				</td>
       				<td align="right">15,000</td>
+                              <td align="center">
+                                    <a href="">X</a>
+                              </td>
       			</tr>
       			<tr>
       				<td align="left">Sherwani</td>
@@ -33,6 +37,9 @@
       					<input type="text" name="updateqty" class="span1 updateqty">
       				</td>
       				<td align="right">15,000</td>
+                              <td align="center">
+                                    <a href="">X</a>
+                              </td>
       			</tr>
       			<tr>
       				<td align="left">Sherwani</td>
@@ -42,6 +49,9 @@
       					<input type="text" name="updateqty" class="span1 updateqty">
       				</td>
       				<td align="right">15,000</td>
+                              <td align="center">
+                                    <a href="">X</a>
+                              </td>
       			</tr>
       		</tbody>
       		<tfoot>
@@ -50,6 +60,7 @@
       					<b>Total Amount</b>
       				</td>
       				<td align="right"><b>45,000</b></td>
+                              <td>&nbsp;</td>
       			</tr>
       		</tfoot>
       	</table>

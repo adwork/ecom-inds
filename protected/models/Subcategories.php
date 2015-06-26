@@ -49,6 +49,7 @@ class Subcategories extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'catSubcats'=>array(self::BELONGS_TO, 'Categories','sub_cat_id'),
+			'subcatItems'=>array(self::HAS_MANY, 'Items','itm_subcategory_id'),
 		);
 	}
 
