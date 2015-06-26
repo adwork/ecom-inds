@@ -24,8 +24,39 @@ class FabricsController extends Controller
 			$image_name = $this->imageUpload($_FILES['Fabrics']['name']['fab_image'],$_FILES['Fabrics']['tmp_name']['fab_image'],'fabrics');
 			if(!empty($image_name))
 				$model->fab_image = $image_name;
-			if($model->save())
+			if($model->save()){
+				$dir_name 			= Yii::getPathOfAlias('webroot').'/storage/fabrics/';
+				$fabFolder 			= $dir_name.$model->fab_id;
+				$fabFolderBack 		= $dir_name.$model->fab_id."/back";
+				$fabFolderCollor 	= $dir_name.$model->fab_id."/collar";
+				$fabFolderCuff 		= $dir_name.$model->fab_id."/cuff";
+				$fabFolderFront 	= $dir_name.$model->fab_id."/front";
+				$fabFolderPlacket 	= $dir_name.$model->fab_id."/placket";
+				$fabFolderPocket 	= $dir_name.$model->fab_id."/pocket";
+				$fabFolderRear 		= $dir_name.$model->fab_id."/rear";
+				$fabFolderSleeve 	= $dir_name.$model->fab_id."/sleeve";
+				$fabFolderYoke 		= $dir_name.$model->fab_id."/yoke";
+				if(!empty($model->fab_for)){
+					if($model->fab_for==1){
+						mkdir($fabFolder, 0777);
+						mkdir($fabFolderBack, 0777);
+						mkdir($fabFolderCollor, 0777);
+						mkdir($fabFolderCuff, 0777);
+						mkdir($fabFolderFront, 0777);
+						mkdir($fabFolderPlacket, 0777);
+						mkdir($fabFolderPocket, 0777);
+						mkdir($fabFolderRear, 0777);
+						mkdir($fabFolderSleeve, 0777);
+						mkdir($fabFolderYoke, 0777);
+					}else if($model->fab_for==2){
+						mkdir($fabFolderFront, 0777);
+						mkdir($fabFolderRear, 0777);					
+					}else if($model->fab_for==3){
+						//for blazer
+					}
+				}
 				$this->redirect(array('index'));
+			}
 		}
 
 		$this->render('create',array(
@@ -143,5 +174,54 @@ class FabricsController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+
+	public function actionUploadcustomizeimages($id){
+		$model=$this->loadModel($id);
+		if(isset($_POST['Fabrics']))
+		{
+			$dir_name 			= 'fabrics/';
+			$fabFolderBack 		= $dir_name.$model->fab_id."/back/";
+			$fabFolderCollor 	= $dir_name.$model->fab_id."/collar/";
+			$fabFolderCuff 		= $dir_name.$model->fab_id."/cuff/";
+			$fabFolderFront 	= $dir_name.$model->fab_id."/front/";
+			$fabFolderPlacket 	= $dir_name.$model->fab_id."/placket/";
+			$fabFolderPocket 	= $dir_name.$model->fab_id."/pocket/";
+			$fabFolderRear 		= $dir_name.$model->fab_id."/rear/";
+			$fabFolderSleeve 	= $dir_name.$model->fab_id."/sleeve/";
+			$fabFolderYoke 		= $dir_name.$model->fab_id."/yoke/";
+			
+			if(!empty($model->fab_for)){
+				if($model->fab_for==1){ //for Shirt
+					if(!empty($_FILES['Fabrics']['name']['fab_image'][1]))
+						$this->imageUpload($_FILES['Fabrics']['name']['fab_image'][1],$_FILES['Fabrics']['tmp_name']['fab_image'][1],$fabFolderBack);
+					if(!empty($_FILES['Fabrics']['name']['fab_image'][2]))
+						$this->imageUpload($_FILES['Fabrics']['name']['fab_image'][2],$_FILES['Fabrics']['tmp_name']['fab_image'][2],$fabFolderCollor);
+					if(!empty($_FILES['Fabrics']['name']['fab_image'][3]))
+						$this->imageUpload($_FILES['Fabrics']['name']['fab_image'][3],$_FILES['Fabrics']['tmp_name']['fab_image'][3],$fabFolderCuff);
+					if(!empty($_FILES['Fabrics']['name']['fab_image'][4]))
+						$this->imageUpload($_FILES['Fabrics']['name']['fab_image'][4],$_FILES['Fabrics']['tmp_name']['fab_image'][4],$fabFolderFront);
+					if(!empty($_FILES['Fabrics']['name']['fab_image'][5]))
+						$this->imageUpload($_FILES['Fabrics']['name']['fab_image'][5],$_FILES['Fabrics']['tmp_name']['fab_image'][5],$fabFolderPlacket);
+					if(!empty($_FILES['Fabrics']['name']['fab_image'][6]))
+						$this->imageUpload($_FILES['Fabrics']['name']['fab_image'][6],$_FILES['Fabrics']['tmp_name']['fab_image'][6],$fabFolderPocket);
+					if(!empty($_FILES['Fabrics']['name']['fab_image'][7]))
+						$this->imageUpload($_FILES['Fabrics']['name']['fab_image'][7],$_FILES['Fabrics']['tmp_name']['fab_image'][7],$fabFolderRear);
+					if(!empty($_FILES['Fabrics']['name']['fab_image'][8]))
+						$this->imageUpload($_FILES['Fabrics']['name']['fab_image'][8],$_FILES['Fabrics']['tmp_name']['fab_image'][8],$fabFolderSleeve);
+					if(!empty($_FILES['Fabrics']['name']['fab_image'][9]))
+						$this->imageUpload($_FILES['Fabrics']['name']['fab_image'][9],$_FILES['Fabrics']['tmp_name']['fab_image'][9],$fabFolderYoke);
+				}else if($model->fab_for==2){ //for trouser
+					if(!empty($_FILES['Fabrics']['name']['fab_image'][1]))
+						$this->imageUpload($_FILES['Fabrics']['name']['fab_image'][1],$_FILES['Fabrics']['tmp_name']['fab_image'][1],$fabFolderFront);
+					if(!empty($_FILES['Fabrics']['name']['fab_image'][2]))
+						$this->imageUpload($_FILES['Fabrics']['name']['fab_image'][2],$_FILES['Fabrics']['tmp_name']['fab_image'][2],$fabFolderRear);
+				}else if($model->fab_for==3){
+					//for blazer
+				}
+				Yii::app()->user->setFlash('success','Images uploaded successfully.');	
+			}
+		}
+		$this->render('uploadcustomizeimages',array('model' => $model));
 	}
 }

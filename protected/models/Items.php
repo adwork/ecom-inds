@@ -21,6 +21,7 @@
  */
 class Items extends CActiveRecord
 {
+	public $searchCriteria;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -37,15 +38,15 @@ class Items extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('itm_name, itm_subcategory_id, itm_price, itm_size, itm_qty, itm_photo', 'required'),
+			array('itm_name, itm_subcategory_id, itm_price, itm_size, itm_qty', 'required'),
 			array('itm_subcategory_id, itm_fabric_id, itm_qty', 'numerical', 'integerOnly'=>true),
 			array('itm_price', 'numerical'),
 			array('itm_name, itm_meta_title', 'length', 'max'=>255),
 			array('itm_size, itm_photo', 'length', 'max'=>200),
-			array('itm_details, itm_meta_title, itm_meta_keyword, itm_meta_description, itm_created, itm_modified', 'safe'),
+			array('itm_details, itm_meta_title, itm_meta_keyword, itm_meta_description, itm_created, itm_modified, itm_slug, itm_photo', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('itm_id, itm_name, itm_subcategory_id, itm_fabric_id, itm_price, itm_size, itm_qty, itm_photo, itm_details, itm_meta_title, itm_meta_keyword, itm_meta_description, itm_created, itm_modified', 'safe', 'on'=>'search'),
+			array('itm_id, itm_name, itm_subcategory_id, itm_fabric_id, itm_price, itm_size, itm_qty, itm_photo, itm_details, itm_meta_title, itm_meta_keyword, itm_meta_description, itm_created, itm_modified, itm_slug', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,6 +58,8 @@ class Items extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'subcatItems'=>array(self::BELONGS_TO, 'Subcategories','itm_subcategory_id'),
+			'fabItems'=>array(self::BELONGS_TO, 'Fabrics','itm_fabric_id'),
 		);
 	}
 
@@ -97,7 +100,9 @@ class Items extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-
+		if(!empty($this->searchCriteria['catid'])){
+			$criteria->compare('itm_subcategory_id',$this->searchCriteria['catid']);	
+		}
 		$criteria->compare('itm_name',$this->itm_name,true);
 		$criteria->compare('itm_price',$this->itm_price);
 		$criteria->compare('itm_size',$this->itm_size,true);
@@ -128,5 +133,21 @@ class Items extends CActiveRecord
 				'setUpdateOnCreate'=> true
 			)
 		);
+	}
+
+	/*
+	* Change password before saving
+	*/
+	
+	protected function beforeSave()
+	{
+		if ($this->isNewRecord){
+			$slugname = strtolower($this->itm_name);
+			$slugname = str_replace(' ', '_', $slugname);
+			$slugname = str_replace('-', '_', $slugname);
+			$slugname = str_replace('&', '_', $slugname);
+			$this->itm_slug = $slugname;			
+		}
+		return parent::beforeSave();
 	}
 }

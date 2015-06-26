@@ -21,7 +21,8 @@ class ItemsController extends Controller
 		if(isset($_POST['Items']))
 		{
 			$model->attributes=$_POST['Items'];
-			$image_name = $this->imageUpload($_FILES['Items']['name']['itm_photo'],$_FILES['Items']['tmp_name']['itm_photo'],'products');
+			if(!empty($_FILES['Items']['name']['itm_photo']))
+				$image_name = $this->imageUpload($_FILES['Items']['name']['itm_photo'],$_FILES['Items']['tmp_name']['itm_photo'],'products');
 			if(!empty($image_name))
 				$model->itm_photo = $image_name;
 			if($model->save())
@@ -48,7 +49,8 @@ class ItemsController extends Controller
 		if(isset($_POST['Items']))
 		{
 			$model->attributes=$_POST['Items'];
-			$image_name = $this->imageUpload($_FILES['Items']['name']['itm_photo'],$_FILES['Items']['tmp_name']['itm_photo'],'products');
+			if(!empty($_FILES['Items']['name']['itm_photo']))
+				$image_name = $this->imageUpload($_FILES['Items']['name']['itm_photo'],$_FILES['Items']['tmp_name']['itm_photo'],'products');
 			if(!empty($image_name))
 				$model->itm_photo = $image_name;
 			if($model->save())

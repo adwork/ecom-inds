@@ -1,7 +1,27 @@
-<?php $this->widget('bootstrap.widgets.TbNavbar', array(    
+<?php 
+$categories = Categories::model()->findAll();
+$productMenues = array();
+$i = 0;
+if(!empty($categories)){
+    foreach ($categories as $key => $catObj) {
+        $productMenues['label']                 = $catObj->cat_name;
+        $productMenues['url']                   = '#'; 
+        $productMenues['items'][$i]['label'] = 'All Products';   
+        $productMenues['items'][$i]['url']   = array('products/');    
+        if(!empty($catObj->catSubcats)){
+            foreach ($catObj->catSubcats as $key2 => $subcatObj) {
+                $i++;
+                $productMenues['items'][$i]['label'] = $subcatObj->sub_cat_name;   
+                $productMenues['items'][$i]['url']   = array('products/index/'.$subcatObj->sub_id);                   
+            }            
+        }
+    }    
+}
+/*<a data-toggle="modal" href="remote.html" data-target="#modal">Click me</a>*/
+$this->widget('bootstrap.widgets.TbNavbar', array(    
     //'type'=>'inverse', // null or 'inverse'
     'brand'=> Yii::app()->params['title'],
-    'brandUrl'=>'#',
+    'brandUrl'=>array('/'),
     'collapse'=>true, // requires bootstrap-responsive.css
     'fluid'=>true,    
     'items'=>array(        
@@ -9,6 +29,8 @@
             'class'=>'bootstrap.widgets.TbMenu',
             'htmlOptions'=>array('class'=>'pull-right'),
             'items'=>array(        
+                $productMenues,
+                array('label'=>'My Cart Item(s)', 'url'=>array('/cartitems'),'itemOptions' => array('id' => 'cartmodal')),
                 array('label'=>'Signin', 'visible'=>Yii::app()->user->isGuest,'url'=>array('site/login')),
                 array('label'=>'Signup', 'visible'=>Yii::app()->user->isGuest,'url'=>array('user/signup')),
                 array('label'=>$this->loggedusername, 'visible'=>Yii::app()->user->checkAccess('member'), 'url'=>'#', 'items'=>array(
@@ -24,3 +46,28 @@
     ),
 
 )); ?>
+<div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Cart Items</h4>
+      </div>
+      <div class="modal-body">
+          
+      </div>
+      
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+       $('#cartmodal a').click(function(e){
+            e.preventDefault();
+            var url = $(this).attr('href');
+            $('#cartModal').modal({
+              remote:url
+            });
+       }); 
+    });
+</script>

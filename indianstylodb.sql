@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 04, 2015 at 08:39 AM
+-- Generation Time: Jun 26, 2015 at 07:10 AM
 -- Server version: 5.5.41-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.7
 
@@ -84,6 +84,7 @@ INSERT INTO `inds_authitem` (`name`, `type`, `description`, `bizrule`, `data`) V
 ('AdminFabricsDelete', 1, NULL, NULL, NULL),
 ('AdminFabricsIndex', 1, NULL, NULL, NULL),
 ('AdminFabricsUpdate', 1, NULL, NULL, NULL),
+('AdminFabricsUploadcustomizeimages', 1, NULL, NULL, NULL),
 ('AdminItemsCreate', 1, NULL, NULL, NULL),
 ('AdminItemsDelete', 1, NULL, NULL, NULL),
 ('AdminItemsIndex', 1, NULL, NULL, NULL),
@@ -101,6 +102,7 @@ INSERT INTO `inds_authitem` (`name`, `type`, `description`, `bizrule`, `data`) V
 ('AdminSeoPagesIndex', 1, NULL, NULL, NULL),
 ('AdminSeoPagesUpdate', 1, NULL, NULL, NULL),
 ('AdminSubcategoriesCreate', 1, NULL, NULL, NULL),
+('AdminSubcategoriesDelete', 1, NULL, NULL, NULL),
 ('AdminSubcategoriesIndex', 1, NULL, NULL, NULL),
 ('AdminSubcategoriesUpdate', 1, NULL, NULL, NULL),
 ('AdminUserAdd', 1, '', '', 's:0:"";'),
@@ -115,6 +117,9 @@ INSERT INTO `inds_authitem` (`name`, `type`, `description`, `bizrule`, `data`) V
 ('AdminUserUserlist', 1, '', '', 's:0:"";'),
 ('guest', 2, NULL, NULL, NULL),
 ('member', 2, NULL, NULL, NULL),
+('ProductsCart', 1, NULL, NULL, NULL),
+('ProductsIndex', 1, NULL, NULL, NULL),
+('ProductsView', 1, NULL, NULL, NULL),
 ('RightsDefaultIndex', 1, NULL, NULL, NULL),
 ('SiteIndex', 1, NULL, NULL, NULL),
 ('SiteLogin', 1, '', '', 's:0:"";'),
@@ -163,6 +168,7 @@ INSERT INTO `inds_authitemchild` (`parent`, `child`) VALUES
 ('admin', 'AdminFabricsDelete'),
 ('admin', 'AdminFabricsIndex'),
 ('admin', 'AdminFabricsUpdate'),
+('admin', 'AdminFabricsUploadcustomizeimages'),
 ('admin', 'AdminItemsCreate'),
 ('admin', 'AdminItemsDelete'),
 ('admin', 'AdminItemsIndex'),
@@ -180,6 +186,7 @@ INSERT INTO `inds_authitemchild` (`parent`, `child`) VALUES
 ('admin', 'AdminSeoPagesIndex'),
 ('admin', 'AdminSeoPagesUpdate'),
 ('admin', 'AdminSubcategoriesCreate'),
+('admin', 'AdminSubcategoriesDelete'),
 ('admin', 'AdminSubcategoriesIndex'),
 ('admin', 'AdminSubcategoriesUpdate'),
 ('admin', 'AdminUserAdd'),
@@ -192,6 +199,9 @@ INSERT INTO `inds_authitemchild` (`parent`, `child`) VALUES
 ('admin', 'AdminUserProfile'),
 ('admin', 'AdminUserStatus'),
 ('admin', 'AdminUserUserlist'),
+('guest', 'ProductsCart'),
+('guest', 'ProductsIndex'),
+('guest', 'ProductsView'),
 ('guest', 'RightsDefaultIndex'),
 ('guest', 'SiteIndex'),
 ('guest', 'SiteLogin'),
@@ -239,14 +249,14 @@ CREATE TABLE IF NOT EXISTS `inds_categories` (
   `cat_meta_keyword` text,
   `cat_meta_description` text,
   PRIMARY KEY (`cat_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `inds_categories`
 --
 
 INSERT INTO `inds_categories` (`cat_id`, `cat_name`, `cat_description`, `cat_meta_title`, `cat_meta_keyword`, `cat_meta_description`) VALUES
-(1, 'Category', '', '', '', '');
+(10, 'Accessories and Products', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -316,15 +326,18 @@ CREATE TABLE IF NOT EXISTS `inds_fabrics` (
   `fab_price` double NOT NULL,
   `fab_color` tinyint(2) NOT NULL COMMENT '1=White,2=Black,3=Blue,4=Pink,5=Red,6=Yellow,7=Brown,8=Purple,9=Grey,10=Beige,11=Green,12=Orange,13=Maroon',
   `fab_pattern` tinyint(2) NOT NULL COMMENT '1=Stripes, 2=Checks, 3=Solid, 4=Prints & Others',
+  `fab_for` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0=None,1=Shirt,2=Trousre,3=Blazer',
   PRIMARY KEY (`fab_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `inds_fabrics`
 --
 
-INSERT INTO `inds_fabrics` (`fab_id`, `fab_name`, `fab_image`, `fab_price`, `fab_color`, `fab_pattern`) VALUES
-(1, 'Linnen', '', 600, 0, 0);
+INSERT INTO `inds_fabrics` (`fab_id`, `fab_name`, `fab_image`, `fab_price`, `fab_color`, `fab_pattern`, `fab_for`) VALUES
+(1, 'Linnen', '', 600, 0, 0, 0),
+(3, 'Cotton', '558b5923294d1.png', 300, 1, 2, 1),
+(4, 'Silk', '558c9eb86d13e.png', 1000, 1, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -358,17 +371,22 @@ CREATE TABLE IF NOT EXISTS `inds_items` (
   `itm_meta_title` varchar(255) NOT NULL,
   `itm_meta_keyword` text NOT NULL,
   `itm_meta_description` text NOT NULL,
+  `itm_slug` varchar(255) NOT NULL,
   `itm_created` datetime NOT NULL,
   `itm_modified` datetime NOT NULL,
   PRIMARY KEY (`itm_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `inds_items`
 --
 
-INSERT INTO `inds_items` (`itm_id`, `itm_name`, `itm_subcategory_id`, `itm_fabric_id`, `itm_price`, `itm_size`, `itm_qty`, `itm_photo`, `itm_details`, `itm_meta_title`, `itm_meta_keyword`, `itm_meta_description`, `itm_created`, `itm_modified`) VALUES
-(1, 'Sherwani', 1, 1, 1000, 'XXl', 10, '556e5d216b8b2.png', 'Sherwani', 'Sherwani', 'Sherwani', 'Sherwani', '2015-06-03 01:49:21', '2015-06-03 01:49:21');
+INSERT INTO `inds_items` (`itm_id`, `itm_name`, `itm_subcategory_id`, `itm_fabric_id`, `itm_price`, `itm_size`, `itm_qty`, `itm_photo`, `itm_details`, `itm_meta_title`, `itm_meta_keyword`, `itm_meta_description`, `itm_slug`, `itm_created`, `itm_modified`) VALUES
+(2, 'Sherwani 1', 3, NULL, 11000, 'XL', 5, '558698f50ee4e.jpg', 'This cross black print on a white base is a good choice for party wear. The black contrast on the inner collar and inner cuff add to the casual look. Wear it over a black trouser and oxford shoes for an evening party.', '', '', '', 'sherwani_1', '2015-06-20 02:11:18', '2015-06-21 10:59:01'),
+(3, 'Juti 1', 4, NULL, 250, '6', 100, '55862bc4709fe.jpg', '', '', '', '', 'juti_1', '2015-06-20 02:12:23', '2015-06-21 03:13:08'),
+(4, 'Safa 1', 5, NULL, 750, 's1', 100, '55862bea9190b.jpg', '', '', '', '', 'safa_1', '2015-06-20 02:13:12', '2015-06-21 03:13:46'),
+(5, 'Tie', 6, NULL, 500, 'S1', 100, '55862bfe04968.jpg', '', '', '', '', 'tie', '2015-06-20 02:16:30', '2015-06-21 03:14:06'),
+(6, 'Sherwani 2', 3, NULL, 2000, 'XXl', 100, '558641d6485df.JPG', '', '', '', '', 'sherwani_2', '2015-06-21 04:47:18', '2015-06-21 04:47:18');
 
 -- --------------------------------------------------------
 
@@ -413,14 +431,17 @@ CREATE TABLE IF NOT EXISTS `inds_subcategories` (
   `sub_cat_keyword` text,
   `sub_meta_description` text,
   PRIMARY KEY (`sub_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `inds_subcategories`
 --
 
 INSERT INTO `inds_subcategories` (`sub_id`, `sub_cat_id`, `sub_cat_name`, `sub_cat_description`, `sub_cat_title`, `sub_cat_keyword`, `sub_meta_description`) VALUES
-(1, 1, 'Subcategory', '', '', '', '');
+(3, 10, 'Serwani', '', '', '', ''),
+(4, 10, 'Juti', '', '', '', ''),
+(5, 10, 'Saafa', '', '', '', ''),
+(6, 10, 'Assesories', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -452,7 +473,7 @@ CREATE TABLE IF NOT EXISTS `inds_user` (
 
 INSERT INTO `inds_user` (`u_id`, `u_first_name`, `u_last_name`, `u_email`, `u_password`, `u_role`, `u_gender`, `u_status`, `u_mail_verify`, `u_verkey`, `u_scrkey`, `u_last_login_date`, `u_created`, `u_modified`) VALUES
 (1, 'Indian', 'Stylo', 'admin@indianstylo.com', '$2a$13$mFlSnpEY4X7.gf3ff4UKdeeZhgIskbSYyIVPWaUn7x2icbsUs11Aa', 'admin', 1, 1, 1, NULL, '496788dbd0201735a4737f0c59d90fd6', '2015-06-03 01:26:27', '2014-12-23 02:20:00', '2015-06-04 02:58:41'),
-(5, 'Durgesh', 'Narayan', 'durgesh@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2015-06-04 03:04:45', '2015-06-04 02:51:57', '2015-06-04 03:04:45');
+(5, 'testuser', 'One', 'testuserone@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2015-06-26 01:21:00', '2015-06-04 02:51:57', '2015-06-26 01:21:00');
 
 --
 -- Constraints for dumped tables
