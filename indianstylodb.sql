@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 26, 2015 at 07:10 AM
+-- Generation Time: Jun 28, 2015 at 07:02 AM
 -- Server version: 5.5.41-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.7
 
@@ -82,9 +82,11 @@ INSERT INTO `inds_authitem` (`name`, `type`, `description`, `bizrule`, `data`) V
 ('AdminFabricsAddbuttons', 1, NULL, NULL, NULL),
 ('AdminFabricsCreate', 1, NULL, NULL, NULL),
 ('AdminFabricsDelete', 1, NULL, NULL, NULL),
+('AdminFabricsImageexist', 1, NULL, NULL, NULL),
 ('AdminFabricsIndex', 1, NULL, NULL, NULL),
 ('AdminFabricsUpdate', 1, NULL, NULL, NULL),
 ('AdminFabricsUploadcustomizeimages', 1, NULL, NULL, NULL),
+('AdminFabricsUploadimages', 1, NULL, NULL, NULL),
 ('AdminItemsCreate', 1, NULL, NULL, NULL),
 ('AdminItemsDelete', 1, NULL, NULL, NULL),
 ('AdminItemsIndex', 1, NULL, NULL, NULL),
@@ -166,9 +168,11 @@ INSERT INTO `inds_authitemchild` (`parent`, `child`) VALUES
 ('admin', 'AdminFabricsAddbuttons'),
 ('admin', 'AdminFabricsCreate'),
 ('admin', 'AdminFabricsDelete'),
+('admin', 'AdminFabricsImageexist'),
 ('admin', 'AdminFabricsIndex'),
 ('admin', 'AdminFabricsUpdate'),
 ('admin', 'AdminFabricsUploadcustomizeimages'),
+('admin', 'AdminFabricsUploadimages'),
 ('admin', 'AdminItemsCreate'),
 ('admin', 'AdminItemsDelete'),
 ('admin', 'AdminItemsIndex'),
@@ -328,7 +332,7 @@ CREATE TABLE IF NOT EXISTS `inds_fabrics` (
   `fab_pattern` tinyint(2) NOT NULL COMMENT '1=Stripes, 2=Checks, 3=Solid, 4=Prints & Others',
   `fab_for` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0=None,1=Shirt,2=Trousre,3=Blazer',
   PRIMARY KEY (`fab_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `inds_fabrics`
@@ -337,7 +341,8 @@ CREATE TABLE IF NOT EXISTS `inds_fabrics` (
 INSERT INTO `inds_fabrics` (`fab_id`, `fab_name`, `fab_image`, `fab_price`, `fab_color`, `fab_pattern`, `fab_for`) VALUES
 (1, 'Linnen', '', 600, 0, 0, 0),
 (3, 'Cotton', '558b5923294d1.png', 300, 1, 2, 1),
-(4, 'Silk', '558c9eb86d13e.png', 1000, 1, 4, 1);
+(4, 'Silk', '558c9eb86d13e.png', 1000, 1, 4, 1),
+(5, 'fabtest', '558ed8bb3f900.png', 500, 1, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -473,7 +478,7 @@ CREATE TABLE IF NOT EXISTS `inds_user` (
 
 INSERT INTO `inds_user` (`u_id`, `u_first_name`, `u_last_name`, `u_email`, `u_password`, `u_role`, `u_gender`, `u_status`, `u_mail_verify`, `u_verkey`, `u_scrkey`, `u_last_login_date`, `u_created`, `u_modified`) VALUES
 (1, 'Indian', 'Stylo', 'admin@indianstylo.com', '$2a$13$mFlSnpEY4X7.gf3ff4UKdeeZhgIskbSYyIVPWaUn7x2icbsUs11Aa', 'admin', 1, 1, 1, NULL, '496788dbd0201735a4737f0c59d90fd6', '2015-06-03 01:26:27', '2014-12-23 02:20:00', '2015-06-04 02:58:41'),
-(5, 'testuser', 'One', 'testuserone@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2015-06-26 01:21:00', '2015-06-04 02:51:57', '2015-06-26 01:21:00');
+(5, 'testuser', 'One', 'testuserone@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2015-06-26 23:42:08', '2015-06-04 02:51:57', '2015-06-26 23:42:08');
 
 --
 -- Constraints for dumped tables
