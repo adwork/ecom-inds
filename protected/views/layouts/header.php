@@ -1,11 +1,12 @@
 <?php 
 $categories = Categories::model()->findAll();
 $productMenues = array();
-$i = 0;
+$index = 0;
 if(!empty($categories)){
     foreach ($categories as $key => $catObj) {
-        $productMenues['label']                 = $catObj->cat_name;
-        $productMenues['url']                   = '#'; 
+        $i = 0;
+        $productMenues['label']              = $catObj->cat_name;
+        $productMenues['url']                = '#'; 
         $productMenues['items'][$i]['label'] = 'All Products';   
         $productMenues['items'][$i]['url']   = array('products/');    
         if(!empty($catObj->catSubcats)){
@@ -15,8 +16,10 @@ if(!empty($categories)){
                 $productMenues['items'][$i]['url']   = array('products/index/'.$subcatObj->sub_id);                   
             }            
         }
+        $index++;
     }    
 }
+//prd($productMenues);
 /*<a data-toggle="modal" href="remote.html" data-target="#modal">Click me</a>*/
 $this->widget('bootstrap.widgets.TbNavbar', array(    
     //'type'=>'inverse', // null or 'inverse'
@@ -30,6 +33,11 @@ $this->widget('bootstrap.widgets.TbNavbar', array(
             'htmlOptions'=>array('class'=>'pull-right'),
             'items'=>array(        
                 $productMenues,
+                array('label' => 'Customize', 'url' => '#','items' => array(
+                    array('label'=>'Shirt', 'url'=>array('fabrics/index/1')),
+                    array('label'=>'Trouser', 'url'=>array('fabrics/index/2')),                    
+                    array('label'=>'Blazer', 'url'=>array('/fabrics/index/3')),
+                )),
                 array('label'=>'My Cart Item(s)', 'url'=>array('/cartitems'),'itemOptions' => array('id' => 'cartmodal')),
                 array('label'=>'Signin', 'visible'=>Yii::app()->user->isGuest,'url'=>array('site/login')),
                 array('label'=>'Signup', 'visible'=>Yii::app()->user->isGuest,'url'=>array('user/signup')),

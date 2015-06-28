@@ -10,6 +10,7 @@
  */
 class Fabrics extends CActiveRecord
 {
+	public $fab_imagecust_option,$fab_imagecust_suboption,$searchCriteria;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -83,7 +84,7 @@ class Fabrics extends CActiveRecord
 
 		$criteria->compare('fab_id',$this->fab_id);
 		$criteria->compare('fab_name',$this->fab_name,true);
-		$criteria->compare('fab_image',$this->fab_image,true);
+		$criteria->compare('fab_for',$this->searchCriteria);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

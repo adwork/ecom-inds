@@ -2,7 +2,7 @@
 $controller = ucfirst(strtolower($this->getId()));        
 $action = ucfirst(strtolower($this->getAction()->getId()));
 $page = $controller.$action;
-
+$userlist = '';
 $dashboard = '';
 $cmspage = '';
 $emailmanager = '';
