@@ -55,13 +55,29 @@
 			<?php echo $form->textAreaRow($model,'itm_meta_description',array('rows'=>6, 'cols'=>50, 'class'=>'form-control')); ?>
 			<div>&nbsp;</div>
 			<div class="form-actions">
-				<?php $this->widget('bootstrap.widgets.TbButton', array(
+				<?php 
+				$this->widget('bootstrap.widgets.TbButton', array(
 					'buttonType'=>'submit',
 					'type'=>'primary',
 					'label'=>$model->isNewRecord ? 'Create' : 'Save',
-				)); ?>
+				)); 
+				echo '&nbsp;&nbsp;';
+				$this->widget('bootstrap.widgets.TbButton', array(
+					'buttonType'=>'button',
+					'type'=>'primary',
+					'label'=>'Cancel',
+					'htmlOptions' => array('id' => 'cancelBtn')
+				));
+				?>
 			</div>
 
 		<?php $this->endWidget(); ?>
 	</div>
 </div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#cancelBtn').click(function(){
+			window.location = '<?php echo Yii::app()->baseUrl; ?>/admin/items';
+		});
+	});
+</script>
