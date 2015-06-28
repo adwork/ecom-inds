@@ -13,6 +13,8 @@ $seoPages = '';
 $sitesetting = '';
 $subcategories = '';
 $items = '';
+$userlist = '';
+
 if($page=='UserIndex')
     $dashboard = 'active-menu';
 else if($page=='UserUserlist' || $page=='UserAdd' || $page=='UserEdit')
