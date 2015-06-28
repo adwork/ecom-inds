@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 28, 2015 at 07:02 AM
+-- Generation Time: Jun 28, 2015 at 08:38 AM
 -- Server version: 5.5.41-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.7
 
@@ -117,6 +117,8 @@ INSERT INTO `inds_authitem` (`name`, `type`, `description`, `bizrule`, `data`) V
 ('AdminUserProfile', 1, '', '', 's:0:"";'),
 ('AdminUserStatus', 1, '', '', 's:0:"";'),
 ('AdminUserUserlist', 1, '', '', 's:0:"";'),
+('FabricsIndex', 1, NULL, NULL, NULL),
+('FabricsView', 1, NULL, NULL, NULL),
 ('guest', 2, NULL, NULL, NULL),
 ('member', 2, NULL, NULL, NULL),
 ('ProductsCart', 1, NULL, NULL, NULL),
@@ -203,6 +205,8 @@ INSERT INTO `inds_authitemchild` (`parent`, `child`) VALUES
 ('admin', 'AdminUserProfile'),
 ('admin', 'AdminUserStatus'),
 ('admin', 'AdminUserUserlist'),
+('guest', 'FabricsIndex'),
+('guest', 'FabricsView'),
 ('guest', 'ProductsCart'),
 ('guest', 'ProductsIndex'),
 ('guest', 'ProductsView'),
@@ -253,7 +257,7 @@ CREATE TABLE IF NOT EXISTS `inds_categories` (
   `cat_meta_keyword` text,
   `cat_meta_description` text,
   PRIMARY KEY (`cat_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `inds_categories`
@@ -339,7 +343,7 @@ CREATE TABLE IF NOT EXISTS `inds_fabrics` (
 --
 
 INSERT INTO `inds_fabrics` (`fab_id`, `fab_name`, `fab_image`, `fab_price`, `fab_color`, `fab_pattern`, `fab_for`) VALUES
-(1, 'Linnen', '', 600, 0, 0, 0),
+(1, 'Linnen', '558f5c772b40f.png', 600, 0, 0, 0),
 (3, 'Cotton', '558b5923294d1.png', 300, 1, 2, 1),
 (4, 'Silk', '558c9eb86d13e.png', 1000, 1, 4, 1),
 (5, 'fabtest', '558ed8bb3f900.png', 500, 1, 2, 1);
