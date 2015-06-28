@@ -1,8 +1,8 @@
-RewriteEngine On
+DirectoryIndex index.php
 
-# if a directory or a file exists, use it directly
+RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteCond $1 !^(index\.php|public|images|css|js|robots\.txt)
 
-# otherwise forward it to index.php
-RewriteRule . index.php
+RewriteRule . index.php [L]

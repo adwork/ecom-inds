@@ -1,0 +1,123 @@
+
+
+http://www.vitruvien.com/images/manequinn/yoke/y2q8n9z5_back-yoke-front-view-of-sides_blueribbon.png
+http://www.vitruvien.com/images/manequinn/yoke_back/y2q8n9z5_back-yoke-front-view-of-center_blueribbon.png
+
+http://www.vitruvien.com/images/manequinn/front/y2q8n9z5_bottom-round_blueribbon.png
+http://www.vitruvien.com/images/manequinn/front/y2q8n9z5_bottom-straight_blueribbon.png
+Bottom cut rounded is default
+
+http://www.vitruvien.com/images/manequinn/placket/blank.png
+http://www.vitruvien.com/images/manequinn/placket/y2q8n9z5_placket-hidden_blueribbon.png
+Placket american is default
+
+Left Side
+http://www.vitruvien.com/images/manequinn/pocket/y2q8n9z5_pocket-angled-left_blueribbon.png
+http://www.vitruvien.com/images/manequinn/pocket/y2q8n9z5_pocket-round-left_blueribbon.png
+http://www.vitruvien.com/images/manequinn/pocket/y2q8n9z5_pocket-square-left_blueribbon.png
+http://www.vitruvien.com/images/manequinn/pocket/y2q8n9z5_pocket-vshape-left_blueribbon.png
+http://www.vitruvien.com/images/manequinn/pocket/y2q8n9z5_pocket-vshape-with-flap-left_blueribbon.png
+Right Side
+http://www.vitruvien.com/images/manequinn/pocket/y2q8n9z5_pocket-vshape-with-flap-right_blueribbon.png
+http://www.vitruvien.com/images/manequinn/pocket/y2q8n9z5_pocket-vshape-right_blueribbon.png
+http://www.vitruvien.com/images/manequinn/pocket/y2q8n9z5_pocket-round-right_blueribbon.png
+http://www.vitruvien.com/images/manequinn/pocket/y2q8n9z5_pocket-square-right_blueribbon.png
+http://www.vitruvien.com/images/manequinn/pocket/y2q8n9z5_pocket-angled-right_blueribbon.png
+Pocket angled is default
+
+
+
+http://www.vitruvien.com/images/manequinn/sleeves/y2q8n9z5_sleeves-full_blueribbon.png
+http://www.vitruvien.com/images/manequinn/sleeves/y2q8n9z5_sleeves-half_blueribbon.png
+http://www.vitruvien.com/images/manequinn/sleeves/y2q8n9z5_sleeves-rolled-up_blueribbon.png
+Sleeves full is default
+
+http://www.vitruvien.com/images/manequinn/cuffs/y2q8n9z5_cuffs-single-button-angled-right_blueribbon.png
+http://www.vitruvien.com/images/manequinn/cuffs/y2q8n9z5_cuffs-single-button-angled-left_blueribbon.png
+http://www.vitruvien.com/images/manequinn/cuffs/y2q8n9z5_cuffs-double-button-angled-left_blueribbon.png
+http://www.vitruvien.com/images/manequinn/cuffs/y2q8n9z5_cuffs-double-button-angled-right_blueribbon.png
+http://www.vitruvien.com/images/manequinn/cuffs/y2q8n9z5_cuffs-french-square-right_blueribbon.png
+http://www.vitruvien.com/images/manequinn/cuffs/y2q8n9z5_cuffs-french-square-left_blueribbon.png
+Cuff single button is default
+
+
+http://www.vitruvien.com/images/manequinn/collar/y2q8n9z5_collar-classic_blueribbon.png
+http://www.vitruvien.com/images/manequinn/collar/y2q8n9z5_collar-button-down_blueribbon.png // need to show two down button in both side in small size on the collar
+http://www.vitruvien.com/images/manequinn/collar/y2q8n9z5_collar-small-spread_blueribbon.png
+http://www.vitruvien.com/images/manequinn/collar/y2q8n9z5_collar-spread_blueribbon.png
+http://www.vitruvien.com/images/manequinn/collar/y2q8n9z5_collar-tall-spread_blueribbon.png // need to show two button instead on single in left side 
+http://www.vitruvien.com/images/manequinn/collar/y2q8n9z5_collar-chinese_blueribbon.png
+// buttons
+http://www.vitruvien.com/images/manequinn/buttons/button-rightplacket_falcowhite.png // buttons
+http://www.vitruvien.com/images/manequinn/buttons/buttons-collarbandone_falcowhite.png // buttons
+Collar classic is default
+
+<div id="buttons_leftplacket" class="mann" style="display: none;">
+<div id="buttons_rightplacket" class="mann">
+<div id="buttons_collarband" class="mann">
+
+<div id="buttons_rolledup" class="mann" style="display: none;"> rolled up sleeve right side button
+<div id="buttons_vshapeleft" class="mann" style="display: none;"> vshape pocket left side button
+<div id="buttons_vshaperight" class="mann" style="display: none;"> vshape pocket right side button
+<div id="buttons_btdown" class="mann" style="display: none;"> collar "button down" buttons
+
+http://www.vitruvien.com/images/manequinn/yoke/y2q8n9z5_back-yoke_blueribbon.png
+http://www.vitruvien.com/images/manequinn/back/y2q8n9z5_back-no-pleats_blueribbon.png
+http://www.vitruvien.com/images/manequinn/back/y2q8n9z5_back-box-pleats_blueribbon.png
+http://www.vitruvien.com/images/manequinn/back/y2q8n9z5_back-side-pleats_blueribbon.png
+Back no-leats is default
+
+
+SAMPLE IMAGES WHICH ARE USED TO REPRESENT DIFFERENT TYPES
+---------------------------------------------------------
+http://www.vitruvien.com/vector_images/sleeves/sleeves-half-sleeves_vector.jpg
+http://www.vitruvien.com/vector_images/sleeves/sleeves-full-sleeves_vector.jpg
+http://www.vitruvien.com/vector_images/sleeves/sleeves-rolledup-sleeves_vector.jpg
+
+http://www.vitruvien.com/vector_images/collar/collar-button-down_vector.jpg
+http://www.vitruvien.com/vector_images/collar/collar-classic_vector.jpg
+http://www.vitruvien.com/vector_images/collar/collar-small-spread_vector.jpg
+http://www.vitruvien.com/vector_images/collar/collar-spread_vector.jpg
+http://www.vitruvien.com/vector_images/collar/collar-tall-spread_vector.jpg
+http://www.vitruvien.com/vector_images/collar/collar-chinese_vector.jpg
+
+http://www.vitruvien.com/vector_images/cuffs/cuffs-single-button_vector.jpg
+http://www.vitruvien.com/vector_images/cuffs/cuffs-double-button_vector.jpg
+http://www.vitruvien.com/vector_images/cuffs/cuffs-french_vector.jpg
+
+http://www.vitruvien.com/vector_images/placket/placket-with-placket_vector.jpg
+http://www.vitruvien.com/vector_images/placket/placket-without-placket_vector.jpg
+http://www.vitruvien.com/vector_images/placket/placket-hidden-placket_vector.jpg
+
+http://www.vitruvien.com/vector_images/pocket/pocket-round-pocket_vector.jpg
+http://www.vitruvien.com/vector_images/pocket/pocket-square-pocket_vector.jpg
+http://www.vitruvien.com/vector_images/pocket/pocket-angled-pocket_vector.jpg
+http://www.vitruvien.com/vector_images/pocket/pocket-vshaped-pocket_vector.jpg
+http://www.vitruvien.com/vector_images/pocket/pocket-flap-pocket_vector.jpg
+
+http://www.vitruvien.com/vector_images/back/back-no-pleat_vector.jpg
+http://www.vitruvien.com/vector_images/back/back-box-pleat_vector.jpg
+http://www.vitruvien.com/vector_images/back/back-side-pleat_vector.jpg
+
+http://www.vitruvien.com/vector_images/front/bottomcut-round_vector.jpg
+http://www.vitruvien.com/vector_images/front/bottomcut-straight_vector.jpg
+
+http://www.vitruvien.com/images/manequinn/buttons/buttons-lhs_mop-browngrey.jpg
+http://www.vitruvien.com/images/manequinn/buttons/buttons-lhs_earlblack.jpg
+http://www.vitruvien.com/images/manequinn/buttons/buttons-lhs_falcowhite.jpg
+http://www.vitruvien.com/images/manequinn/buttons/buttons-lhs_falcomaroon.jpg
+http://www.vitruvien.com/images/manequinn/buttons/buttons-lhs_luxorblue.jpg
+
+http://www.vitruvien.com/images/manequinn/fabric/y2q8n9z5_customize-swatch_blueribbon.jpg
+http://www.vitruvien.com
+http://www.vitruvien.com/images/manequin_bg.jpg
+
+back_pleats
+
+indsse-loading-img
+
+$(this).wrap("<div class='indssese-editor-container'><div class='indsse-cover'></div><div id='indsse-mask'></div><div id='indsse-loading-div'><img id='indsse-loading-img' src='' border='0' /></div></div>");
+
+indsLoading
+
+
