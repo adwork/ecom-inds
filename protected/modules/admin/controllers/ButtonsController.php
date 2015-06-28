@@ -21,11 +21,16 @@ class ButtonsController extends Controller
 		if(isset($_POST['Buttons']))
 		{
 			$model->attributes=$_POST['Buttons'];
-			$image_name = $this->imageUpload($_FILES['Buttons']['name']['but_image'],$_FILES['Buttons']['tmp_name']['but_image'],'buttons');
-			if(!empty($image_name))
-				$model->but_image = $image_name;
-			if($model->save())
+			if($model->save()){
+				if(!empty($_FILES['Buttons']['name']['but_image'])){
+					$pathinfo 	= pathinfo($_FILES['Buttons']['name']['but_image']);
+					$image_name = 'button_'.$model->but_id.".".$pathinfo['extension'];
+					$this->imageUpload($_FILES['Buttons']['name']['but_image'],$_FILES['Buttons']['tmp_name']['but_image'],'buttons',$image_name);
+					$model->but_image = $image_name;
+					$model->save();
+				}
 				$this->redirect(array('index'));
+			}
 		}
 
 		$this->render('create',array(
@@ -48,11 +53,15 @@ class ButtonsController extends Controller
 		if(isset($_POST['Buttons']))
 		{
 			$model->attributes=$_POST['Buttons'];
-			$image_name = $this->imageUpload($_FILES['Buttons']['name']['but_image'],$_FILES['Buttons']['tmp_name']['but_image'],'buttons');
-			if(!empty($image_name))
-				$model->but_image = $image_name;
-			if($model->save())
+			if(!empty($_FILES['Buttons']['name']['but_image'])){
+				$pathinfo 	= pathinfo($_FILES['Buttons']['name']['but_image']);
+				$image_name = 'button_'.$id.".".$pathinfo['extension'];
+				$this->imageUpload($_FILES['Buttons']['name']['but_image'],$_FILES['Buttons']['tmp_name']['but_image'],'buttons',$image_name);
+				$model->but_image = $image_name;				
+			}
+			if($model->save()){
 				$this->redirect(array('index'));
+			}
 		}
 
 		$this->render('update',array(

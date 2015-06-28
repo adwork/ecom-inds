@@ -44,11 +44,14 @@ $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/upload.min.js');
 					<div id="uploadedImage"></div>
 					<div>&nbsp;</div>
 					<div class="form-actions">
-						<?php /*$this->widget('bootstrap.widgets.TbButton', array(
-							'buttonType'=>'submit',
-							'type'=>'primary',
-							'label'=>'Upload Images',
-						));*/ ?>
+						<?php
+                        $this->widget('bootstrap.widgets.TbButton', array(
+                              'buttonType'=>'button',
+                              'type'=>'primary',
+                              'label'=>'Cancel',
+                              'htmlOptions' => array('id' => 'cancelBtn')
+                        )); 
+                        ?>
 					</div>
 					<?php
 				}else{
@@ -187,5 +190,9 @@ $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/upload.min.js');
 			  	},			  
 			});
 		});
+
+		$('#cancelBtn').click(function(){
+              window.location = '<?php echo Yii::app()->baseUrl; ?>/admin/fabrics';
+        });
 	});
 </script>

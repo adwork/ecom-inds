@@ -22,12 +22,14 @@ class FabricsController extends Controller
 
 	public function actionView($id = NULL,$type = NULL){
 		$fabricDetail = $this->loadModel($id);
+		$buttons = new Buttons;
 		$model = new Fabrics;
 		$model->searchCriteria['fab_for'] = $type;
 		$this->render('view',array(
 			'model' => $model,
 			'fabricDetail' => $fabricDetail,
-			'id' => $id
+			'id' => $id,
+			'buttons' => $buttons
 		));
 	}	
 

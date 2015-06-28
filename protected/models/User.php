@@ -104,7 +104,8 @@ class User extends CActiveRecord
 			'old_password'=>'Old Password',
 			'new_password'=>'New Password',
 			'new_repeat_password'=>'Repeat New Password',
-			'u_status'=>'Status'
+			'u_status'=>'Status',
+			'u_username' => 'Username'
 		);
 	}
 

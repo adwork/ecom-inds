@@ -50,14 +50,30 @@
             	</table>
             	<div>&nbsp;</div>
             	<div class="form-actions">
-					<?php $this->widget('bootstrap.widgets.TbButton', array(
-						'buttonType'=>'submit',
-						'type'=>'primary',
-						'label'=>'Add Buttons',
-					)); ?>
-				</div>
-				<?php $this->endWidget(); ?>
+				<?php 
+                        $this->widget('bootstrap.widgets.TbButton', array(
+					'buttonType'=>'submit',
+					'type'=>'primary',
+					'label'=>'Add Buttons',
+				)); 
+                        echo '&nbsp;&nbsp;';
+                        $this->widget('bootstrap.widgets.TbButton', array(
+                              'buttonType'=>'button',
+                              'type'=>'primary',
+                              'label'=>'Cancel',
+                              'htmlOptions' => array('id' => 'cancelBtn')
+                        ));
+                        ?>
+			</div>
+			<?php $this->endWidget(); ?>
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+      $(document).ready(function(){
+            $('#cancelBtn').click(function(){
+                  window.location = '<?php echo Yii::app()->baseUrl; ?>/admin/fabrics';
+            });
+      });
+</script>

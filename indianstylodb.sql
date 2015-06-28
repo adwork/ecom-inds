@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 28, 2015 at 08:38 AM
+-- Generation Time: Jun 28, 2015 at 10:13 PM
 -- Server version: 5.5.41-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.7
 
@@ -234,14 +234,16 @@ CREATE TABLE IF NOT EXISTS `inds_buttons` (
   `but_image` varchar(255) NOT NULL,
   `but_price` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`but_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `inds_buttons`
 --
 
 INSERT INTO `inds_buttons` (`but_id`, `but_name`, `but_image`, `but_price`) VALUES
-(1, 'button1', '', 100);
+(1, 'button1', 'button_1.png', 100),
+(2, 'Button2', 'button_2.png', 10),
+(3, 'Button3', 'button_3.png', 0);
 
 -- --------------------------------------------------------
 
@@ -482,7 +484,7 @@ CREATE TABLE IF NOT EXISTS `inds_user` (
 
 INSERT INTO `inds_user` (`u_id`, `u_first_name`, `u_last_name`, `u_email`, `u_password`, `u_role`, `u_gender`, `u_status`, `u_mail_verify`, `u_verkey`, `u_scrkey`, `u_last_login_date`, `u_created`, `u_modified`) VALUES
 (1, 'Indian', 'Stylo', 'admin@indianstylo.com', '$2a$13$mFlSnpEY4X7.gf3ff4UKdeeZhgIskbSYyIVPWaUn7x2icbsUs11Aa', 'admin', 1, 1, 1, NULL, '496788dbd0201735a4737f0c59d90fd6', '2015-06-03 01:26:27', '2014-12-23 02:20:00', '2015-06-04 02:58:41'),
-(5, 'testuser', 'One', 'testuserone@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2015-06-26 23:42:08', '2015-06-04 02:51:57', '2015-06-26 23:42:08');
+(5, 'testuser', 'One', 'testuserone@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2015-06-26 23:42:08', '2015-06-04 02:51:57', '2015-06-28 20:12:58');
 
 --
 -- Constraints for dumped tables
