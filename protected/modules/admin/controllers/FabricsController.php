@@ -49,8 +49,8 @@ class FabricsController extends Controller
 						mkdir($fabFolderSleeve, 0777);
 						mkdir($fabFolderYoke, 0777);
 					}else if($model->fab_for==2){
-						mkdir($fabFolderFront, 0777);
-						mkdir($fabFolderRear, 0777);					
+						//mkdir($fabFolderFront, 0777);
+						//mkdir($fabFolderRear, 0777);					
 					}else if($model->fab_for==3){
 						//for blazer
 					}
@@ -178,50 +178,230 @@ class FabricsController extends Controller
 
 	public function actionUploadcustomizeimages($id){
 		$model=$this->loadModel($id);
-		if(isset($_POST['Fabrics']))
-		{
-			$dir_name 			= 'fabrics/';
-			$fabFolderBack 		= $dir_name.$model->fab_id."/back/";
-			$fabFolderCollor 	= $dir_name.$model->fab_id."/collar/";
-			$fabFolderCuff 		= $dir_name.$model->fab_id."/cuff/";
-			$fabFolderFront 	= $dir_name.$model->fab_id."/front/";
-			$fabFolderPlacket 	= $dir_name.$model->fab_id."/placket/";
-			$fabFolderPocket 	= $dir_name.$model->fab_id."/pocket/";
-			$fabFolderRear 		= $dir_name.$model->fab_id."/rear/";
-			$fabFolderSleeve 	= $dir_name.$model->fab_id."/sleeve/";
-			$fabFolderYoke 		= $dir_name.$model->fab_id."/yoke/";
-			
-			if(!empty($model->fab_for)){
-				if($model->fab_for==1){ //for Shirt
-					if(!empty($_FILES['Fabrics']['name']['fab_image'][1]))
-						$this->imageUpload($_FILES['Fabrics']['name']['fab_image'][1],$_FILES['Fabrics']['tmp_name']['fab_image'][1],$fabFolderBack);
-					if(!empty($_FILES['Fabrics']['name']['fab_image'][2]))
-						$this->imageUpload($_FILES['Fabrics']['name']['fab_image'][2],$_FILES['Fabrics']['tmp_name']['fab_image'][2],$fabFolderCollor);
-					if(!empty($_FILES['Fabrics']['name']['fab_image'][3]))
-						$this->imageUpload($_FILES['Fabrics']['name']['fab_image'][3],$_FILES['Fabrics']['tmp_name']['fab_image'][3],$fabFolderCuff);
-					if(!empty($_FILES['Fabrics']['name']['fab_image'][4]))
-						$this->imageUpload($_FILES['Fabrics']['name']['fab_image'][4],$_FILES['Fabrics']['tmp_name']['fab_image'][4],$fabFolderFront);
-					if(!empty($_FILES['Fabrics']['name']['fab_image'][5]))
-						$this->imageUpload($_FILES['Fabrics']['name']['fab_image'][5],$_FILES['Fabrics']['tmp_name']['fab_image'][5],$fabFolderPlacket);
-					if(!empty($_FILES['Fabrics']['name']['fab_image'][6]))
-						$this->imageUpload($_FILES['Fabrics']['name']['fab_image'][6],$_FILES['Fabrics']['tmp_name']['fab_image'][6],$fabFolderPocket);
-					if(!empty($_FILES['Fabrics']['name']['fab_image'][7]))
-						$this->imageUpload($_FILES['Fabrics']['name']['fab_image'][7],$_FILES['Fabrics']['tmp_name']['fab_image'][7],$fabFolderRear);
-					if(!empty($_FILES['Fabrics']['name']['fab_image'][8]))
-						$this->imageUpload($_FILES['Fabrics']['name']['fab_image'][8],$_FILES['Fabrics']['tmp_name']['fab_image'][8],$fabFolderSleeve);
-					if(!empty($_FILES['Fabrics']['name']['fab_image'][9]))
-						$this->imageUpload($_FILES['Fabrics']['name']['fab_image'][9],$_FILES['Fabrics']['tmp_name']['fab_image'][9],$fabFolderYoke);
-				}else if($model->fab_for==2){ //for trouser
-					if(!empty($_FILES['Fabrics']['name']['fab_image'][1]))
-						$this->imageUpload($_FILES['Fabrics']['name']['fab_image'][1],$_FILES['Fabrics']['tmp_name']['fab_image'][1],$fabFolderFront);
-					if(!empty($_FILES['Fabrics']['name']['fab_image'][2]))
-						$this->imageUpload($_FILES['Fabrics']['name']['fab_image'][2],$_FILES['Fabrics']['tmp_name']['fab_image'][2],$fabFolderRear);
-				}else if($model->fab_for==3){
-					//for blazer
-				}
-				Yii::app()->user->setFlash('success','Images uploaded successfully.');	
+		$this->render('uploadcustomizeimages',array('model' => $model));
+	}
+
+	public function actionUploadimages(){
+		$this->layout = false;
+		$ret['file'] = '';
+		$ret['error'] = 1;
+		$ret['msg'] = 'Error in file upload.';
+		if(!empty($_POST['option']) && !empty($_POST['suboption']) && !empty($_POST['fab_for']) && !empty($_POST['fabid'])){
+			$fabid 		= $_POST['fabid'];
+			$fab_for 	= $_POST['fab_for'];
+			$option 	= $_POST['option'];
+			$suboption 	= $_POST['suboption'];
+			if(isset($_FILES["myfile"])){
+				$name 			= $_FILES["myfile"]["name"];
+				$tmp_name 		= $_FILES["myfile"]["tmp_name"];				
+				$ret['file'] 	= $this->imageuploadandstatus($fabid,$fab_for,$option,$suboption,$name,$tmp_name,true);
+				$ret['error'] 	= 0;
+				$ret['msg'] 	= '';				
 			}
 		}
-		$this->render('uploadcustomizeimages',array('model' => $model));
+		echo json_encode($ret);exit;
+	}
+
+	public function actionImageexist(){
+		$this->layout = false;
+		$ret['file'] = '';
+		if(!empty($_GET['option']) && !empty($_GET['suboption']) && !empty($_GET['fab_for']) && !empty($_GET['fabid'])){
+			$fabid 			= $_GET['fabid'];
+			$fab_for 		= $_GET['fab_for'];
+			$option 		= $_GET['option'];
+			$suboption 		= $_GET['suboption'];
+			$dir_name 		= Yii::getPathOfAlias('webroot').'/storage/';
+			$filename		= $this->imageuploadandstatus($fabid,$fab_for,$option,$suboption);
+			if(file_exists($dir_name.$filename)){
+				$ret['file'] = $filename;				
+			}			
+		}
+		echo json_encode($ret);exit;	
+	}
+
+	private function imageuploadandstatus($fabid,$fab_for,$option,$suboption,$name = NULL,$tmp_name = NULL,$is_upload = false){
+		$dir_name 			= 'fabrics/'.$fabid;
+		$fabFolderBack 		= $dir_name."/back/";
+		$fabFolderCollor 	= $dir_name."/collar/";
+		$fabFolderCuff 		= $dir_name."/cuff/";
+		//$fabFolderFront 	= $dir_name."/front/";
+		$fabFolderPlacket 	= $dir_name."/placket/";
+		$fabFolderPocket 	= $dir_name."/pocket/";
+		//$fabFolderRear 		= $dir_name."/rear/";
+		$fabFolderSleeve 	= $dir_name."/sleeve/";
+		//$fabFolderYoke 		= $dir_name."/yoke/";
+
+		if($fab_for==1){ //Shirt
+			switch ($option) {
+				case 1: //Sleeve
+					$dname = $fabFolderSleeve;
+					if($suboption==1){ //Short
+						$image_name = 'sleeves_short.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderSleeve,$image_name);
+					}else if($suboption==2){ //Long
+						$image_name = 'sleeves_full.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderSleeve,$image_name);
+					}else if($suboption==3){ //Rolled Up
+						$image_name = 'sleeves_rolled_up.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderSleeve,$image_name);
+					}
+					break;
+				case 2: //Collar
+					$dname = $fabFolderCollor;
+					if($suboption==1){ //Bottom Down
+						$image_name = 'collar_button_down.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderCollor,$image_name);
+					}else if($suboption==2){ //Classic
+						$image_name = 'collar_classic.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderCollor,$image_name);
+					}else if($suboption==3){ //Short Spread
+						$image_name = 'collar_short_spread.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderCollor,$image_name);
+					}else if($suboption==4){ //Spread 
+						$image_name = 'collar_spread.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderCollor,$image_name);
+					}else if($suboption==5){ //Tall Spread
+						$image_name = 'collar_tall_spread.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderCollor,$image_name);
+					}else if($suboption==6){ //Chinese
+						$image_name = 'collar_chinese.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderCollor,$image_name);
+					}
+					break;
+				case 3: //Cuff
+					$dname = $fabFolderCuff;
+					if($suboption==1){ //Left Single Button
+						$image_name = 'cuff_left_single_button.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderCuff,$image_name);
+					}else if($suboption==2){ //Right Single Button
+						$image_name = 'cuff_right_single_button.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderCuff,$image_name);
+					}else if($suboption==3){ //Left Double Button
+						$image_name = 'cuff_left_double_button.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderCuff,$image_name);
+					}else if($suboption==4){ //Right Double Button
+						$image_name = 'cuff_right_double_button.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderCuff,$image_name);
+					}else if($suboption==5){ //Left French Cuff
+						$image_name = 'cuff_left_french.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderCuff,$image_name);
+					}else if($suboption==6){ //Right French Cuff
+						$image_name = 'cuff_right_french.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderCuff,$image_name);
+					}
+					break;
+				case 4: //Placket
+					$dname = $fabFolderPlacket;
+					if($suboption==1){ //American
+						$image_name = 'placket_american.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderPlacket,$image_name);
+					}else if($suboption==2){ //French
+						$image_name = 'placket_french.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderPlacket,$image_name);
+					}else if($suboption==3){ //Hidden
+						$image_name = 'placket_hidden.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderPlacket,$image_name);
+					}
+					break;
+				case 5: //Pocket
+					$dname = $fabFolderPocket;
+					if($suboption==1){ //Left Round
+						$image_name = 'pocket_left_round.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderPocket,$image_name);
+					}else if($suboption==2){ //Right Round
+						$image_name = 'pocket_right_round.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderPocket,$image_name);
+					}else if($suboption==3){ //Left Square
+						$image_name = 'pocket_left_square.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderPocket,$image_name);
+					}else if($suboption==4){ //Right Round
+						$image_name = 'pocket_right_square.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderPocket,$image_name);
+					}else if($suboption==5){ //Left Angled
+						$image_name = 'pocket_left_angled.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderPocket,$image_name);
+					}else if($suboption==6){ //Right Angled
+						$image_name = 'pocket_right_angled.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderPocket,$image_name);
+					}else if($suboption==7){ //Left Vshape
+						$image_name = 'pocket_left_vshape.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderPocket,$image_name);
+					}else if($suboption==8){ //Right Vshape
+						$image_name = 'pocket_right_vshape.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderPocket,$image_name);
+					}else if($suboption==9){ //Left Flap
+						$image_name = 'pocket_left_vshape_with_flap.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderPocket,$image_name);
+					}else if($suboption==10){ //Right Flap
+						$image_name = 'pocket_right_vshape_with_flap.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderPocket,$image_name);
+					}
+					break;
+				case 6: //Back Detail
+					$dname = $fabFolderBack;
+					if($suboption==1){ //No Pleats
+						$image_name = 'back_no_pleats.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderBack,$image_name);
+					}else if($suboption==2){ //Box Pleat
+						$image_name = 'back_box_pleats.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderBack,$image_name);
+					}else if($suboption==3){ //Side Pleat
+						$image_name = 'back_side_pleats.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderBack,$image_name);
+					}
+					break;
+				case 7: //Bottom Cut
+					if($suboption==1){ //Round
+						$image_name = '';
+					}else if($suboption==2){ //Straight
+						$image_name = '';
+					}
+					break;
+				/*case 8: //Front
+					if($suboption==1){ //Short
+						$image_name = '';
+					}else if($suboption==2){ //Long
+						$image_name = '';
+					}
+					break;					*/
+			}
+		}else if($fab_for==2){ //Trousre
+
+		}else if($fab_for==3){ //Blazer
+
+		}
+
+		return $dname.$image_name;
 	}
 }

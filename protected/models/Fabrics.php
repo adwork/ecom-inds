@@ -10,6 +10,7 @@
  */
 class Fabrics extends CActiveRecord
 {
+	public $fab_imagecust_option,$fab_imagecust_suboption;
 	/**
 	 * @return string the associated database table name
 	 */

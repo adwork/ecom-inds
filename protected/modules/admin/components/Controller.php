@@ -225,12 +225,12 @@ class Controller extends CController
         return $command->execute($params);
     }
 
-    public function imageUpload($filename,$tmpname,$type){
+    public function imageUpload($filename,$tmpname,$type,$name = NULL){
 		$return = '';
 		if(!empty($filename)){
 			$dir_name 	= Yii::getPathOfAlias('webroot').'/storage/'.$type.'/';
 			$pathinfo 	= pathinfo($filename);
-			$file_name 	= uniqid().".".$pathinfo['extension'];
+			$file_name 	= (!empty($name)) ? $name : uniqid().".".$pathinfo['extension'];
 			$file_path 	= $dir_name.$file_name;
 			if(move_uploaded_file($tmpname, $file_path))
 				$return = $file_name;			
