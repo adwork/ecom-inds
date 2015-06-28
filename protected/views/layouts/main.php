@@ -25,12 +25,12 @@
     $this->beginContent('/layouts/header');
     $this->endContent();                
 ?>
-<div class="container-fluid">
+<div class="container-fluid" style="margin-top:45px;">
   <div class="row-fluid">
       <!-- <div class="span3" id="sidebar">
           <?php  
-              $this->beginContent('/layouts/left_menu');
-              $this->endContent();                
+              //$this->beginContent('/layouts/left_menu');
+              //$this->endContent();                
           ?>
       </div> -->
       <div class="span12" id="content">

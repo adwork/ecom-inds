@@ -24,6 +24,7 @@ class FabricsController extends Controller
 			$image_name = $this->imageUpload($_FILES['Fabrics']['name']['fab_image'],$_FILES['Fabrics']['tmp_name']['fab_image'],'fabrics');
 			if(!empty($image_name))
 				$model->fab_image = $image_name;
+			
 			if($model->save()){
 				$dir_name 			= Yii::getPathOfAlias('webroot').'/storage/fabrics/';
 				$fabFolder 			= $dir_name.$model->fab_id;
