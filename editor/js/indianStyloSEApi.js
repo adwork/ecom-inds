@@ -104,11 +104,12 @@ e){fabric.loadSVGFromString(e.toString(),t,n)}):request(e,"",function(e){fabric.
 
             // SOME DEPENDENT SETTINGS 
             var randnum = Math.random();
-            vE.settings.server_path = 'http://localhost/ecom/editor/';
+            vE.settings.server_path = 'http://localhost/ecom/';
+            // vE.settings.server_path = 'http://localhost/ecom/editor/';
             // vE.settings.server_path = 'http://adevloper.com/indianstyle/editor/';
             vE.settings.canvas_div = 'indssec_front_'+randnum;
             vE.settings.back_canvas_div = 'indssec_rear_'+randnum;
-            vE.settings.productImagesPath = vE.settings.server_path+'storage/products/';
+            vE.settings.productImagesPath = vE.settings.server_path+'storage/fabrics/';
             vE.settings.buttonsImagesPath = vE.settings.server_path+'storage/buttons/';
             vE.settings.loadingImg = vE.settings.server_path+'images/se_main_loading.gif';
 
@@ -241,7 +242,7 @@ e){fabric.loadSVGFromString(e.toString(),t,n)}):request(e,"",function(e){fabric.
 	    var loadFabric = function(){
 	    	// var objectArr = {'back_yock_center_front':'','back_yock_center_rear':'','back_yock_side_front':'','front_shirt':'','sleeves':'','placket':'','collar':'','pocket_left':'','pocket_right':'','cuff_left_sleeve':'','cuff_right_sleeve':'','placket_buttons':''};
 	    	
-	    	// vE.settings.productImagesPath = vE.settings.server_path+'storage/products/';
+	    	// vE.settings.productImagesPath = vE.settings.server_path+'storage/fabrics/';
             // vE.settings.fabricId = 0;
             if(!(vE.settings.fabricId>0)){
             	alert(allMessages['er-fabric-not-found']);
@@ -1162,7 +1163,10 @@ e){fabric.loadSVGFromString(e.toString(),t,n)}):request(e,"",function(e){fabric.
          * = PUBLIC FUNCTIONS
          * ===================================================================================
          */
-
+        el.refreshFabricImages = function(){
+        	$(this).childNodes().remove();
+        	this.each(function(){$(this).indianStyloSE(options)});
+        }
         el.updateFabric = function(newFabricId){
         	if(newFabricId>0){
         		vE.settings.fabricId = newFabricId;

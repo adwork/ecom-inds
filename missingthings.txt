@@ -10,3 +10,5 @@ Missing things in fabric:
 
 	3. Under the button add/edit we need change the button name like "buttton_2" prifix need to be "button_" and then add the id of that button.
 	4. Need to add the button section in front end where we are showing the fabric and editor div so also fetch the buttons as well as the fabric if possible then please add the tabs first for fabric and second for style (I will add the content in this tab) and third tab for buttons and fetch all the applicable buttons for this fabric. 
+
+

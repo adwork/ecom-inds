@@ -1,7 +1,13 @@
 <?php
 $cs = Yii::app()->clientScript;		
 $cs->registerCssFile(Yii::app()->request->baseUrl.'/css/upload.min.css');      
+$cs->registerCssFile(Yii::app()->request->baseUrl.'/css/stylo_se_min.css');
+
 $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/upload.min.js');
+$cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/lang/en.js');
+// $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/indianStyloSEApi.js');
+$cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/StyloSEMin.js');
+$cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.form.js');
 ?>
 <div class="row">
 	<div class="col-lg-12">
@@ -10,63 +16,74 @@ $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/upload.min.js');
                 Upload Customized Images
             </div>
             <div class="panel-body">
-            <div class="col-lg-6">
-	            <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-					'id'=>'fabrics-form',
-					'enableAjaxValidation'=>false,		
-					'htmlOptions' => array('enctype' => 'multipart/form-data'),	
-				)); ?>
-				<?php
-				if(!empty($model->fab_for)){
-					if($model->fab_for==1){
-						//Shirt
-						$fabImageCustOptions = array(
-							1=>'Sleeve',2=>'Collar',3=>'Cuff',4=>'Placket',5=>'Pocket',6=>'Back Detail',7=>'Bottom Cut'//,8=>'Front'
-						);
+	            <div class="col-lg-6">
+		            <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+						'id'=>'fabrics-form',
+						'enableAjaxValidation'=>false,		
+						'htmlOptions' => array('enctype' => 'multipart/form-data'),	
+					)); ?>
+					<?php
+					if(!empty($model->fab_for)){
+						if($model->fab_for==1){
+							//Shirt
+							$fabImageCustOptions = array(
+								1=>'Sleeve',2=>'Collar',3=>'Cuff',4=>'Placket',5=>'Pocket',6=>'Back Detail',7=>'Bottom Cut',8=>'Front Yoke'
+							);
+							?>
+							<label>Customize Options</label>
+							<?php echo $form->dropdownListRow($model,'fab_imagecust_option',$fabImageCustOptions,array('empty' => 'Select Option','label' => false,'class' => 'form-control')); ?>
+							<div>&nbsp;</div>
+							<label>Customize Sub-Options</label>
+							<?php echo $form->dropdownListRow($model,'fab_imagecust_suboption',array(),array('label' => false,'class' => 'form-control')); ?>
+							<div>&nbsp;</div>
+							<label>Image</label>
+							<?php //echo $form->fileFieldRow($model,'fab_image',array('label' => false, 'class' => 'form-control')); ?>
+							<div id="fileuploader" style="width:100%;">Upload</div>
+							<div>&nbsp;</div>
+							<?php
+						}else if($model->fab_for==2){
+							//Trouser
+						}else if($model->fab_for==2){
+							//Blazer	
+						}
 						?>
-						<label>Customize Options</label>
-						<?php echo $form->dropdownListRow($model,'fab_imagecust_option',$fabImageCustOptions,array('empty' => 'Select Option','label' => false,'class' => 'form-control')); ?>
+						<div id="uploadedImage"></div>
 						<div>&nbsp;</div>
-						<label>Customize Sub-Options</label>
-						<?php echo $form->dropdownListRow($model,'fab_imagecust_suboption',array(),array('label' => false,'class' => 'form-control')); ?>
-						<div>&nbsp;</div>
-						<label>Image</label>
-						<?php //echo $form->fileFieldRow($model,'fab_image',array('label' => false, 'class' => 'form-control')); ?>
-						<div id="fileuploader">Upload</div>
-						<div>&nbsp;</div>
+						<div class="form-actions">
+							<?php
+	                        $this->widget('bootstrap.widgets.TbButton', array(
+	                              'buttonType'=>'button',
+	                              'type'=>'primary',
+	                              'label'=>'Cancel',
+	                              'htmlOptions' => array('id' => 'cancelBtn')
+	                        )); 
+	                        ?>
+						</div>
 						<?php
-					}else if($model->fab_for==2){
-						//Trouser
-					}else if($model->fab_for==2){
-						//Blazer	
+					}else{
+						?>
+						This Fabric not for upload customized images.
+						<?php
 					}
 					?>
-					<div id="uploadedImage"></div>
-					<div>&nbsp;</div>
-					<div class="form-actions">
-						<?php
-                        $this->widget('bootstrap.widgets.TbButton', array(
-                              'buttonType'=>'button',
-                              'type'=>'primary',
-                              'label'=>'Cancel',
-                              'htmlOptions' => array('id' => 'cancelBtn')
-                        )); 
-                        ?>
-					</div>
-					<?php
-				}else{
-					?>
-					This Fabric not for upload customized images.
-					<?php
-				}
-				?>
-				<?php $this->endWidget(); ?>
+					<?php $this->endWidget(); ?>
+				</div>
+				<div class="col-lg-6">
+					// editor window
+					<div class="box3 f_left clearfix">
+			            <div class="prc"><button onclick="refreshImages();">Refresh</button></div>
+			            <div class="main_inr_box_new">
+			                <div id="shirt_editor" class="editmyshirt" style="border:1px solid #ccc;"></div>
+			            </div>            
+			        </div>
+
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 <script type="text/javascript">
+	var indianStyloSEJson = {fabricId:<?php echo $fabricId;?>,buttonId:1};
 	$(document).ready(function(){
 		var fab_for = '<?php echo $model->fab_for; ?>';
 		var fabid = '<?php echo $model->fab_id; ?>';
@@ -103,10 +120,12 @@ $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/upload.min.js');
 			},
 			onSuccess:function(files,data,xhr){
 				if(data){
-					if(data.error==1)
+					if(data.error==1){
 						alert(data.msg);
-					else
+					}else{
 						$("#uploadedImage").html('<img src="<?php echo Yii::app()->baseUrl; ?>/storage/'+data.file+'" width="150">');				
+						refreshImages();
+					}	
 				}
 			},
 			onError: function(files,status,errMsg){
@@ -160,15 +179,16 @@ $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/upload.min.js');
 					html += '<option value="1">No Pleats</option>';
 					html += '<option value="2">Box Pleat</option>';
 					html += '<option value="3">Side Pleat</option>';
+					html += '<option value="4">Back Yoke</option>';
 					break;
 				case '7':
 					html += '<option value="1">Round</option>';
 					html += '<option value="2">Straight</option>';
 					break;
-				/*case '8':
-					html += '<option value="1">Short</option>';
-					html += '<option value="2">Long</option>';					
-					break;*/
+				case '8':
+					html += '<option value="1">Center Front</option>';
+					html += '<option value="2">Side Front</option>';					
+					break;
 			}
 
 			$('#Fabrics_fab_imagecust_suboption').html(html);
@@ -194,5 +214,50 @@ $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/upload.min.js');
 		$('#cancelBtn').click(function(){
               window.location = '<?php echo Yii::app()->baseUrl; ?>/admin/fabrics';
         });
+
+        // INITIALIZE THE EDITOR
+        // var indianStyloSEJson = {fabricId:<?php echo $fabricId;?>,buttonId:1};
+        indianStyloSEObj = $("#shirt_editor").indianStyloSE(indianStyloSEJson);
+        // $("#tabs").tabs({
+                        // activate: function(event,ui){ console.log(ui.newTab.index()); if(ui.newTab.index()==6){ indianStyloSEObj.showRear(); }else{ indianStyloSEObj.showFront(); } }
+                    // });
 	});
+
+	function updateElements(elem,newobj){
+      switch(elem){
+        case 1:
+          indianStyloSEObj.updateFabric(newobj);
+        break;
+        case 2:
+          indianStyloSEObj.updateSleeves(newobj);
+        break;
+        case 3:
+          indianStyloSEObj.updateCollar(newobj);
+        break;
+        case 4:
+          indianStyloSEObj.updateFrontShirt(newobj);
+        break;
+        case 5:
+          indianStyloSEObj.updatePocket(newobj);
+        break;
+        case 6:
+          indianStyloSEObj.updatePocketVisibility(newobj);
+        break;
+        case 7:
+          indianStyloSEObj.updateCuff(newobj);
+        break;
+        case 8:
+          indianStyloSEObj.updateBackPleats(newobj);
+        break;
+        case 10:
+          indianStyloSEObj.updatePlacket(newobj);
+        break;
+        case 11:
+          indianStyloSEObj.updateButton(newobj);
+        break;
+      }
+    }
+    function refreshImages(){
+    	indianStyloSEObj.refreshFabricImages();
+    }
 </script>

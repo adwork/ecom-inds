@@ -34,7 +34,6 @@ class FabricsController extends Controller
 				$fabFolderFront 	= $dir_name.$model->fab_id."/front";
 				$fabFolderPlacket 	= $dir_name.$model->fab_id."/placket";
 				$fabFolderPocket 	= $dir_name.$model->fab_id."/pocket";
-				$fabFolderRear 		= $dir_name.$model->fab_id."/rear";
 				$fabFolderSleeve 	= $dir_name.$model->fab_id."/sleeve";
 				$fabFolderYoke 		= $dir_name.$model->fab_id."/yoke";
 				if(!empty($model->fab_for)){
@@ -46,14 +45,12 @@ class FabricsController extends Controller
 						mkdir($fabFolderFront, 0777);
 						mkdir($fabFolderPlacket, 0777);
 						mkdir($fabFolderPocket, 0777);
-						mkdir($fabFolderRear, 0777);
 						mkdir($fabFolderSleeve, 0777);
 						mkdir($fabFolderYoke, 0777);
 					}else if($model->fab_for==2){
-						//mkdir($fabFolderFront, 0777);
-						//mkdir($fabFolderRear, 0777);					
+						// fro trouser	
 					}else if($model->fab_for==3){
-						//for blazer
+						// for blazer
 					}
 				}
 				$this->redirect(array('index'));
@@ -179,7 +176,7 @@ class FabricsController extends Controller
 
 	public function actionUploadcustomizeimages($id){
 		$model=$this->loadModel($id);
-		$this->render('uploadcustomizeimages',array('model' => $model));
+		$this->render('uploadcustomizeimages',array('model' => $model,'fabricId'=>$id));
 	}
 
 	public function actionUploadimages(){
@@ -225,12 +222,11 @@ class FabricsController extends Controller
 		$fabFolderBack 		= $dir_name."/back/";
 		$fabFolderCollor 	= $dir_name."/collar/";
 		$fabFolderCuff 		= $dir_name."/cuff/";
-		//$fabFolderFront 	= $dir_name."/front/";
+		$fabFolderFront 	= $dir_name."/front/";
 		$fabFolderPlacket 	= $dir_name."/placket/";
 		$fabFolderPocket 	= $dir_name."/pocket/";
-		//$fabFolderRear 		= $dir_name."/rear/";
 		$fabFolderSleeve 	= $dir_name."/sleeve/";
-		//$fabFolderYoke 		= $dir_name."/yoke/";
+		$fabFolderYoke 		= $dir_name."/yoke/";
 
 		if($fab_for==1){ //Shirt
 			switch ($option) {
@@ -380,22 +376,36 @@ class FabricsController extends Controller
 						$image_name = 'back_side_pleats.png';
 						if($is_upload==true)
 							$this->imageUpload($name,$tmp_name,$fabFolderBack,$image_name);
+					}else if($suboption==4){ //Back Yock
+						$image_name = 'back_yoke.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderBack,$image_name);
 					}
 					break;
 				case 7: //Bottom Cut
+					$dname = $fabFolderFront;
 					if($suboption==1){ //Round
-						$image_name = '';
+						$image_name = 'front_shirt_bottom_long.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderFront,$image_name);
 					}else if($suboption==2){ //Straight
-						$image_name = '';
+						$image_name = 'front_shirt_bottom_straight.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderFront,$image_name);
 					}
 					break;
-				/*case 8: //Front
-					if($suboption==1){ //Short
-						$image_name = '';
-					}else if($suboption==2){ //Long
-						$image_name = '';
+				case 8: //Front Yoke
+					$dname = $fabFolderYoke;
+					if($suboption==1){ // Center Front Yoke
+						$image_name = 'back_yock_center_front.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderYoke,$image_name);
+					}else if($suboption==2){ // Side Front Yoke
+						$image_name = 'back_yock_side_front.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderYoke,$image_name);
 					}
-					break;					*/
+					break;					
 			}
 		}else if($fab_for==2){ //Trousre
 

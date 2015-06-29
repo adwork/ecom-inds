@@ -21,6 +21,7 @@ class FabricsController extends Controller
 	}
 
 	public function actionView($id = NULL,$type = NULL){
+		$this->layout = 'editor';
 		$fabricDetail = $this->loadModel($id);
 		$buttons = new Buttons;
 		$model = new Fabrics;
