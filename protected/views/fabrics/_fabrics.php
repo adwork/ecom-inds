@@ -1,5 +1,6 @@
+<?php /*echo Yii::app()->baseUrl; ?>/fabrics/view?id=<?php echo $data->fab_id; ?>&type=<?php echo $data->fab_for;*/ ?>
 <li class="<?php echo ($id==$data->fab_id) ? 'selected' : ''; ?>"> 
-	<a href="<?php echo Yii::app()->baseUrl; ?>/fabrics/view?id=<?php echo $data->fab_id; ?>&type=<?php echo $data->fab_for; ?>">
+	<a href="javascript:void(0);" class="fabricClick" id="<?php echo $data->fab_id; ?>">
 		<div>
 			<img src="<?php echo Yii::app()->baseUrl; ?>/storage/fabrics/<?php echo $data->fab_image; ?>">
 		</div>

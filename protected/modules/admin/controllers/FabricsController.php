@@ -21,9 +21,12 @@ class FabricsController extends Controller
 		if(isset($_POST['Fabrics']))
 		{
 			$model->attributes=$_POST['Fabrics'];
-			$image_name = $this->imageUpload($_FILES['Fabrics']['name']['fab_image'],$_FILES['Fabrics']['tmp_name']['fab_image'],'fabrics');
+			if(!empty($_FILES['Fabrics']['name']['fab_image']))
+				$image_name = $this->imageUpload($_FILES['Fabrics']['name']['fab_image'],$_FILES['Fabrics']['tmp_name']['fab_image'],'fabrics');
 			if(!empty($image_name))
 				$model->fab_image = $image_name;
+			else
+				unset($model->fab_image);
 			
 			if($model->save()){
 				$dir_name 			= Yii::getPathOfAlias('webroot').'/storage/fabrics/';
@@ -77,9 +80,13 @@ class FabricsController extends Controller
 		if(isset($_POST['Fabrics']))
 		{
 			$model->attributes=$_POST['Fabrics'];
-			$image_name = $this->imageUpload($_FILES['Fabrics']['name']['fab_image'],$_FILES['Fabrics']['tmp_name']['fab_image'],'fabrics');
+			if(!empty($_FILES['Fabrics']['name']['fab_image']))
+				$image_name = $this->imageUpload($_FILES['Fabrics']['name']['fab_image'],$_FILES['Fabrics']['tmp_name']['fab_image'],'fabrics');
 			if(!empty($image_name))
 				$model->fab_image = $image_name;
+			else
+				unset($model->fab_image);
+			
 			if($model->save())
 				$this->redirect(array('index'));
 		}

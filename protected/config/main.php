@@ -42,7 +42,15 @@ return array(
 	
 	// application components
 	'components'=>array(
-	
+		'clientScript'=>array(
+		  'packages'=>array(
+		    'jquery'=>array(
+		      'baseUrl'=>'js/',
+		      'js'=>array('jquery-1.11.1.js'),
+		      'coreScriptPosition'=>CClientScript::POS_HEAD
+		    ),		    
+		  ),
+		),
 		'user' => array(              // Webuser for the frontend
 		    'class'             => 'CWebUser',
 		    'loginUrl'          => array('site/login'),
@@ -73,8 +81,8 @@ return array(
 			'connectionString' => 'mysql:host=localhost;dbname=indianstylodb',
 			'emulatePrepare' => true,
 			'username' => 'root',
-			// 'password' => 'qaz#123',
-			'password' => '',
+			'password' => 'qaz#123',
+			//'password' => '',
 			'charset' => 'utf8',
 			'tablePrefix' => 'inds_',			
 			'enableParamLogging' => true,

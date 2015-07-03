@@ -3,6 +3,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
+    <script type="text/javascript">
+      var baseUrl = '<?php echo Yii::app()->baseUrl; ?>/';
+    </script>
     <?php 
   		//THEME ASSETS
       $cs = Yii::app()->clientScript;		
@@ -14,12 +17,11 @@
       ->registerScriptFile(Yii::app()->request->baseUrl.'/vendors/wysiwyg/bootstrap-wysihtml5.js',CClientScript::POS_END)
       ->registerCssFile(Yii::app()->request->baseUrl.'/css/stylo_se_min.css');
       //LOAD JQUERY
-  		//Yii::app()->clientScript->registerCoreScript('jquery');
+  		Yii::app()->clientScript->registerCoreScript('jquery');
       $cs = Yii::app()->clientScript;   
       $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery-ui.js');
       $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/lang/en.js');
       $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/StyloSEMin.js');
-      // $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery-1.11.1.js',CClientScript::POS_HEAD);
       //LOAD BOOTSTRAP
       Yii::app()->bootstrap->register();    
   	?>

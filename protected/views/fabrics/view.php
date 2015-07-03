@@ -1,5 +1,5 @@
 <style type="text/css">
-  .fabrics li{
+  .fabrics li,.buttons li{
     border: 4px solid #eee;
     border-radius: 5px;
     display: inline-block;
@@ -7,8 +7,9 @@
     padding: 5px;
     text-align: center;
     width: 22%;
+    height: 150px;
   }
-  .fabrics li.selected{
+  .fabrics li.selected,.buttons li.selected{
   	background: #CCC;
   }
   .fabricTabs{
@@ -258,7 +259,7 @@
             </div>
 	</div>
 	<div id="buttons" style="display:none;">
-		<ul class="fabrics">
+		<ul class="buttons">
 		  <?php      
 		  $this->widget('zii.widgets.CListView', array(
 		    'id'=>'buttons-grid',
@@ -292,7 +293,21 @@
 			$('#'+rel).show();
 		});
 
-		indianStyloSEObj = $("#shirt_editor").indianStyloSE(indianStyloSEJson);
+    $('.fabricClick').click(function(){
+      $('.fabricClick').parent().removeClass('selected');
+      $(this).parent().addClass('selected');
+      var id = $(this).attr('id');
+      updateElements(1,id);
+    });
+
+    $('.buttonClick').click(function(){
+      $('.buttonClick').parent().removeClass('selected');
+      $(this).parent().addClass('selected');
+      var id = $(this).attr('id');
+      updateElements(11,id);
+    });
+
+    indianStyloSEObj = $("#shirt_editor").indianStyloSE(indianStyloSEJson);
 		$("#tabs").tabs({
                         activate: function(event,ui){ 
                         	// console.	log(ui.newTab.index()); 

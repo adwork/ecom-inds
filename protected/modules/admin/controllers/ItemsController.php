@@ -25,6 +25,8 @@ class ItemsController extends Controller
 				$image_name = $this->imageUpload($_FILES['Items']['name']['itm_photo'],$_FILES['Items']['tmp_name']['itm_photo'],'products');
 			if(!empty($image_name))
 				$model->itm_photo = $image_name;
+			else
+				unset($model->itm_photo);
 			if($model->save())
 				$this->redirect(array('index'));
 		}
@@ -53,6 +55,8 @@ class ItemsController extends Controller
 				$image_name = $this->imageUpload($_FILES['Items']['name']['itm_photo'],$_FILES['Items']['tmp_name']['itm_photo'],'products');
 			if(!empty($image_name))
 				$model->itm_photo = $image_name;
+			else
+				unset($model->itm_photo);
 			if($model->save())
 				$this->redirect(array('index'));
 		}

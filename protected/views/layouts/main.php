@@ -13,9 +13,9 @@
       ->registerScriptFile(Yii::app()->request->baseUrl.'/vendors/wysiwyg/wysihtml5-0.3.0.js',CClientScript::POS_END)
       ->registerScriptFile(Yii::app()->request->baseUrl.'/vendors/wysiwyg/bootstrap-wysihtml5.js',CClientScript::POS_END);
       //LOAD JQUERY
-  		//Yii::app()->clientScript->registerCoreScript('jquery');
-      $cs = Yii::app()->clientScript;   
-      $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery-1.11.1.js',CClientScript::POS_HEAD);
+  		Yii::app()->clientScript->registerCoreScript('jquery');
+      //$cs = Yii::app()->clientScript;   
+      //$cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery-1.11.1.js',CClientScript::POS_HEAD);
       //LOAD BOOTSTRAP
       Yii::app()->bootstrap->register();    
   	?>

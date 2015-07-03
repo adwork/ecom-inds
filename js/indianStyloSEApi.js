@@ -104,7 +104,7 @@ e){fabric.loadSVGFromString(e.toString(),t,n)}):request(e,"",function(e){fabric.
 
             // SOME DEPENDENT SETTINGS 
             var randnum = Math.random();
-            vE.settings.server_path = 'http://localhost/ecom/';
+            vE.settings.server_path = baseUrl; //'http://localhost/ecom/';
             // vE.settings.server_path = 'http://localhost/ecom/editor/';
             // vE.settings.server_path = 'http://adevloper.com/indianstyle/editor/';
             vE.settings.canvas_div = 'indssec_front_'+randnum;
