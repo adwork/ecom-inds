@@ -293,7 +293,8 @@
 			$('#'+rel).show();
 		});
 
-    $('.fabricClick').click(function(){
+    $('.fabricClick').click(function(e){
+      e.preventDefault();
       $('.fabricClick').parent().removeClass('selected');
       $(this).parent().addClass('selected');
       var id = $(this).attr('id');
