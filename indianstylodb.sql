@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.3.11
+-- version 4.0.10deb1
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Jun 29, 2015 at 05:35 AM
--- Server version: 5.6.24
--- PHP Version: 5.5.24
+-- Host: localhost
+-- Generation Time: Jul 09, 2015 at 08:30 AM
+-- Server version: 5.5.41-0ubuntu0.14.04.1
+-- PHP Version: 5.5.9-1ubuntu4.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -30,7 +30,8 @@ CREATE TABLE IF NOT EXISTS `inds_authassignment` (
   `itemname` varchar(64) NOT NULL,
   `userid` varchar(64) NOT NULL,
   `bizrule` text,
-  `data` text
+  `data` text,
+  PRIMARY KEY (`itemname`,`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -55,7 +56,8 @@ CREATE TABLE IF NOT EXISTS `inds_authitem` (
   `type` int(11) NOT NULL COMMENT '1 for action 2 for role',
   `description` text,
   `bizrule` text,
-  `data` text
+  `data` text,
+  PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -142,7 +144,9 @@ INSERT INTO `inds_authitem` (`name`, `type`, `description`, `bizrule`, `data`) V
 
 CREATE TABLE IF NOT EXISTS `inds_authitemchild` (
   `parent` varchar(64) NOT NULL,
-  `child` varchar(64) NOT NULL
+  `child` varchar(64) NOT NULL,
+  PRIMARY KEY (`parent`,`child`),
+  KEY `child` (`child`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -225,11 +229,12 @@ INSERT INTO `inds_authitemchild` (`parent`, `child`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `inds_buttons` (
-  `but_id` int(11) NOT NULL,
+  `but_id` int(11) NOT NULL AUTO_INCREMENT,
   `but_name` varchar(255) NOT NULL,
   `but_image` varchar(255) NOT NULL,
-  `but_price` double NOT NULL DEFAULT '0'
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `but_price` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`but_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `inds_buttons`
@@ -246,13 +251,14 @@ INSERT INTO `inds_buttons` (`but_id`, `but_name`, `but_image`, `but_price`) VALU
 --
 
 CREATE TABLE IF NOT EXISTS `inds_categories` (
-  `cat_id` int(11) NOT NULL,
+  `cat_id` int(11) NOT NULL AUTO_INCREMENT,
   `cat_name` varchar(255) NOT NULL,
   `cat_description` text,
   `cat_meta_title` text,
   `cat_meta_keyword` text,
-  `cat_meta_description` text
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+  `cat_meta_description` text,
+  PRIMARY KEY (`cat_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `inds_categories`
@@ -268,7 +274,7 @@ INSERT INTO `inds_categories` (`cat_id`, `cat_name`, `cat_description`, `cat_met
 --
 
 CREATE TABLE IF NOT EXISTS `inds_cmspage` (
-  `c_id` int(11) NOT NULL,
+  `c_id` int(11) NOT NULL AUTO_INCREMENT,
   `c_pagename` varchar(100) NOT NULL,
   `c_title` varchar(250) NOT NULL,
   `c_subtitle` varchar(250) NOT NULL,
@@ -279,8 +285,9 @@ CREATE TABLE IF NOT EXISTS `inds_cmspage` (
   `c_meta_description` text NOT NULL,
   `c_status` tinyint(3) NOT NULL DEFAULT '1' COMMENT '0=inactive, 1=active',
   `c_created` datetime NOT NULL,
-  `c_modified` datetime NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  `c_modified` datetime NOT NULL,
+  PRIMARY KEY (`c_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `inds_cmspage`
@@ -298,13 +305,14 @@ INSERT INTO `inds_cmspage` (`c_id`, `c_pagename`, `c_title`, `c_subtitle`, `c_co
 --
 
 CREATE TABLE IF NOT EXISTS `inds_email_manager` (
-  `em_id` int(11) NOT NULL,
+  `em_id` int(11) NOT NULL AUTO_INCREMENT,
   `em_title` varchar(100) DEFAULT NULL,
   `em_email_subject` varchar(100) DEFAULT NULL,
   `em_email_template` text,
   `em_created` datetime DEFAULT NULL,
-  `em_modified` datetime DEFAULT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `em_modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`em_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `inds_email_manager`
@@ -321,24 +329,27 @@ INSERT INTO `inds_email_manager` (`em_id`, `em_title`, `em_email_subject`, `em_e
 --
 
 CREATE TABLE IF NOT EXISTS `inds_fabrics` (
-  `fab_id` int(11) NOT NULL,
+  `fab_id` int(11) NOT NULL AUTO_INCREMENT,
   `fab_name` varchar(255) NOT NULL,
   `fab_image` varchar(255) NOT NULL,
   `fab_price` double NOT NULL,
   `fab_color` tinyint(2) NOT NULL COMMENT '1=White,2=Black,3=Blue,4=Pink,5=Red,6=Yellow,7=Brown,8=Purple,9=Grey,10=Beige,11=Green,12=Orange,13=Maroon',
   `fab_pattern` tinyint(2) NOT NULL COMMENT '1=Stripes, 2=Checks, 3=Solid, 4=Prints & Others',
-  `fab_for` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0=None,1=Shirt,2=Trousre,3=Blazer'
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+  `fab_fabric` int(11) NOT NULL COMMENT '1 = ''Cotton'', 2 = ''Linen'', 3 = ''Linen Cotton'', 4 = ''Egyptian_Giza_Cotton'', 5 = "2/120''s Egyptian Giza Cotton", 6 = "2/140''s Egyptian Giza Cotton"',
+  `fab_for` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0=None,1=Shirt,2=Trousre,3=Blazer',
+  PRIMARY KEY (`fab_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `inds_fabrics`
 --
 
-INSERT INTO `inds_fabrics` (`fab_id`, `fab_name`, `fab_image`, `fab_price`, `fab_color`, `fab_pattern`, `fab_for`) VALUES
-(1, 'Fabric for trouser', '', 600, 0, 0, 0),
-(3, 'Megenta Cotton', '5590a9fbf3ad3.png', 300, 1, 2, 1),
-(4, 'Blue Linen', '5590aa2617ce3.png', 1000, 1, 4, 1),
-(5, 'Latest', '5590aa5796793.png', 500, 1, 2, 1);
+INSERT INTO `inds_fabrics` (`fab_id`, `fab_name`, `fab_image`, `fab_price`, `fab_color`, `fab_pattern`, `fab_fabric`, `fab_for`) VALUES
+(1, 'Fabric for trouser', '', 600, 0, 0, 0, 0),
+(3, 'Megenta Cotton', '5590a9fbf3ad3.png', 300, 1, 2, 0, 1),
+(4, 'Blue Linen', '5590aa2617ce3.png', 1000, 1, 4, 0, 1),
+(5, 'Latest', '5590aa5796793.png', 500, 1, 2, 0, 1),
+(6, ' hhh dfdfdfdfdf jjj', '5595e00f7d62c.png', 100, 2, 2, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -347,10 +358,11 @@ INSERT INTO `inds_fabrics` (`fab_id`, `fab_name`, `fab_image`, `fab_price`, `fab
 --
 
 CREATE TABLE IF NOT EXISTS `inds_fabric_buttons` (
-  `fbt_id` int(11) NOT NULL,
+  `fbt_id` int(11) NOT NULL AUTO_INCREMENT,
   `fbt_fabric_id` int(11) NOT NULL,
-  `fbt_button_id` int(11) NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `fbt_button_id` int(11) NOT NULL,
+  PRIMARY KEY (`fbt_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `inds_fabric_buttons`
@@ -367,7 +379,7 @@ INSERT INTO `inds_fabric_buttons` (`fbt_id`, `fbt_fabric_id`, `fbt_button_id`) V
 --
 
 CREATE TABLE IF NOT EXISTS `inds_items` (
-  `itm_id` int(11) NOT NULL,
+  `itm_id` int(11) NOT NULL AUTO_INCREMENT,
   `itm_name` varchar(255) NOT NULL,
   `itm_subcategory_id` int(11) NOT NULL,
   `itm_fabric_id` int(11) DEFAULT '0',
@@ -381,8 +393,9 @@ CREATE TABLE IF NOT EXISTS `inds_items` (
   `itm_meta_description` text NOT NULL,
   `itm_slug` varchar(255) NOT NULL,
   `itm_created` datetime NOT NULL,
-  `itm_modified` datetime NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+  `itm_modified` datetime NOT NULL,
+  PRIMARY KEY (`itm_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `inds_items`
@@ -402,12 +415,13 @@ INSERT INTO `inds_items` (`itm_id`, `itm_name`, `itm_subcategory_id`, `itm_fabri
 --
 
 CREATE TABLE IF NOT EXISTS `inds_seo_pages` (
-  `sep_id` int(11) NOT NULL,
+  `sep_id` int(11) NOT NULL AUTO_INCREMENT,
   `sep_page_name` varchar(255) NOT NULL,
   `sep_page_title` text,
   `sep_page_keyword` text,
-  `sep_page_meta_desc` text
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `sep_page_meta_desc` text,
+  PRIMARY KEY (`sep_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -416,10 +430,11 @@ CREATE TABLE IF NOT EXISTS `inds_seo_pages` (
 --
 
 CREATE TABLE IF NOT EXISTS `inds_site_settings` (
-  `sst_id` int(11) NOT NULL,
+  `sst_id` int(11) NOT NULL AUTO_INCREMENT,
   `sst_name` varchar(255) NOT NULL,
-  `sst_value` varchar(255) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `sst_value` varchar(255) NOT NULL,
+  PRIMARY KEY (`sst_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -428,14 +443,15 @@ CREATE TABLE IF NOT EXISTS `inds_site_settings` (
 --
 
 CREATE TABLE IF NOT EXISTS `inds_subcategories` (
-  `sub_id` int(11) NOT NULL,
+  `sub_id` int(11) NOT NULL AUTO_INCREMENT,
   `sub_cat_id` int(11) NOT NULL,
   `sub_cat_name` varchar(200) NOT NULL,
   `sub_cat_description` text,
   `sub_cat_title` text,
   `sub_cat_keyword` text,
-  `sub_meta_description` text
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+  `sub_meta_description` text,
+  PRIMARY KEY (`sub_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `inds_subcategories`
@@ -454,7 +470,7 @@ INSERT INTO `inds_subcategories` (`sub_id`, `sub_cat_id`, `sub_cat_name`, `sub_c
 --
 
 CREATE TABLE IF NOT EXISTS `inds_user` (
-  `u_id` int(11) NOT NULL,
+  `u_id` int(11) NOT NULL AUTO_INCREMENT,
   `u_first_name` varchar(200) NOT NULL,
   `u_last_name` varchar(200) NOT NULL,
   `u_email` varchar(200) DEFAULT NULL,
@@ -467,8 +483,9 @@ CREATE TABLE IF NOT EXISTS `inds_user` (
   `u_scrkey` varchar(250) DEFAULT NULL COMMENT 'Forgot password link ',
   `u_last_login_date` datetime DEFAULT NULL,
   `u_created` datetime NOT NULL,
-  `u_modified` datetime NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+  `u_modified` datetime NOT NULL,
+  PRIMARY KEY (`u_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `inds_user`
@@ -479,153 +496,6 @@ INSERT INTO `inds_user` (`u_id`, `u_first_name`, `u_last_name`, `u_email`, `u_pa
 (5, 'testuser', 'One', 'testuserone@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2015-06-26 23:42:08', '2015-06-04 02:51:57', '2015-06-26 23:42:08');
 
 --
--- Indexes for dumped tables
---
-
---
--- Indexes for table `inds_authassignment`
---
-ALTER TABLE `inds_authassignment`
-  ADD PRIMARY KEY (`itemname`,`userid`);
-
---
--- Indexes for table `inds_authitem`
---
-ALTER TABLE `inds_authitem`
-  ADD PRIMARY KEY (`name`);
-
---
--- Indexes for table `inds_authitemchild`
---
-ALTER TABLE `inds_authitemchild`
-  ADD PRIMARY KEY (`parent`,`child`), ADD KEY `child` (`child`);
-
---
--- Indexes for table `inds_buttons`
---
-ALTER TABLE `inds_buttons`
-  ADD PRIMARY KEY (`but_id`);
-
---
--- Indexes for table `inds_categories`
---
-ALTER TABLE `inds_categories`
-  ADD PRIMARY KEY (`cat_id`);
-
---
--- Indexes for table `inds_cmspage`
---
-ALTER TABLE `inds_cmspage`
-  ADD PRIMARY KEY (`c_id`);
-
---
--- Indexes for table `inds_email_manager`
---
-ALTER TABLE `inds_email_manager`
-  ADD PRIMARY KEY (`em_id`);
-
---
--- Indexes for table `inds_fabrics`
---
-ALTER TABLE `inds_fabrics`
-  ADD PRIMARY KEY (`fab_id`);
-
---
--- Indexes for table `inds_fabric_buttons`
---
-ALTER TABLE `inds_fabric_buttons`
-  ADD PRIMARY KEY (`fbt_id`);
-
---
--- Indexes for table `inds_items`
---
-ALTER TABLE `inds_items`
-  ADD PRIMARY KEY (`itm_id`);
-
---
--- Indexes for table `inds_seo_pages`
---
-ALTER TABLE `inds_seo_pages`
-  ADD PRIMARY KEY (`sep_id`);
-
---
--- Indexes for table `inds_site_settings`
---
-ALTER TABLE `inds_site_settings`
-  ADD PRIMARY KEY (`sst_id`);
-
---
--- Indexes for table `inds_subcategories`
---
-ALTER TABLE `inds_subcategories`
-  ADD PRIMARY KEY (`sub_id`);
-
---
--- Indexes for table `inds_user`
---
-ALTER TABLE `inds_user`
-  ADD PRIMARY KEY (`u_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `inds_buttons`
---
-ALTER TABLE `inds_buttons`
-  MODIFY `but_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `inds_categories`
---
-ALTER TABLE `inds_categories`
-  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
---
--- AUTO_INCREMENT for table `inds_cmspage`
---
-ALTER TABLE `inds_cmspage`
-  MODIFY `c_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `inds_email_manager`
---
-ALTER TABLE `inds_email_manager`
-  MODIFY `em_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `inds_fabrics`
---
-ALTER TABLE `inds_fabrics`
-  MODIFY `fab_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `inds_fabric_buttons`
---
-ALTER TABLE `inds_fabric_buttons`
-  MODIFY `fbt_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `inds_items`
---
-ALTER TABLE `inds_items`
-  MODIFY `itm_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT for table `inds_seo_pages`
---
-ALTER TABLE `inds_seo_pages`
-  MODIFY `sep_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `inds_site_settings`
---
-ALTER TABLE `inds_site_settings`
-  MODIFY `sst_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `inds_subcategories`
---
-ALTER TABLE `inds_subcategories`
-  MODIFY `sub_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT for table `inds_user`
---
-ALTER TABLE `inds_user`
-  MODIFY `u_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
---
 -- Constraints for dumped tables
 --
 
@@ -633,14 +503,14 @@ ALTER TABLE `inds_user`
 -- Constraints for table `inds_authassignment`
 --
 ALTER TABLE `inds_authassignment`
-ADD CONSTRAINT `inds_authassignment_ibfk_1` FOREIGN KEY (`itemname`) REFERENCES `inds_authitem` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `inds_authassignment_ibfk_1` FOREIGN KEY (`itemname`) REFERENCES `inds_authitem` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `inds_authitemchild`
 --
 ALTER TABLE `inds_authitemchild`
-ADD CONSTRAINT `inds_authitemchild_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `inds_authitem` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `inds_authitemchild_ibfk_2` FOREIGN KEY (`child`) REFERENCES `inds_authitem` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `inds_authitemchild_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `inds_authitem` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `inds_authitemchild_ibfk_2` FOREIGN KEY (`child`) REFERENCES `inds_authitem` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -29,33 +29,84 @@
   .fabricTabs li.selected{
   	background: #CCC !important;
   }
+  .fabricFilters li{
+    display: inline-block;
+  }
+  .fabricFilters li select{
+    width: 150px;
+  }
 </style>
 <div style="width:39%;float:left;border:1px solid #ccc;min-height:500px;border-radius:5px;margin-right:10px;padding:5px;">
 	<div>&nbsp;</div>
 	<div align="center">
-		<ul class="fabricTabs">
-			<li class="selected" rel="fabrics">FABRIC</li>
-			<li rel="style">STYLE</li>
-			<li rel="buttons">BUTTONS</li>
-		</ul>
+		<div>
+      <ul class="fabricTabs">
+  			<li class="selected" rel="fabrics">FABRIC</li>
+  			<li rel="style">STYLE</li>
+  			<li rel="buttons">BUTTONS</li>
+  		</ul>
+    </div>    
 	</div>
 	<div id="fabrics">
-		<ul class="fabrics">
-		  <?php      
-		  $this->widget('zii.widgets.CListView', array(
-		    'id'=>'fabrics-grid',
-		    'dataProvider'=>$model->search(),                       
-		    'template'=>'{items}{pager}',        
-		    'itemView'=>'_fabrics',   
-		    'viewData' => array('id' => $id),		
-		    //'emptyText'=>($model->un_content=='')?'No Notes Found':'No notes found for the keyword "<b>'.$model->un_content.'</b>"',
-		    'summaryText'=>'Showing {start} to {end} of {count} entries',       
-		  ));        
-		  ?>
-		</ul>
+    <div>&nbsp;</div>
+    <div>
+      <ul class="fabricFilters">
+        <li>
+          <select name="fabric_patterns" id="fabric_patterns">
+            <option value="">All Patterns</option>
+            <?php
+            foreach (Yii::app()->params['fabPattern'] as $pKey => $pattern) {
+              ?>
+              <option value="<?php echo $pKey; ?>"><?php echo $pattern; ?></option>
+              <?php
+            }
+            ?>
+          </select>
+        </li>
+        <li>
+          <select name="fabric_all" id="fabric_all">
+            <option value="">All Fabrics</option>
+            <?php
+            foreach (Yii::app()->params['fabrics'] as $fKey => $fabricname) {
+              ?>
+              <option value="<?php echo $fKey; ?>"><?php echo $fabricname; ?></option>
+              <?php
+            }
+            ?>
+          </select>
+        </li>
+        <li>
+          <select name="fabric_colors" id="fabric_colors">
+            <option value="">All Colors</option>
+            <?php
+            foreach (Yii::app()->params['fabColors'] as $fcKey => $fabriccolor) {
+              ?>
+              <option value="<?php echo $fcKey; ?>"><?php echo $fabriccolor; ?></option>
+              <?php
+            }
+            ?>
+          </select>
+        </li>
+      </ul>
+    </div>
+    <div>&nbsp;</div>
+    <div>
+  		<ul class="fabrics">
+  		  <?php      
+  		  $this->widget('zii.widgets.CListView', array(
+  		    'id'=>'fabrics-grid',
+  		    'dataProvider'=>$model->search(),                       
+  		    'template'=>'{items}{pager}',        
+  		    'itemView'=>'_fabrics',   
+  		    'viewData' => array('id' => $id),		
+  		    //'emptyText'=>($model->un_content=='')?'No Notes Found':'No notes found for the keyword "<b>'.$model->un_content.'</b>"',
+  		    'summaryText'=>'Showing {start} to {end} of {count} entries',       
+  		  ));        
+  		  ?>
+  		</ul>
+    </div>
 	</div>
 	<div id="style" style="display:none;">
-		// Style
 		<div id="tabs">
               <ul>
                <!--  <li><a href="#tabs-1">Fabric</a></li> -->
@@ -274,7 +325,6 @@
 	</div>
 </div>
 <div style="width:58%;float:left;border:1px solid #ccc;min-height:500px;border-radius:5px;padding:5px;">
-	// editor
 	<div class="main_inr_box_new">
         <div id="shirt_editor" class="editmyshirt"></div>
     </div>    
@@ -306,6 +356,30 @@
       $(this).parent().addClass('selected');
       var id = $(this).attr('id');
       updateElements(11,id);
+    });
+
+    $('#fabric_patterns').change(function(){
+      var value = $(this).val();
+      $.fn.yiiListView.update(
+          'fabrics-grid',
+          {data: {'pattern' : value}}
+      );
+    });
+
+    $('#fabric_all').change(function(){
+      var value = $(this).val();
+      $.fn.yiiListView.update(
+          'fabrics-grid',
+          {data: {'fabric' : value}}
+      );
+    });
+
+    $('#fabric_colors').change(function(){
+      var value = $(this).val();
+      $.fn.yiiListView.update(
+          'fabrics-grid',
+          {data: {'color' : value}}
+      );
     });
 
     indianStyloSEObj = $("#shirt_editor").indianStyloSE(indianStyloSEJson);

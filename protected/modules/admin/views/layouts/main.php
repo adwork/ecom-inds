@@ -4,6 +4,9 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title><?php echo CHtml::encode($this->pageTitle); ?></title> 
+        <script type="text/javascript">
+          var baseUrl = '<?php echo Yii::app()->baseUrl; ?>/';
+        </script>
         <link href="<?php echo Yii::app()->baseUrl; ?>/css/bootstrap.css" rel="stylesheet" />
         <link href="<?php echo Yii::app()->baseUrl; ?>/css/font-awesome.css" rel="stylesheet" />
         <link href="<?php echo Yii::app()->baseUrl; ?>/css/custom-styles.css" rel="stylesheet" />

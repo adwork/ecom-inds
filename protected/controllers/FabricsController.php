@@ -26,12 +26,25 @@ class FabricsController extends Controller
 		$buttons = new Buttons;
 		$model = new Fabrics;
 		$model->searchCriteria['fab_for'] = $type;
-		$this->render('view',array(
+		
+		if(!empty($_GET['pattern']))
+			$model->searchCriteria['fab_pattern'] 	= $_GET['pattern'];
+		if(!empty($_GET['fabric']))
+			$model->searchCriteria['fab_fabric'] 	= $_GET['fabric'];
+		if(!empty($_GET['color']))
+			$model->searchCriteria['fab_color'] 	= $_GET['color'];
+
+		$params = array(
 			'model' => $model,
 			'fabricDetail' => $fabricDetail,
 			'id' => $id,
 			'buttons' => $buttons
-		));
+		);
+
+		if(!empty($_GET['ajax']))
+			$this->renderPartial('view',$params);
+		else
+			$this->render('view',$params);		
 	}	
 
 	/**

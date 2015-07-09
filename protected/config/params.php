@@ -35,4 +35,13 @@ return array(
 		2 => 'Trousre',
 		3 => 'Blazer'
 	),
+
+	'fabrics' => array(
+		1 => 'Cotton',
+		2 => 'Linen',
+		3 => 'Linen Cotton',
+		4 => 'Egyptian_Giza_Cotton',
+		5 => "2/120's Egyptian Giza Cotton",
+		6 => "2/140's Egyptian Giza Cotton"
+	)
 );

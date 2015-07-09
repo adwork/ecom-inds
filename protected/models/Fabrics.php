@@ -27,7 +27,7 @@ class Fabrics extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fab_name,fab_color', 'required'),
+			array('fab_name,fab_color, fab_fabric', 'required'),
 			array('fab_name, fab_image', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -61,6 +61,7 @@ class Fabrics extends CActiveRecord
 			'fab_color' => 'Fabric Color',
 			'fab_pattern' => 'Fabric Pattern',
 			'fab_for' => 'Fabric for',
+			'fab_fabric' => 'Fabric'
 		);
 	}
 
@@ -84,7 +85,14 @@ class Fabrics extends CActiveRecord
 
 		$criteria->compare('fab_id',$this->fab_id);
 		$criteria->compare('fab_name',$this->fab_name,true);
-		$criteria->compare('fab_for',$this->searchCriteria);
+		if(isset($this->searchCriteria['fab_for']))
+			$criteria->compare('fab_for',$this->searchCriteria['fab_for']);
+		if(isset($this->searchCriteria['fab_color']))
+			$criteria->compare('fab_color',$this->searchCriteria['fab_color']);
+		if(isset($this->searchCriteria['fab_pattern']))
+			$criteria->compare('fab_pattern',$this->searchCriteria['fab_pattern']);
+		if(isset($this->searchCriteria['fab_fabric']))
+			$criteria->compare('fab_fabric',$this->searchCriteria['fab_fabric']);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

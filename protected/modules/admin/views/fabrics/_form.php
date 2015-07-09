@@ -35,6 +35,11 @@
 				?>
 				<div>&nbsp;</div>
 				<div class="fabcolor">
+					<label class="required" for="Fabrics_fab_fabric">Fabric Type <span class="required">*</span></label>
+					<?php echo $form->radiobuttonList($model,'fab_fabric',Yii::app()->params['fabrics']); ?>
+				</div>
+				<div>&nbsp;</div>
+				<div class="fabcolor">
 					<label class="required" for="Fabrics_fab_color">Fabric Color <span class="required">*</span></label>
 					<?php echo $form->radiobuttonList($model,'fab_color',Yii::app()->params['fabColors']); ?>
 				</div>
