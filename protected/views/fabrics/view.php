@@ -35,6 +35,13 @@
   .fabricFilters li select{
     width: 150px;
   }
+  .view_summery_details{
+    display: none;
+  }
+  .view_summery_details li{
+    line-height: 42px;
+    list-style: none;
+  }
 </style>
 <div style="width:39%;float:left;border:1px solid #ccc;min-height:500px;border-radius:5px;margin-right:10px;padding:5px;">
 	<div>&nbsp;</div>
@@ -119,29 +126,23 @@
                 <li><a href="#tabs-8">Bottom Cut</a></li>
                 <!-- <li><a href="#tabs-9">Buttons</a></li> -->
               </ul>
-              <!-- <div id="tabs-1"> 
-                <h3>Fabric</h3> 
-                <label><input type="radio" value="1" name="fabric" onclick="updateElements(1,3);"> Fabric 1</label>
-                <label><input type="radio" value="2" name="fabric" onclick="updateElements(1,1);"> Fabric 2</label>
-              </div> -->
-
               <div id="tabs-2">
                 <ul class="arrange_horizontal">
                   <li>
-                    <label onclick="updateElements(2,'sleeves_short')">
-                      <div><input type="radio" value="1" name="sleeve" > Short</div> 
+                    <label onclick="updateElements(2,'sleeves_short',this)">
+                      <div><input type="radio" value="1" name="sleeve" rel="Short"> Short</div> 
                       <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/s_customizations/sleeve/sleeves-half-sleeves_vector.jpg" alt=""></div>
                     </label>
                   </li>
                   <li>
-                    <label onclick="updateElements(2,'sleeves_full')">
-                      <div><input type="radio" value="2" name="sleeve" > Long </div>
+                    <label onclick="updateElements(2,'sleeves_full',this)">
+                      <div><input type="radio" value="2" name="sleeve" rel="Long"> Long </div>
                       <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/s_customizations/sleeve/sleeves-full-sleeves_vector.jpg" alt=""></div>
                     </label>    
                   </li>
                   <li>
-                    <label onclick="updateElements(2,'sleeves_rolled_up')">
-                      <div><input type="radio" value="2" name="sleeve" > Rolled Up </div>
+                    <label onclick="updateElements(2,'sleeves_rolled_up',this)">
+                      <div><input type="radio" value="2" name="sleeve" rel="Rolled Up"> Rolled Up </div>
                       <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/s_customizations/sleeve/sleeves-rolledup-sleeves_vector.jpg" alt=""></div>
                     </label>
                   </li>
@@ -151,38 +152,38 @@
               <div id="tabs-3">  
                 <ul class="arrange_horizontal">
                   <li>
-                    <label onclick="updateElements(3,'collar_button_down')">
-                      <div><input type="radio" value="1" name="collar" > Bottom Down</div> 
+                    <label onclick="updateElements(3,'collar_button_down',this)">
+                      <div><input type="radio" value="1" name="collar" rel="Bottom Down"> Bottom Down</div> 
                       <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/s_customizations/collar/collar-button-down_vector.jpg" alt=""></div>
                     </label>
                   </li>
                   <li>
-                    <label onclick="updateElements(3,'collar_classic')">
-                      <div><input type="radio" value="1" name="collar" > Classic</div> 
+                    <label onclick="updateElements(3,'collar_classic',this)">
+                      <div><input type="radio" value="1" name="collar" rel="Classic"> Classic</div> 
                       <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/s_customizations/collar/collar-classic_vector.jpg" alt=""></div>
                     </label>
                   </li>
                   <li>
-                    <label onclick="updateElements(3,'collar_short_spread')">
-                      <div><input type="radio" value="1" name="collar" > Short Spread</div> 
+                    <label onclick="updateElements(3,'collar_short_spread',this)">
+                      <div><input type="radio" value="1" name="collar" rel="Short Spread"> Short Spread</div> 
                       <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/s_customizations/collar/collar-small-spread_vector.jpg" alt=""></div>
                     </label>
                   </li>
                   <li>
-                    <label onclick="updateElements(3,'collar_spread')">
-                      <div><input type="radio" value="1" name="collar" > Spread</div> 
+                    <label onclick="updateElements(3,'collar_spread',this)">
+                      <div><input type="radio" value="1" name="collar" rel="Spread"> Spread</div> 
                       <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/s_customizations/collar/collar-spread_vector.jpg" alt=""></div>
                     </label>
                   </li>
                   <li>
-                    <label onclick="updateElements(3,'collar_tall_spread')">
-                      <div><input type="radio" value="1" name="collar" > Tall Spread</div> 
+                    <label onclick="updateElements(3,'collar_tall_spread',this)">
+                      <div><input type="radio" value="1" name="collar" rel="Tall Spread"> Tall Spread</div> 
                       <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/s_customizations/collar/collar-tall-spread_vector.jpg" alt=""></div>
                     </label>
                   </li>
                   <li>
-                    <label onclick="updateElements(3,'collar_chinese')">
-                      <div><input type="radio" value="1" name="collar" > Chinese</div> 
+                    <label onclick="updateElements(3,'collar_chinese',this)">
+                      <div><input type="radio" value="1" name="collar" rel="Chinese"> Chinese</div> 
                       <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/s_customizations/collar/collar-chinese_vector.jpg" alt=""></div>
                     </label>
                   </li>
@@ -192,20 +193,20 @@
               <div id="tabs-4"> 
                 <ul class="arrange_horizontal">
                   <li>
-                    <label onclick="updateElements(7,'single_button')">
-                      <div><input type="radio" value="1" name="cuff" > Single Button</div> 
+                    <label onclick="updateElements(7,'single_button',this)">
+                      <div><input type="radio" value="1" name="cuff" rel="Single Button"> Single Button</div> 
                       <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/s_customizations/cuff/cuffs-single-button_vector.jpg" alt=""></div>
                     </label>
                   </li>
                   <li>
-                    <label onclick="updateElements(7,'double_button')">
-                      <div><input type="radio" value="1" name="cuff" > Double Button</div> 
+                    <label onclick="updateElements(7,'double_button',this)">
+                      <div><input type="radio" value="1" name="cuff" rel="Double Button"> Double Button</div> 
                       <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/s_customizations/cuff/cuffs-single-button_vector.jpg" alt=""></div>
                     </label>
                   </li>
                   <li>
-                    <label onclick="updateElements(7,'french')">
-                      <div><input type="radio" value="1" name="cuff" > French cuff</div> 
+                    <label onclick="updateElements(7,'french',this)">
+                      <div><input type="radio" value="1" name="cuff" rel="French cuff"> French cuff</div> 
                       <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/s_customizations/cuff/cuffs-single-button_vector.jpg" alt=""></div>
                     </label>
                   </li>
@@ -214,52 +215,45 @@
 
               <div id="tabs-5">  
                 <h3>Placket</h3> 
-                <label onclick="updateElements(10,'american')"><input type="radio" value="American" name="placket"> American</label>
-                <label onclick="updateElements(10,'french')"><input type="radio" value="French" name="placket"> French</label>
-                <label onclick="updateElements(10,'hidden')"><input type="radio" value="Hidden" name="placket"> Hidden</label>
+                <label onclick="updateElements(10,'american',this)"><input type="radio" value="American" name="placket" rel="American"> American</label>
+                <label onclick="updateElements(10,'french',this)"><input type="radio" value="French" name="placket" rel="French"> French</label>
+                <label onclick="updateElements(10,'hidden',this)"><input type="radio" value="Hidden" name="placket" rel="Hidden"> Hidden</label>
               </div>
 
               <div id="tabs-6"> 
                 <ul class="arrange_horizontal">
                   <li style="width:100%;">
                     <label>
-                      <select name="pocket_type" onchange="updateElements(6,this.value)"><option value="0">None</option><option value="1" selected="selected">One</option><option value="2">Two</option></select>
+                      <select name="pocket_type" onchange="updateElements(6,this.value,this)"><option value="0">None</option><option value="1" selected="selected">One</option><option value="2">Two</option></select>
                     </label>
                   </li>
-
-                  <!-- <li>
-                    <label onclick="updateElements(5,'round')">
-                      <div><input type="radio" value="1" name="pocket" > Round</div> 
-                      <div><img src="storage/s_customizations/pocket/pocket-round-pocket_vector.jpg" alt=""></div>
-                    </label>
-                  </li> -->
                   <li>
-                    <label onclick="updateElements(5,'round')">
-                      <div><input type="radio" value="1" name="pocket" > Round</div> 
+                    <label onclick="updateElements(5,'round',this)">
+                      <div><input type="radio" value="1" name="pocket" rel="Round"> Round</div> 
                       <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/s_customizations/pocket/pocket-round-pocket_vector.jpg" alt=""></div>
                     </label>
                   </li>
                   <li>
-                    <label onclick="updateElements(5,'square')">
-                      <div><input type="radio" value="1" name="pocket" > Square</div> 
+                    <label onclick="updateElements(5,'square',this)">
+                      <div><input type="radio" value="1" name="pocket" rel="Square"> Square</div> 
                       <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/s_customizations/pocket/pocket-square-pocket_vector.jpg" alt=""></div>
                     </label>
                   </li>
                   <li>
-                    <label onclick="updateElements(5,'angled')">
-                      <div><input type="radio" value="1" name="pocket" > Angled</div> 
+                    <label onclick="updateElements(5,'angled',this)">
+                      <div><input type="radio" value="1" name="pocket" rel="Angled"> Angled</div> 
                       <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/s_customizations/pocket/pocket-angled-pocket_vector.jpg" alt=""></div>
                     </label>
                   </li>
                   <li>
-                    <label onclick="updateElements(5,'vshape')">
-                      <div><input type="radio" value="1" name="pocket" > Vshape</div> 
+                    <label onclick="updateElements(5,'vshape',this)">
+                      <div><input type="radio" value="1" name="pocket" rel="Vshape"> Vshape</div> 
                       <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/s_customizations/pocket/pocket-vshaped-pocket_vector.jpg" alt=""></div>
                     </label>
                   </li>
                   <li>
-                    <label onclick="updateElements(5,'vshape_with_flap')">
-                      <div><input type="radio" value="1" name="pocket" > Flap</div> 
+                    <label onclick="updateElements(5,'vshape_with_flap',this)">
+                      <div><input type="radio" value="1" name="pocket" rel="Flap"> Flap</div> 
                       <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/s_customizations/pocket/pocket-flap-pocket_vector.jpg" alt=""></div>
                     </label>
                   </li>
@@ -268,45 +262,27 @@
 
               <div id="tabs-7"> 
                 <h3>Back Detail</h3> 
-                <li onclick="updateElements(8,'no_pleats')"><label><input type="radio" value="1" name="collar"> No Pleats</label></li>
-                <li onclick="updateElements(8,'box_pleats')"><label><input type="radio" value="2" name="collar"> Box Pleat</label></li>
-                <li onclick="updateElements(8,'side_pleats')"><label><input type="radio" value="2" name="collar"> Side Pleat</label></li>
+                <li onclick="updateElements(8,'no_pleats',this)"><label><input type="radio" value="1" name="back_shirt" rel="No Pleats"> No Pleats</label></li>
+                <li onclick="updateElements(8,'box_pleats',this)"><label><input type="radio" value="2" name="back_shirt" rel="Box Pleat"> Box Pleat</label></li>
+                <li onclick="updateElements(8,'side_pleats',this)"><label><input type="radio" value="2" name="back_shirt" rel="Side Pleat"> Side Pleat</label></li>
               </div>
 
               <div id="tabs-8"> 
                 <ul class="arrange_horizontal">
                   <li>
-                    <label onclick="updateElements(4,'front_shirt_bottom_long')">
-                      <div><input type="radio" value="1" name="front_shirt" > Round</div> 
+                    <label onclick="updateElements(4,'front_shirt_bottom_long',this)">
+                      <div><input type="radio" value="1" name="front_shirt" rel="Round"> Round</div> 
                       <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/s_customizations/front/bottomcut-round_vector.jpg" alt=""></div>
                     </label>
                   </li>
                   <li>
-                    <label onclick="updateElements(4,'front_shirt_bottom_straight')">
-                      <div><input type="radio" value="1" name="front_shirt" > Straight</div> 
+                    <label onclick="updateElements(4,'front_shirt_bottom_straight',this)">
+                      <div><input type="radio" value="1" name="front_shirt" rel="Straight"> Straight</div> 
                       <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/s_customizations/front/bottomcut-straight_vector.jpg" alt=""></div>
                     </label>
                   </li>
                 </ul>
               </div>
-
-              <!-- <div id="tabs-9"> 
-                <ul class="arrange_horizontal">
-                  <li>
-                    <label onclick="updateElements(11,1)">
-                      <div><input type="radio" value="1" name="button" > White</div> 
-                      <div><img src="storage/buttons/button_1.png" alt=""></div>
-                    </label>
-                  </li>
-                  <li>
-                    <label onclick="updateElements(11,2)">
-                      <div><input type="radio" value="1" name="button" > Maroon</div> 
-                      <div><img src="storage/buttons/button_2.png" alt=""></div>
-                    </label>
-                  </li>
-                </ul>
-              </div> -->
-
             </div>
 	</div>
 	<div id="buttons" style="display:none;">
@@ -317,7 +293,6 @@
 		    'dataProvider'=>$buttons->search(),                       
 		    'template'=>'{items}{pager}',        
 		    'itemView'=>'_buttons',   
-		    //'emptyText'=>($model->un_content=='')?'No Notes Found':'No notes found for the keyword "<b>'.$model->un_content.'</b>"',
 		    'summaryText'=>'Showing {start} to {end} of {count} entries',       
 		  ));        
 		  ?>
@@ -326,8 +301,73 @@
 </div>
 <div style="width:58%;float:left;border:1px solid #ccc;min-height:500px;border-radius:5px;padding:5px;">
 	<div class="main_inr_box_new">
-        <div id="shirt_editor" class="editmyshirt"></div>
-    </div>    
+    <div id="shirt_editor" class="editmyshirt"></div>
+  </div>    
+  <div class="view_summery_details">
+    <h1>Summary</h1>
+    <form name="addtocart" id="addtocart" method="post" action="">
+      <input type="hidden" name="YII_CSRF_TOKEN" value="<?php echo Yii::app()->request->csrfToken; ?>">
+      <div>
+        <ul>
+          <li>
+            <span><b>Fabric:</b></span>
+            <span id="fabric"></span>
+            <input type="hidden" name="txt_fabric" id="txt_fabric">
+          </li>
+          <li>
+            <span><b>Sleeve:</b></span>
+            <span id="sleeve"></span>
+            <input type="hidden" name="txt_sleeve" id="txt_sleeve">
+          </li>
+          <li>
+            <span><b>Collar:</b></span>
+            <span id="collar"></span>
+            <input type="hidden" name="txt_collor" id="txt_collar">
+          </li>
+          <li>
+            <span><b>Cuff:</b></span>
+            <span id="cuff"></span>
+            <input type="hidden" name="txt_cuff" id="txt_cuff">
+          </li>
+          <li>
+            <span><b>Placket:</b></span>
+            <span id="placket"></span>
+            <input type="hidden" name="txt_placket" id="txt_placket">
+          </li>
+          <li>
+            <span><b>Pocket:</b></span>
+            <span id="pocket"></span>
+            <input type="hidden" name="txt_pocket" id="txt_pocket">
+          </li>
+          <li>
+            <span><b>Back:</b></span>
+            <span id="back_shirt"></span>
+            <input type="hidden" name="txt_back_shirt" id="txt_back_shirt">
+          </li>
+          <li>
+            <span><b>Bottom Cut:</b></span>
+            <span id="front_shirt"></span>
+            <input type="hidden" name="txt_front_shirt" id="txt_front_shirt">
+          </li>
+          <li>
+            <span><b>Button:</b></span>
+            <span id="button"></span>
+            <input type="hidden" name="txt_button" id="txt_button">
+          </li>
+          <li>
+            <span><b>Monogram:</b></span>
+            <span id="monogram"></span>
+            <input type="hidden" name="txt_monogram" id="txt_monogram">
+          </li>
+        </ul>
+      </div>
+    </form>
+  </div>
+</div>
+<div>&nbsp;</div>
+<div align="right">
+  <input type="button" name="view_summery" id="view_summery" value="View Summary" class="btn btn-primary">
+  <input type="button" name="add_to_cart" id="add_to_cart" value="Add to Cart" class="btn btn-primary">
 </div>
 <script type="text/javascript">
 	var indianStyloSEJson = {fabricId:<?php echo $id;?>,buttonId:1};
@@ -348,14 +388,14 @@
       $('.fabricClick').parent().removeClass('selected');
       $(this).parent().addClass('selected');
       var id = $(this).attr('id');
-      updateElements(1,id);
+      updateElements(1,id,this);
     });
 
     $('.buttonClick').click(function(){
       $('.buttonClick').parent().removeClass('selected');
       $(this).parent().addClass('selected');
       var id = $(this).attr('id');
-      updateElements(11,id);
+      updateElements(11,id,this);
     });
 
     $('#fabric_patterns').change(function(){
@@ -382,6 +422,35 @@
       );
     });
 
+    $('#view_summery').click(function(){
+      if($('.view_summery_details').is(':hidden')){
+        $('.view_summery_details').show();
+        $('.main_inr_box_new').hide();
+        $(this).val('Hide Summary');
+      }else{
+        $('.view_summery_details').hide();
+        $('.main_inr_box_new').show();
+        $(this).val('View Summary');
+      }
+    });
+
+    $('#add_to_cart').click(function(){
+      $.ajax({
+        type:'POST',
+        url:'<?php echo Yii::app()->baseUrl; ?>/cart/addtocart',
+        data:$('#addtocart').serialize(),
+        success:function(data){
+          console.log(data);
+          if(data){
+            var url = '<?php echo Yii::app()->baseUrl; ?>/cartitems';
+            $('#cartModal').modal({
+              remote:url
+            });
+          }
+        },
+      });
+    });
+
     indianStyloSEObj = $("#shirt_editor").indianStyloSE(indianStyloSEJson);
 		$("#tabs").tabs({
                         activate: function(event,ui){ 
@@ -395,13 +464,19 @@
                     });
 	});
 
-	function updateElements(elem,newobj){
+	function updateElements(elem,newobj,obj){
+      var text = $(obj).find('input').attr('rel');
+      var name = $(obj).find('input').attr('name');
+      $('.view_summery_details #'+name).text(text);
+      $('.view_summery_details #txt_'+name).val(text);
+      $('.view_summery_details #txt_fabric').val($(obj).find('input').val());
+      $('.view_summery_details #txt_button').val($(obj).find('input').val());
       switch(elem){
         case 1:
           indianStyloSEObj.updateFabric(newobj);
         break;
         case 2:
-          indianStyloSEObj.updateSleeves(newobj);
+          indianStyloSEObj.updateSleeves(newobj);          
         break;
         case 3:
           indianStyloSEObj.updateCollar(newobj);

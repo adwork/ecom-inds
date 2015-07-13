@@ -27,18 +27,5 @@ class ProductsController extends Controller
 		$criteria->params = array(':itm_slug' => $slug);
 		$model = Items::model()->find($criteria);
 		$this->render('view',array('model' => $model));
-	}
-
-	public function actionCart(){
-		$this->layout = false;
-		$this->render('cart');
-	}
-
-	public function actionAddtocart(){
-		
-	}
-
-	public function actionCheckout(){
-		
-	}
+	}	
 }

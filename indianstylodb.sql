@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 09, 2015 at 08:30 AM
+-- Generation Time: Jul 13, 2015 at 08:43 AM
 -- Server version: 5.5.41-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.7
 
@@ -117,11 +117,13 @@ INSERT INTO `inds_authitem` (`name`, `type`, `description`, `bizrule`, `data`) V
 ('AdminUserProfile', 1, '', '', 's:0:"";'),
 ('AdminUserStatus', 1, '', '', 's:0:"";'),
 ('AdminUserUserlist', 1, '', '', 's:0:"";'),
+('CartAddtocart', 1, NULL, NULL, NULL),
+('CartRemoveitem', 1, NULL, NULL, NULL),
+('CartView', 1, NULL, NULL, NULL),
 ('FabricsIndex', 1, NULL, NULL, NULL),
 ('FabricsView', 1, NULL, NULL, NULL),
 ('guest', 2, NULL, NULL, NULL),
 ('member', 2, NULL, NULL, NULL),
-('ProductsCart', 1, NULL, NULL, NULL),
 ('ProductsIndex', 1, NULL, NULL, NULL),
 ('ProductsView', 1, NULL, NULL, NULL),
 ('RightsDefaultIndex', 1, NULL, NULL, NULL),
@@ -205,9 +207,11 @@ INSERT INTO `inds_authitemchild` (`parent`, `child`) VALUES
 ('admin', 'AdminUserProfile'),
 ('admin', 'AdminUserStatus'),
 ('admin', 'AdminUserUserlist'),
+('guest', 'CartAddtocart'),
+('guest', 'CartRemoveitem'),
+('guest', 'CartView'),
 ('guest', 'FabricsIndex'),
 ('guest', 'FabricsView'),
-('guest', 'ProductsCart'),
 ('guest', 'ProductsIndex'),
 ('guest', 'ProductsView'),
 ('guest', 'RightsDefaultIndex'),
@@ -243,6 +247,43 @@ CREATE TABLE IF NOT EXISTS `inds_buttons` (
 INSERT INTO `inds_buttons` (`but_id`, `but_name`, `but_image`, `but_price`) VALUES
 (1, 'button1', '558f7345d0a40.png', 100),
 (2, 'button 2', '558f735a492f2.png', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inds_cart`
+--
+
+CREATE TABLE IF NOT EXISTS `inds_cart` (
+  `cart_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cart_user_id` int(11) NOT NULL,
+  `cart_created` datetime NOT NULL,
+  `cart_modified` datetime NOT NULL,
+  PRIMARY KEY (`cart_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inds_cart_items`
+--
+
+CREATE TABLE IF NOT EXISTS `inds_cart_items` (
+  `citm_id` int(11) NOT NULL,
+  `citm_cart_id` int(11) NOT NULL,
+  `citm_item_id` int(11) NOT NULL,
+  `citm_price` double NOT NULL,
+  `citm_discount` double NOT NULL,
+  `citm_color` int(11) NOT NULL DEFAULT '0',
+  `citm_pattern` int(11) NOT NULL DEFAULT '0',
+  `citm_fabric` int(11) NOT NULL DEFAULT '0',
+  `citm_type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0=Normal product, 1= Rental product, 2=Customization, 3=User will send product for measurment',
+  `citm_customization` text NOT NULL,
+  `citm_measurement` text NOT NULL,
+  `citm_rental` int(11) NOT NULL,
+  `citm_created` datetime NOT NULL,
+  `citm_modified` datetime NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 

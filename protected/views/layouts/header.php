@@ -63,8 +63,7 @@ $this->widget('bootstrap.widgets.TbNavbar', array(
       </div>
       <div class="modal-body">
           
-      </div>
-      
+      </div>      
     </div>
   </div>
 </div>
@@ -76,6 +75,6 @@ $this->widget('bootstrap.widgets.TbNavbar', array(
             $('#cartModal').modal({
               remote:url
             });
-       }); 
+       });        
     });
 </script>

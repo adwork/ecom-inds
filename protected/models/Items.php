@@ -60,6 +60,7 @@ class Items extends CActiveRecord
 		return array(
 			'subcatItems'=>array(self::BELONGS_TO, 'Subcategories','itm_subcategory_id'),
 			'fabItems'=>array(self::BELONGS_TO, 'Fabrics','itm_fabric_id'),
+			'cartItem'=>array(self::HAS_MANY, 'CartItems','citm_item_id'),
 		);
 	}
 

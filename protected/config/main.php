@@ -121,7 +121,7 @@ return array(
 				'about'=>'site/pages/id/1',
 				'privacy'=>'site/pages/id/2',				
 				'dashboard'=>'user/dashboard',
-				'cartitems'=>'products/cart',
+				'cartitems'=>'cart/view',
 				'admin/accessdenied'=>'admin/cmspage/accessdenied',
 				'admin/contract'=>'admin/invoicetemplate/contract',
 				'admin'=>'admin',

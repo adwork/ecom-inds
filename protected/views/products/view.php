@@ -54,7 +54,27 @@ $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/imagezoom.js');
 		</div>
 		<div>&nbsp;</div>
 		<div>
-			<input type="button" name="addtocart" value="Add to Cart" class="btn btn-primary btn-lg">
+			<input type="button" name="addtocart" value="Add to Cart" class="btn btn-primary btn-lg" id="add_to_cart">
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#add_to_cart').click(function(){
+      $.ajax({
+        type:'POST',
+        url:'<?php echo Yii::app()->baseUrl; ?>/cart/addtocart',
+        data:{itemid:<?php echo $model->itm_id; ?>,YII_CSRF_TOKEN:'<?php echo Yii::app()->request->csrfToken; ?>'},
+        success:function(data){
+          console.log(data);
+          if(data){
+            var url = '<?php echo Yii::app()->baseUrl; ?>/cartitems';
+            $('#cartModal').modal({
+              remote:url
+            });
+          }
+        },
+      });
+    });
+  });
+</script>

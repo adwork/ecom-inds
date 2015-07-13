@@ -1,0 +1,102 @@
+<?php
+
+/**
+ * This is the model class for table "{{cart}}".
+ *
+ * The followings are the available columns in table '{{cart}}':
+ * @property integer $cart_id
+ * @property integer $cart_user_id
+ * @property string $cart_created
+ * @property string $cart_modified
+ */
+class Cart extends CActiveRecord
+{
+	/**
+	 * @return string the associated database table name
+	 */
+	public function tableName()
+	{
+		return '{{cart}}';
+	}
+
+	/**
+	 * @return array validation rules for model attributes.
+	 */
+	public function rules()
+	{
+		// NOTE: you should only define rules for those attributes that
+		// will receive user inputs.
+		return array(
+			array('cart_user_id, cart_created, cart_modified', 'required'),
+			array('cart_user_id', 'numerical', 'integerOnly'=>true),
+			// The following rule is used by search().
+			// @todo Please remove those attributes that should not be searched.
+			array('cart_id, cart_user_id, cart_created, cart_modified', 'safe', 'on'=>'search'),
+		);
+	}
+
+	/**
+	 * @return array relational rules.
+	 */
+	public function relations()
+	{
+		// NOTE: you may need to adjust the relation name and the related
+		// class name for the relations automatically generated below.
+		return array(
+			'cartCartItem'=>array(self::HAS_MANY, 'CartItems','citm_cart_id'),
+			'userCart'=>array(self::BELONGS_TO, 'User','cart_user_id'),
+		);
+	}
+
+	/**
+	 * @return array customized attribute labels (name=>label)
+	 */
+	public function attributeLabels()
+	{
+		return array(
+			'cart_id' => 'Cart',
+			'cart_user_id' => 'Cart User',
+			'cart_created' => 'Cart Created',
+			'cart_modified' => 'Cart Modified',
+		);
+	}
+
+	/**
+	 * Retrieves a list of models based on the current search/filter conditions.
+	 *
+	 * Typical usecase:
+	 * - Initialize the model fields with values from filter form.
+	 * - Execute this method to get CActiveDataProvider instance which will filter
+	 * models according to data in model fields.
+	 * - Pass data provider to CGridView, CListView or any similar widget.
+	 *
+	 * @return CActiveDataProvider the data provider that can return the models
+	 * based on the search/filter conditions.
+	 */
+	public function search()
+	{
+		// @todo Please modify the following code to remove attributes that should not be searched.
+
+		$criteria=new CDbCriteria;
+
+		$criteria->compare('cart_id',$this->cart_id);
+		$criteria->compare('cart_user_id',$this->cart_user_id);
+		$criteria->compare('cart_created',$this->cart_created,true);
+		$criteria->compare('cart_modified',$this->cart_modified,true);
+
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+	}
+
+	/**
+	 * Returns the static model of the specified AR class.
+	 * Please note that you should have this exact method in all your CActiveRecord descendants!
+	 * @param string $className active record class name.
+	 * @return Cart the static model class
+	 */
+	public static function model($className=__CLASS__)
+	{
+		return parent::model($className);
+	}
+}
