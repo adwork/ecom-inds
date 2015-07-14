@@ -37,9 +37,12 @@ class CartItems extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('citm_id, citm_cart_id, citm_item_id, citm_price, citm_discount, citm_customization, citm_measurement, citm_rental, citm_created, citm_modified', 'required'),
+			array('citm_id, citm_cart_id, citm_item_id, citm_price', 'required'),
 			array('citm_id, citm_cart_id, citm_item_id, citm_color, citm_pattern, citm_fabric, citm_type, citm_rental', 'numerical', 'integerOnly'=>true),
 			array('citm_price, citm_discount', 'numerical'),
+
+			array('citm_discount, citm_customization, citm_measurement, citm_rental, citm_created, citm_modified, citm_qty','safe'),
+
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('citm_id, citm_cart_id, citm_item_id, citm_price, citm_discount, citm_color, citm_pattern, citm_fabric, citm_type, citm_customization, citm_measurement, citm_rental, citm_created, citm_modified', 'safe', 'on'=>'search'),
@@ -129,5 +132,16 @@ class CartItems extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+
+	public function behaviors(){
+		return array(
+			'CTimestampBehavior' => array(
+				'class' => 'zii.behaviors.CTimestampBehavior',
+				'createAttribute' => 'citm_created',
+				'updateAttribute' => 'citm_modified',
+				'setUpdateOnCreate'=> true
+			)
+		);
 	}
 }

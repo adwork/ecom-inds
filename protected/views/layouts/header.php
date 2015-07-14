@@ -38,7 +38,7 @@ $this->widget('bootstrap.widgets.TbNavbar', array(
                     array('label'=>'Trouser', 'url'=>array('fabrics/index/2')),                    
                     array('label'=>'Blazer', 'url'=>array('/fabrics/index/3')),
                 )),
-                array('label'=>'My Cart Item(s)', 'url'=>array('/cartitems'),'itemOptions' => array('id' => 'cartmodal')),
+                array('label'=>'My Cart Item(s)', 'url'=>'javascript:void(0);','itemOptions' => array('href' => Yii::app()->baseUrl.'/cartitems','data-toggle' => 'modal' ,'data-target' => '#cartModal')),
                 array('label'=>'Signin', 'visible'=>Yii::app()->user->isGuest,'url'=>array('site/login')),
                 array('label'=>'Signup', 'visible'=>Yii::app()->user->isGuest,'url'=>array('user/signup')),
                 array('label'=>$this->loggedusername, 'visible'=>Yii::app()->user->checkAccess('member'), 'url'=>'#', 'items'=>array(
@@ -59,22 +59,11 @@ $this->widget('bootstrap.widgets.TbNavbar', array(
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Cart Items</h4>
+        <h4 class="modal-title" id="myModalLabel">Items in your cart</h4>
       </div>
       <div class="modal-body">
           
-      </div>      
+      </div>       
     </div>
   </div>
 </div>
-<script type="text/javascript">
-    $(document).ready(function(){
-       $('#cartmodal a').click(function(e){
-            e.preventDefault();
-            var url = $(this).attr('href');
-            $('#cartModal').modal({
-              remote:url
-            });
-       });        
-    });
-</script>

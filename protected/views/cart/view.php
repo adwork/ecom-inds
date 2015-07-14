@@ -4,7 +4,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Items in your cart</h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="cartBody">
       	<table width="100%">
       		<thead>
       			<tr>
@@ -19,7 +19,7 @@
       		<tbody>
                         <?php
                         $gTotal = 0;
-                        if(!empty($items) || !empty($fabrics)){
+                        if((!empty($items) || !empty($fabrics)) && !empty($cart_items)){
                               foreach ($items as $key => $itemArr) {
                                     ?>
                                     <tr style="border-bottom:1px solid #CCC;margin-bottom:5px;">
@@ -32,13 +32,13 @@
                                                 </div>
                                           </td>
                                           <td align="right"><?php echo $itemArr->itm_price; ?></td>
-                                          <td align="right">1</td>
+                                          <td align="right"><?php echo $cart_items['item'][$itemArr->itm_id]['qty']; ?></td>
                                           <td align="center">
-                                                <input type="text" name="updateqty" class="span1 updateqty">
+                                                <input type="text" name="updateqty" class="span1 updateqty" rel="<?php echo $itemArr->itm_id; ?>" itype="item">
                                           </td>
                                           <td align="right">
                                                 <?php 
-                                                $itemPrice = ($itemArr->itm_price*1);
+                                                $itemPrice = ($itemArr->itm_price*$cart_items['item'][$itemArr->itm_id]['qty']);
                                                 echo $itemPrice; 
                                                 ?>
                                           </td>
@@ -61,13 +61,13 @@
                                                 </div>
                                           </td>
                                           <td align="right"><?php echo $fabricArr->fab_price; ?></td>
-                                          <td align="right">1</td>
+                                          <td align="right"><?php echo $cart_items['fabric'][$fabricArr->fab_id]['qty']; ?></td>
                                           <td align="center">
-                                                <input type="text" name="updateqty" class="span1 updateqty">
+                                                <input type="text" name="updateqty" class="span1 updateqty" rel="<?php echo $fabricArr->fab_id; ?>" itype="fabric">
                                           </td>
                                           <td align="right">
                                                 <?php 
-                                                $fabPrice = ($fabricArr->fab_price*1);
+                                                $fabPrice = ($fabricArr->fab_price*$cart_items['fabric'][$fabricArr->fab_id]['qty']);
                                                 echo $fabPrice; 
                                                 ?>
                                           </td>
@@ -106,7 +106,7 @@
 </div>
 <script type="text/javascript">
   $(document).ready(function(){
-      $('.removeItem').click(function(e){
+      $('body').on('click','a',function(e){
           e.preventDefault();
           var con = confirm('Are you sure want to delete this record?');
           var id = $(this).attr('rel');
@@ -119,12 +119,30 @@
                   data:{id:id,type:type},
                   success:function(html){
                         var url = '<?php echo Yii::app()->baseUrl; ?>/cartitems';
-                        $("#cartModal .modal-body").load(url, function() { 
+                        $("#cartModal .modal-dialog").load(url, function() { 
                            $("#cartModal").modal("show"); 
                         });
                   },
                 });
             }
+      });
+
+      $('body').on('blur','.updateqty',function(){
+            var val = $(this).val();
+            var id = $(this).attr('rel');
+            var url = '<?php echo Yii::app()->baseUrl; ?>/cart/updateqty';
+            var type = $(this).attr('itype');
+            $.ajax({
+                  type:'POST',
+                  url:url,
+                  data:{id:id,qty:val,type:type},
+                  success:function(html){
+                        var url = '<?php echo Yii::app()->baseUrl; ?>/cartitems';
+                        $("#cartModal .modal-dialog").load(url, function() { 
+                           $("#cartModal").modal("show"); 
+                        });
+                  },
+            });
       });
   });
 </script>

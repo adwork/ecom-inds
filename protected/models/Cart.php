@@ -99,4 +99,15 @@ class Cart extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+	public function behaviors(){
+		return array(
+			'CTimestampBehavior' => array(
+				'class' => 'zii.behaviors.CTimestampBehavior',
+				'createAttribute' => 'cart_created',
+				'updateAttribute' => 'cart_modified',
+				'setUpdateOnCreate'=> true
+			)
+		);
+	}
 }

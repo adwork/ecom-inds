@@ -6,6 +6,7 @@ class CartController extends Controller
 		if(!empty($_POST)){
 			$data = array();
 			unset($_POST['YII_CSRF_TOKEN']);
+			$_POST['qty'] = 1;
 			$data = Yii::app()->session['cartItems'];
 			if(!empty($_POST['txt_fabric']))
 				$data['fabric'][$_POST['txt_fabric']] = $_POST;
@@ -18,8 +19,9 @@ class CartController extends Controller
 
 	public function actionView(){
 		$this->layout = false;
+		$cart_items = Yii::app()->session['cartItems'];
 		$cartData = $this->processCart();
-		$this->render('view',array('fabrics' => $cartData['fabrics'],'items' => $cartData['items']));
+		$this->render('view',array('fabrics' => $cartData['fabrics'],'items' => $cartData['items'],'cart_items' => $cart_items));
 	}
 
 	public function actionRemoveitem(){
@@ -34,7 +36,34 @@ class CartController extends Controller
 			}
 		}
 		Yii::app()->session['cartItems'] = $cart_items;
-		echo 'succes';		
+		echo 'succes';	
+		exit;	
+	}
+
+	public function actionUpdateqty(){
+		$this->layout = false;
+		$cart_items = Yii::app()->session['cartItems'];
+		if(!empty($_POST['id']) && !empty($_POST['qty'])){
+			if($_POST['type']=='item'){
+				foreach ($cart_items['item'] as $itmKey => $itemArr) {
+					if($itmKey==$_POST['id']){
+						$itemArr['qty'] = $_POST['qty'];
+						$cart_items['item'][$itmKey] = $itemArr;
+					}
+				}
+			}
+			if($_POST['type']=='fabric'){
+				foreach ($cart_items['fabric'] as $fabKey => $fabArr) {
+					if($fabKey==$_POST['id']){
+						$fabArr['qty'] = $_POST['qty'];
+						$cart_items['fabric'][$fabKey] = $fabArr;
+					}
+				}	
+			}
+		}
+		Yii::app()->session['cartItems'] = $cart_items;
+		echo 'succes';	
+		exit;
 	}
 
 	public function processCart(){
