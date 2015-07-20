@@ -67,3 +67,16 @@ $this->widget('bootstrap.widgets.TbNavbar', array(
     </div>
   </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("a[data-target=#cartModal]").click(function(ev) {
+            ev.preventDefault();
+            var target = $(this).attr("href");
+
+            // load the url and show modal on success
+            $("#cartModal .modal-body").load(target, function() { 
+                 $("#cartModal").modal("show"); 
+            });
+        });
+    });
+</script>

@@ -42,6 +42,15 @@ return array(
 	
 	// application components
 	'components'=>array(
+		'Paypal' => array(
+			'class'=>'application.components.Paypal',
+			'apiUsername' => 'adsmartwork_api1.gmail.com',
+			'apiPassword' => 'MQF52A28CLG2CZ32',
+			'apiSignature' => 'AEGEFg.rVNzj608cNpTpBj4GlgRSAjcvv3xsSSrYmzz6DiGHPaKsG.a2',
+			'apiLive' => false,			
+			'returnUrl' => 'cart/confirm/', //regardless of url management component
+			'cancelUrl' => 'cart/cancel/', //regardless of url management component
+		),
 		'clientScript'=>array(
 		  'packages'=>array(
 		    'jquery'=>array(

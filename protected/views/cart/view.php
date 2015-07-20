@@ -88,25 +88,37 @@
                         ?>   			
       		</tbody>
       		<tfoot>
-      			<tr>
-      				<td align="right" colspan="4">
-      					<b>Total Amount</b>
-      				</td>
-      				<td align="right"><b><?php echo $gTotal; ?></b></td>
-                              <td>&nbsp;</td>
-      			</tr>
+               <?php
+               if((!empty($items) || !empty($fabrics)) && !empty($cart_items)){
+                  ?>
+         			<tr>
+         				<td align="right" colspan="4">
+         					<b>Total Amount</b>
+         				</td>
+         				<td align="right"><b><?php echo $gTotal; ?></b></td>
+                                 <td>&nbsp;</td>
+         			</tr>
+                  <?php
+               }
+               ?>
       		</tfoot>
       	</table>
       </div>
       <div class="modal-footer">
-      	<!-- <button type="button" class="btn btn-primary">More Shopping</button> -->
-      	<button type="button" class="btn btn-primary">Checkout</button>        
+            <?php
+            if((!empty($items) || !empty($fabrics)) && !empty($cart_items)){
+                  ?>
+            	<!-- <button type="button" class="btn btn-primary">More Shopping</button> -->
+                  <a class="btn btn-primary" href="<?php echo Yii::app()->baseUrl; ?>/cart/checkout">Checkout</a>
+            	<?php
+            }
+            ?>
       </div>
     </div>
 </div>
 <script type="text/javascript">
   $(document).ready(function(){
-      $('body').on('click','a',function(e){
+      $('body').on('click','.removeItem',function(e){
           e.preventDefault();
           var con = confirm('Are you sure want to delete this record?');
           var id = $(this).attr('rel');

@@ -311,8 +311,8 @@
         <ul>
           <li>
             <span><b>Fabric:</b></span>
-            <span id="fabric"></span>
-            <input type="hidden" name="txt_fabric" id="txt_fabric">
+            <span id="fabric"><?php echo $fabricDetail->fab_name; ?></span>
+            <input type="hidden" name="txt_fabric" id="txt_fabric" value="<?php echo $id; ?>">
           </li>
           <li>
             <span><b>Sleeve:</b></span>
@@ -469,8 +469,12 @@
       var name = $(obj).find('input').attr('name');
       $('.view_summery_details #'+name).text(text);
       $('.view_summery_details #txt_'+name).val(text);
-      $('.view_summery_details #txt_fabric').val($(obj).find('input').val());
-      $('.view_summery_details #txt_button').val($(obj).find('input').val());
+      if($(obj).find('input').attr('fab_id')){
+        $('.view_summery_details #txt_fabric').val($(obj).find('input').attr('fab_id'));  
+      }
+      if($(obj).find('input').attr('but_id')){
+        $('.view_summery_details #txt_button').val($(obj).find('input').attr('but_id'));
+      }
       switch(elem){
         case 1:
           indianStyloSEObj.updateFabric(newobj);

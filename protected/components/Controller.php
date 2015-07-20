@@ -78,7 +78,7 @@ class Controller extends CController
 				Yii::app()->end();				
 			}else{	
 				Yii::app()->user->setFlash('popupmsg','Not Authorized Action.');
-				$this->redirect(array('/'));				
+				$this->redirect(array('site/login'));				
 			}
 		}elseif(Yii::app()->user->id){
 			$user = User::model()->checkStatus();
@@ -90,7 +90,7 @@ class Controller extends CController
 					Yii::app()->end();				
 				}else{	
 					Yii::app()->user->setFlash('popupmsg','Your account is deactivated. Please contact site administrator');
-					$this->redirect(array('/'));				
+					$this->redirect(array('site/login'));				
 				}	
 			}
 

@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 14, 2015 at 07:56 AM
+-- Generation Time: Jul 20, 2015 at 08:49 AM
 -- Server version: 5.5.41-0ubuntu0.14.04.1
--- PHP Version: 5.5.9-1ubuntu4.7
+-- PHP Version: 5.5.9-1ubuntu4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -90,7 +90,9 @@ INSERT INTO `inds_authitem` (`name`, `type`, `description`, `bizrule`, `data`) V
 ('AdminItemsCreate', 1, NULL, NULL, NULL),
 ('AdminItemsDelete', 1, NULL, NULL, NULL),
 ('AdminItemsIndex', 1, NULL, NULL, NULL),
+('AdminItemsOrders', 1, NULL, NULL, NULL),
 ('AdminItemsUpdate', 1, NULL, NULL, NULL),
+('AdminItemsVieworders', 1, NULL, NULL, NULL),
 ('AdminProductsAddimages', 1, '', '', 's:0:"";'),
 ('AdminProductsAddsizes', 1, '', '', 's:0:"";'),
 ('AdminProductsCreate', 1, '', '', 's:0:"";'),
@@ -118,6 +120,9 @@ INSERT INTO `inds_authitem` (`name`, `type`, `description`, `bizrule`, `data`) V
 ('AdminUserStatus', 1, '', '', 's:0:"";'),
 ('AdminUserUserlist', 1, '', '', 's:0:"";'),
 ('CartAddtocart', 1, NULL, NULL, NULL),
+('CartCancel', 1, NULL, NULL, NULL),
+('CartCheckout', 1, NULL, NULL, NULL),
+('CartConfirm', 1, NULL, NULL, NULL),
 ('CartRemoveitem', 1, NULL, NULL, NULL),
 ('CartUpdateqty', 1, NULL, NULL, NULL),
 ('CartView', 1, NULL, NULL, NULL),
@@ -181,7 +186,9 @@ INSERT INTO `inds_authitemchild` (`parent`, `child`) VALUES
 ('admin', 'AdminItemsCreate'),
 ('admin', 'AdminItemsDelete'),
 ('admin', 'AdminItemsIndex'),
+('admin', 'AdminItemsOrders'),
 ('admin', 'AdminItemsUpdate'),
+('admin', 'AdminItemsVieworders'),
 ('admin', 'AdminProductsAddimages'),
 ('admin', 'AdminProductsAddsizes'),
 ('admin', 'AdminProductsCreate'),
@@ -209,6 +216,9 @@ INSERT INTO `inds_authitemchild` (`parent`, `child`) VALUES
 ('admin', 'AdminUserStatus'),
 ('admin', 'AdminUserUserlist'),
 ('guest', 'CartAddtocart'),
+('member', 'CartCancel'),
+('member', 'CartCheckout'),
+('member', 'CartConfirm'),
 ('guest', 'CartRemoveitem'),
 ('guest', 'CartUpdateqty'),
 ('guest', 'CartView'),
@@ -258,11 +268,25 @@ INSERT INTO `inds_buttons` (`but_id`, `but_name`, `but_image`, `but_price`) VALU
 
 CREATE TABLE IF NOT EXISTS `inds_cart` (
   `cart_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cart_orderno` varchar(200) NOT NULL,
   `cart_user_id` int(11) NOT NULL,
+  `cart_payment_status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0=not chekout,1=checkout,2=success,3=cancel',
+  `cart_order_status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0=pending,1=under process,2=deliver,3=complete',
+  `cart_paypal_result` text,
   `cart_created` datetime NOT NULL,
   `cart_modified` datetime NOT NULL,
   PRIMARY KEY (`cart_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `inds_cart`
+--
+
+INSERT INTO `inds_cart` (`cart_id`, `cart_orderno`, `cart_user_id`, `cart_payment_status`, `cart_order_status`, `cart_paypal_result`, `cart_created`, `cart_modified`) VALUES
+(2, '55ac42134c1ea', 5, 0, 0, '{"status":"not checkout yet"}', '2015-07-20 06:04:27', '2015-07-20 06:04:27'),
+(3, '55ac436835842', 5, 1, 0, '{"TOKEN":"EC-68B5355957899074A","TIMESTAMP":"2015-07-20T00:40:08Z","CORRELATIONID":"442dc1fcc3929","ACK":"Success","VERSION":"3.0","BUILD":"17403434"}', '2015-07-20 06:08:43', '2015-07-20 06:10:08'),
+(4, '55ac444c3e780', 5, 2, 0, '{"TOKEN":"EC-2EA908743F5101649","TIMESTAMP":"2015-07-20T00:43:56Z","CORRELATIONID":"95fae32298e38","ACK":"Success","VERSION":"3.0","BUILD":"17403434","TRANSACTIONID":"0Y7477099T293963L","TRANSACTIONTYPE":"expresscheckout","PAYMENTTYPE":"instant","ORDERTIME":"2015-07-20T00:43:55Z","AMT":"1050.00","FEEAMT":"41.25","TAXAMT":"0.00","CURRENCYCODE":"USD","PAYMENTSTATUS":"Completed","PENDINGREASON":"None","REASONCODE":"None"}', '2015-07-20 06:12:34', '2015-07-20 06:13:56'),
+(5, '55ac4543991d3', 5, 3, 0, '{"status":"cancel","token":"EC-43C21967X4911952Y"}', '2015-07-20 06:17:34', '2015-07-20 06:18:03');
 
 -- --------------------------------------------------------
 
@@ -271,22 +295,35 @@ CREATE TABLE IF NOT EXISTS `inds_cart` (
 --
 
 CREATE TABLE IF NOT EXISTS `inds_cart_items` (
-  `citm_id` int(11) NOT NULL,
+  `citm_id` int(11) NOT NULL AUTO_INCREMENT,
   `citm_cart_id` int(11) NOT NULL,
-  `citm_item_id` int(11) NOT NULL,
-  `citm_price` double NOT NULL,
-  `citm_discount` double NOT NULL,
-  `citm_qty` int(11) NOT NULL DEFAULT '0',
-  `citm_color` int(11) NOT NULL DEFAULT '0',
-  `citm_pattern` int(11) NOT NULL DEFAULT '0',
-  `citm_fabric` int(11) NOT NULL DEFAULT '0',
-  `citm_type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0=Normal product, 1= Rental product, 2=Customization, 3=User will send product for measurment',
-  `citm_customization` text NOT NULL,
-  `citm_measurement` text NOT NULL,
-  `citm_rental` int(11) NOT NULL,
+  `citm_item_id` int(11) DEFAULT '0',
+  `citm_price` double DEFAULT '0',
+  `citm_discount` double DEFAULT '0',
+  `citm_qty` int(11) DEFAULT '0',
+  `citm_color` int(11) DEFAULT '0',
+  `citm_pattern` int(11) DEFAULT '0',
+  `citm_fabric` int(11) DEFAULT '0',
+  `citm_type` tinyint(2) DEFAULT '0' COMMENT '0=Normal product, 1= Rental product, 2=Customization, 3=User will send product for measurment',
+  `citm_customization` text,
+  `citm_measurement` text,
+  `citm_rental` int(11) DEFAULT NULL,
   `citm_created` datetime NOT NULL,
-  `citm_modified` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `citm_modified` datetime NOT NULL,
+  PRIMARY KEY (`citm_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Dumping data for table `inds_cart_items`
+--
+
+INSERT INTO `inds_cart_items` (`citm_id`, `citm_cart_id`, `citm_item_id`, `citm_price`, `citm_discount`, `citm_qty`, `citm_color`, `citm_pattern`, `citm_fabric`, `citm_type`, `citm_customization`, `citm_measurement`, `citm_rental`, `citm_created`, `citm_modified`) VALUES
+(1, 3, 0, 1000, 0, 1, 1, 4, 1, 2, '{"product":"1","shirt":{"sleeve":"Short","collor":"Chinese","cuff":"","placket":"Hidden","pocket":"Round","back_shirt":"Box Pleat","front_shirt":"Round","button":"2","monogram":"","fabid":3},"trouser":[],"blazer":[],"suit":[]}', NULL, NULL, '2015-07-20 06:08:43', '2015-07-20 06:08:43'),
+(2, 3, 4, 750, 0, 1, 0, 0, 0, 0, NULL, NULL, NULL, '2015-07-20 06:08:43', '2015-07-20 06:08:43'),
+(3, 4, 0, 300, 0, 1, 1, 2, 1, 2, '{"product":"1","shirt":{"sleeve":"Long","collor":"Classic","cuff":"Double Button","placket":"French","pocket":"Square","back_shirt":"Box Pleat","front_shirt":"Round","button":"2","monogram":"","fabid":4},"trouser":[],"blazer":[],"suit":[]}', NULL, NULL, '2015-07-20 06:12:34', '2015-07-20 06:12:34'),
+(4, 4, 4, 750, 0, 1, 0, 0, 0, 0, NULL, NULL, NULL, '2015-07-20 06:12:34', '2015-07-20 06:12:34'),
+(5, 5, 0, 1000, 0, 1, 1, 4, 1, 2, '{"product":"1","shirt":{"sleeve":"Short","collor":"Chinese","cuff":"","placket":"Hidden","pocket":"Square","back_shirt":"Side Pleat","front_shirt":"Round","button":"2","monogram":"","fabid":3},"trouser":[],"blazer":[],"suit":[]}', NULL, NULL, '2015-07-20 06:17:34', '2015-07-20 06:17:34'),
+(6, 5, 3, 250, 0, 1, 0, 0, 0, 0, NULL, NULL, NULL, '2015-07-20 06:17:34', '2015-07-20 06:17:34');
 
 -- --------------------------------------------------------
 
@@ -389,11 +426,11 @@ CREATE TABLE IF NOT EXISTS `inds_fabrics` (
 --
 
 INSERT INTO `inds_fabrics` (`fab_id`, `fab_name`, `fab_image`, `fab_price`, `fab_color`, `fab_pattern`, `fab_fabric`, `fab_for`) VALUES
-(1, 'Fabric for trouser', '', 600, 0, 0, 0, 0),
-(3, 'Megenta Cotton', '5590a9fbf3ad3.png', 300, 1, 2, 0, 1),
-(4, 'Blue Linen', '5590aa2617ce3.png', 1000, 1, 4, 0, 1),
-(5, 'Latest', '5590aa5796793.png', 500, 1, 2, 0, 1),
-(6, ' hhh dfdfdfdfdf jjj', '5595e00f7d62c.png', 100, 2, 2, 0, 0);
+(1, 'Fabric for trouser', '', 600, 0, 0, 1, 0),
+(3, 'Megenta Cotton', '5590a9fbf3ad3.png', 300, 1, 2, 1, 1),
+(4, 'Blue Linen', '5590aa2617ce3.png', 1000, 1, 4, 1, 1),
+(5, 'Latest', '5590aa5796793.png', 500, 1, 2, 1, 1),
+(6, ' hhh dfdfdfdfdf jjj', '5595e00f7d62c.png', 100, 2, 2, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -537,7 +574,7 @@ CREATE TABLE IF NOT EXISTS `inds_user` (
 
 INSERT INTO `inds_user` (`u_id`, `u_first_name`, `u_last_name`, `u_email`, `u_password`, `u_role`, `u_gender`, `u_status`, `u_mail_verify`, `u_verkey`, `u_scrkey`, `u_last_login_date`, `u_created`, `u_modified`) VALUES
 (1, 'Indian', 'Stylo', 'admin@indianstylo.com', '$2a$13$mFlSnpEY4X7.gf3ff4UKdeeZhgIskbSYyIVPWaUn7x2icbsUs11Aa', 'admin', 1, 1, 1, NULL, '496788dbd0201735a4737f0c59d90fd6', '2015-06-03 01:26:27', '2014-12-23 02:20:00', '2015-06-04 02:58:41'),
-(5, 'testuser', 'One', 'testuserone@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2015-06-26 23:42:08', '2015-06-04 02:51:57', '2015-06-26 23:42:08');
+(5, 'testuser', 'One', 'testuserone@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2015-07-20 06:12:30', '2015-06-04 02:51:57', '2015-07-20 06:12:30');
 
 --
 -- Constraints for dumped tables

@@ -11,6 +11,7 @@
  */
 class Cart extends CActiveRecord
 {
+	public $u_email;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -27,10 +28,11 @@ class Cart extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('cart_user_id, cart_created, cart_modified', 'required'),
+			array('cart_user_id,cart_orderno', 'required'),
 			array('cart_user_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
+			array('cart_payment_status, cart_order_status, cart_paypal_result', 'safe'),
 			array('cart_id, cart_user_id, cart_created, cart_modified', 'safe', 'on'=>'search'),
 		);
 	}
@@ -54,10 +56,11 @@ class Cart extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'cart_id' => 'Cart',
-			'cart_user_id' => 'Cart User',
-			'cart_created' => 'Cart Created',
-			'cart_modified' => 'Cart Modified',
+			'cart_orderno' => 'Order No',
+			'cart_user_id' => 'Username',
+			'cart_created' => 'Order Date'	,
+			'cart_order_status' => 'Order Status',
+			'u_email' => 'Customer email'		
 		);
 	}
 
@@ -78,15 +81,19 @@ class Cart extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-
-		$criteria->compare('cart_id',$this->cart_id);
-		$criteria->compare('cart_user_id',$this->cart_user_id);
+		$criteria->condition = "cart_payment_status=:cart_payment_status";
+		$criteria->params = array(':cart_payment_status' => 2);
+		$criteria->with = array('userCart'=>array('select' => array('u_email')));
+		$criteria->compare('u_email',$this->u_email,true);
+		$criteria->compare('cart_order_status',$this->cart_order_status);
 		$criteria->compare('cart_created',$this->cart_created,true);
-		$criteria->compare('cart_modified',$this->cart_modified,true);
-
-		return new CActiveDataProvider($this, array(
+		//$criteria->select = array('u_email','cart_order_status','cart_created','cart_orderno');
+		$data = new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+		/*$result = $data->getData();
+		prd($result);*/
+		return $data; 
 	}
 
 	/**

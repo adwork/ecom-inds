@@ -14,7 +14,7 @@ $sitesetting = '';
 $subcategories = '';
 $items = '';
 $userlist = '';
-
+$orders = '';
 if($page=='UserIndex')
     $dashboard = 'active-menu';
 else if($page=='UserUserlist' || $page=='UserAdd' || $page=='UserEdit')
@@ -37,6 +37,8 @@ else if($page=='UserSitesettings')
     $sitesetting = 'active-menu';
 else if($page=='ItemsIndex')
     $sitesetting = 'active-menu';
+else if($page=='ItemsOrders')
+    $orders = 'active-menu';
 ?>
 <nav class="navbar-default navbar-side" role="navigation">
     <div class="sidebar-collapse">
@@ -90,6 +92,11 @@ else if($page=='ItemsIndex')
             <li>
                 <?php
                 echo CHtml::link('<i class="fa fa-tags"></i> Seo Manager',array('/admin/seopages/index'),array('class' => $seoPages));
+                ?>
+            </li>
+            <li>
+                <?php
+                echo CHtml::link('<i class="fa fa-tags"></i> Orders',array('/admin/items/orders'),array('class' => $orders));
                 ?>
             </li>
             <li>

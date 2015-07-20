@@ -37,11 +37,10 @@ class CartItems extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('citm_id, citm_cart_id, citm_item_id, citm_price', 'required'),
-			array('citm_id, citm_cart_id, citm_item_id, citm_color, citm_pattern, citm_fabric, citm_type, citm_rental', 'numerical', 'integerOnly'=>true),
-			array('citm_price, citm_discount', 'numerical'),
-
-			array('citm_discount, citm_customization, citm_measurement, citm_rental, citm_created, citm_modified, citm_qty','safe'),
+			array('citm_cart_id, citm_price', 'required'),
+			array('citm_id, citm_cart_id', 'numerical', 'integerOnly'=>true),
+			
+			array('citm_discount, citm_color, citm_pattern, citm_fabric, citm_type, citm_customization, citm_measurement, citm_rental, citm_created, citm_modified, citm_qty, citm_item_id','safe'),
 
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -68,20 +67,17 @@ class CartItems extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'citm_id' => 'Citm',
-			'citm_cart_id' => 'Citm Cart',
-			'citm_item_id' => 'Citm Item',
-			'citm_price' => 'Citm Price',
-			'citm_discount' => 'Citm Discount',
-			'citm_color' => 'Citm Color',
-			'citm_pattern' => 'Citm Pattern',
-			'citm_fabric' => 'Citm Fabric',
-			'citm_type' => '0=Normal product, 1= Rental product, 2=Customization, 3=User will send product for measurment',
-			'citm_customization' => 'Citm Customization',
-			'citm_measurement' => 'Citm Measurement',
-			'citm_rental' => 'Citm Rental',
-			'citm_created' => 'Citm Created',
-			'citm_modified' => 'Citm Modified',
+			'citm_id' => 'Order Id',
+			'citm_price' => 'Price',
+			'citm_discount' => 'Discount',
+			'citm_color' => 'Color',
+			'citm_pattern' => 'Pattern',
+			'citm_fabric' => 'Fabric',
+			'citm_type' => 'Cart Type',
+			'citm_customization' => 'Customizations',
+			'citm_measurement' => 'Measurements',
+			'citm_rental' => 'Rental',
+			'citm_created' => 'Order Date'			
 		);
 	}
 
@@ -102,8 +98,7 @@ class CartItems extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-
-		$criteria->compare('citm_id',$this->citm_id);
+		//$criteria->condition = '';
 		$criteria->compare('citm_cart_id',$this->citm_cart_id);
 		$criteria->compare('citm_item_id',$this->citm_item_id);
 		$criteria->compare('citm_price',$this->citm_price);
@@ -114,10 +109,8 @@ class CartItems extends CActiveRecord
 		$criteria->compare('citm_type',$this->citm_type);
 		$criteria->compare('citm_customization',$this->citm_customization,true);
 		$criteria->compare('citm_measurement',$this->citm_measurement,true);
-		$criteria->compare('citm_rental',$this->citm_rental);
 		$criteria->compare('citm_created',$this->citm_created,true);
-		$criteria->compare('citm_modified',$this->citm_modified,true);
-
+		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
