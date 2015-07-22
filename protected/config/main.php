@@ -91,7 +91,7 @@ return array(
 			'emulatePrepare' => true,
 			'username' => 'root',
 			'password' => 'qaz#123',
-			//'password' => '',
+			// 'password' => '',
 			'charset' => 'utf8',
 			'tablePrefix' => 'inds_',			
 			'enableParamLogging' => true,
