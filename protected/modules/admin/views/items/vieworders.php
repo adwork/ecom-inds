@@ -11,6 +11,10 @@
 		display: inline-block;
 		width: 75%;
 	}
+	.panel-body .itemHeading{
+		padding:5px;
+		background: #CCC;		
+	}	
 </style>
 <div class="row">
 	<div class="col-lg-12">
@@ -32,7 +36,7 @@
 	            		</li>
 	            		<li>
 	            			<span1><b>Order status : </b></span1>
-	            			<span2>
+	            			<span2 class="orderStatus">
 	            				<?php 
 	            				if($model[0]->cartCartItem->cart_order_status==0)
 	            					echo 'Pending'; 
@@ -53,6 +57,18 @@
 	            			<span1><b>Customer email: </b></span1>
 	            			<span2><?php echo $model[0]->cartCartItem->userCart->u_email; ?></span2>
 	            		</li>
+	            		<li>
+	            			<span1><b>Change Status: </b></span1>
+	            			<span2>
+	            				<select name="change_status" id="change_status" rel=<?php echo $model[0]->cartCartItem->cart_id; ?>"">
+	            					<option value="">Select status</option>
+	            					<option value="0">Pending</option>
+	            					<option value="1">Under process</option>
+	            					<option value="2">Deliver</option>
+	            					<option value="3">Complete</option>
+	            				</select>
+	            			</span2>
+	            		</li>
 	            	</ul>
             	</div>
             	<?php
@@ -63,11 +79,11 @@
             			if($fabArr->citm_item_id==0){
 	            			if($i==0){
 			            		?>
-				            	<div><b>Fabric Details</b></div>
+				            	<div class="itemHeading"><b>Fabric Details</b></div>
 				            	<?php
 			            	}
 			            	?>
-			            	<div>
+			            	<div class="itemBody">
 				            	<ul>
 				            		<li>
 				            			<span1><b>Fabric Name : </b></span1>
@@ -151,11 +167,11 @@
 			        	if(!empty($fabArr->citm_item_id)){
 	            			if($j==0){
 			            		?>
-				            	<div><b>Item Details</b></div>
+				            	<div class="itemHeading"><b>Item Details</b></div>
 				            	<?php
 			            	}
 			            	?>
-			            	<div>
+			            	<div class="itemBody">
 				            	<ul>
 				            		<li>
 				            			<span1><b>Item Name : </b></span1>
@@ -186,3 +202,25 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+	$('#change_status').change(function(){
+		var value = $(this).val();
+		var id = $(this).attr('rel');
+		$.ajax({
+          type:'POST',
+          url:'<?php echo Yii::app()->baseUrl; ?>/admin/items/updatestatus',
+          data:{id:id,val:value},
+          success:function(data){
+          	if(data){
+          		if(data=='success'){
+          			var status = $('#change_status option:selected').text();
+          			$('.orderStatus').html(status);
+          			alert('Status updated successfully.');
+          		}
+          		else if(data=='error')
+          			alert('Status not updated. Something went wrong.');
+          	}
+          },
+        });
+	});
+</script>
