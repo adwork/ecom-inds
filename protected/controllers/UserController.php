@@ -55,7 +55,8 @@ class UserController extends Controller
 	public function actionProfile()
 	{
 		$this->tabs = true;
-		$model=$this->loadModel(Yii::app()->user->id);
+		$user_id = Yii::app()->user->id;
+		$model=$this->loadModel($user_id);
 		$model->scenario = 'useredit';		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -77,13 +78,15 @@ class UserController extends Controller
 				
 			}
 		}
-		$pro_type = Yii::app()->params['pro_type'];
-		$organisation_type = Yii::app()->params['organisation_type'];
+		$orderModel = new Cart;
+		$orderModel->cart_user_id = $user_id;
+		
+		$userAddressModel = new UserAddress;
 
 		$this->render('profile',array(
 			'model'=>$model,
-			'pro_type'=>$pro_type,
-			'organisation_type'=>$organisation_type
+			'orderModel'=> $orderModel,
+			'userAddressModel' => $userAddressModel			
 		));
 	}
 
