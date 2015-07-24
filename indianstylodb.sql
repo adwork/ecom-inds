@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 23, 2015 at 07:58 AM
+-- Generation Time: Jul 24, 2015 at 08:39 AM
 -- Server version: 5.5.41-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.11
 
@@ -144,7 +144,9 @@ INSERT INTO `inds_authitem` (`name`, `type`, `description`, `bizrule`, `data`) V
 ('UserForgotpassword', 1, '', '', 's:0:"";'),
 ('UserProfile', 1, '', '', 's:0:"";'),
 ('UserResetpassword', 1, '', '', 's:0:"";'),
-('UserSignup', 1, NULL, NULL, NULL);
+('UserSaveaddress', 1, NULL, NULL, NULL),
+('UserSignup', 1, NULL, NULL, NULL),
+('UserStates', 1, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -240,7 +242,9 @@ INSERT INTO `inds_authitemchild` (`parent`, `child`) VALUES
 ('guest', 'UserForgotpassword'),
 ('member', 'UserProfile'),
 ('guest', 'UserResetpassword'),
-('guest', 'UserSignup');
+('member', 'UserSaveaddress'),
+('guest', 'UserSignup'),
+('guest', 'UserStates');
 
 -- --------------------------------------------------------
 
@@ -5313,14 +5317,22 @@ CREATE TABLE IF NOT EXISTS `inds_user_address` (
   `uad_add2` varchar(255) DEFAULT NULL,
   `uad_country_id` int(11) NOT NULL,
   `uad_state_id` int(11) NOT NULL,
-  `uad_city` int(11) NOT NULL,
+  `uad_city` varchar(200) NOT NULL,
   `uad_zipcode` varchar(200) NOT NULL,
   `uad_mobile` varchar(200) NOT NULL,
   `uad_type` tinyint(2) NOT NULL COMMENT '1=Shipping Address, 2=Billing Address',
   `uad_created` datetime NOT NULL,
   `uad_modified` datetime NOT NULL,
   PRIMARY KEY (`uad_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `inds_user_address`
+--
+
+INSERT INTO `inds_user_address` (`uad_id`, `uad_user_id`, `uad_add1`, `uad_add2`, `uad_country_id`, `uad_state_id`, `uad_city`, `uad_zipcode`, `uad_mobile`, `uad_type`, `uad_created`, `uad_modified`) VALUES
+(1, 5, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2015-07-24 07:45:43', '2015-07-24 07:45:43'),
+(2, 5, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 2, '2015-07-24 07:45:43', '2015-07-24 07:45:43');
 
 --
 -- Constraints for dumped tables

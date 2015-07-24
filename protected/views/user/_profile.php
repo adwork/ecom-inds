@@ -35,25 +35,42 @@
 				    <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'label'=>'Reset')); ?>
 				</div>				
 				<?php $this->endWidget(); ?>
-			</div>
-			<div class="span12">
+			
 				<?php /** @var BootActiveForm $form */
 				$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-				    'id'=>'verticalForm',
-				    'type'=>'horizontal',    
+				    'id'=>'user-address',
+				    'type'=>'horizontal',  
+				    'action' => array('user/saveaddress')  
 				)); 
 				?>
 				<div class="address">
 					<div class="left">
-						<div>SHIPPING ADDRESS</div>
+						<div><b>SHIPPING ADDRESS</b></div>
 						<div>
-							
+							<?php echo $form->hiddenField($userAddressModel, 'uad_type', array('name' => 'UserAddress[uad_type][1]','value' => 1)); ?>
+							<?php echo $form->hiddenField($userAddressModel, 'uad_type', array('name' => 'UserAddress[uad_id][1]','value' => (!empty($address[1]['uad_id'])) ? $address[1]['uad_id']:'')); ?>
+							<?php echo $form->textFieldRow($userAddressModel, 'uad_add1', array('value' => (!empty($address[1]['uad_add1'])) ? $address[1]['uad_add1']:'','name' => 'UserAddress[uad_add1][1]')); ?>
+							<?php echo $form->textFieldRow($userAddressModel, 'uad_add2', array('value' => (!empty($address[1]['uad_add2'])) ? $address[1]['uad_add2']:'','name' => 'UserAddress[uad_add2][1]')); ?>
+							<?php echo $form->dropDownListRow($userAddressModel,'uad_country_id', $countries,array('empty' => 'Select County','name' => 'UserAddress[uad_country_id][1]')); ?>
+							<?php echo $form->dropDownListRow($userAddressModel, 'uad_state_id', $states1,array('empty' => 'Select State','name' => 'UserAddress[uad_state_id][1]')); ?>
+							<?php echo $form->textFieldRow($userAddressModel, 'uad_city', array('value' => (!empty($address[1]['uad_city'])) ? $address[1]['uad_city']:'','name' => 'UserAddress[uad_city][1]')); ?>
+							<?php echo $form->textFieldRow($userAddressModel, 'uad_zipcode', array('value' => (!empty($address[1]['uad_zipcode'])) ? $address[1]['uad_zipcode']:'','name' => 'UserAddress[uad_zipcode][1]')); ?>
+							<?php echo $form->textFieldRow($userAddressModel, 'uad_mobile', array('value' => (!empty($address[1]['uad_mobile'])) ? $address[1]['uad_mobile']:'','name' => 'UserAddress[uad_mobile][1]')); ?>
+							<input type="checkbox" name="shippingChk" id="shippingChk">&nbsp;Billing Address same as Shipping Address
 						</div>
 					</div>
 					<div class="left">
-						<div>BILLING ADDRESS</div>
+						<div><b>BILLING ADDRESS</b></div>
 						<div>
-							
+							<?php echo $form->hiddenField($userAddressModel, 'uad_type', array('name' => 'UserAddress[uad_type][2]','value' => 2)); ?>
+							<?php echo $form->hiddenField($userAddressModel, 'uad_type', array('name' => 'UserAddress[uad_id][2]','value' => (!empty($address[2]['uad_id'])) ? $address[2]['uad_id']:'')); ?>
+							<?php echo $form->textFieldRow($userAddressModel, 'uad_add1', array('value' => (!empty($address[2]['uad_add1'])) ? $address[2]['uad_add1']:'','name' => 'UserAddress[uad_add1][2]')); ?>
+							<?php echo $form->textFieldRow($userAddressModel, 'uad_add2', array('value' => (!empty($address[2]['uad_add2'])) ? $address[2]['uad_add2']:'','name' => 'UserAddress[uad_add2][2]')); ?>
+							<?php echo $form->dropDownListRow($userAddressModel, 'uad_country_id', $countries, array('empty' => 'Select County','name' => 'UserAddress[uad_country_id][2]')); ?>
+							<?php echo $form->dropDownListRow($userAddressModel, 'uad_state_id', $states2, array('empty' => 'Select State','name' => 'UserAddress[uad_state_id][2]')); ?>
+							<?php echo $form->textFieldRow($userAddressModel, 'uad_city', array('value' => (!empty($address[2]['uad_city'])) ? $address[2]['uad_city']:'','name' => 'UserAddress[uad_city][2]')); ?>
+							<?php echo $form->textFieldRow($userAddressModel, 'uad_zipcode', array('value' => (!empty($address[2]['uad_zipcode'])) ? $address[2]['uad_zipcode']:'','name' => 'UserAddress[uad_zipcode][2]')); ?>
+							<?php echo $form->textFieldRow($userAddressModel, 'uad_mobile', array('value' => (!empty($address[2]['uad_mobile'])) ? $address[2]['uad_mobile']:'','name' => 'UserAddress[uad_mobile][2]')); ?>
 						</div>
 					</div>
 				</div>

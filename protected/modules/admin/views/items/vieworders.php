@@ -109,9 +109,13 @@
 					            				$fabCustArr = $customizatiosData[$fabArr->citm_id]['suit'];
 					            				$fabid = $customizatiosData[$fabArr->citm_id]['suit']['fabid'];	
 					            			}
-				            				echo $fabrics[$fabid];
+				            				echo $fabrics[$fabid]->fab_name;
 				            				?>
 				            			</span2>
+				            		</li>
+				            		<li>
+				            			<span1><b>Image : </b></span1>
+				            			<span2><img src="<?php echo Yii::app()->baseUrl; ?>/storage/fabrics/<?php echo $fabrics[$fabid]->fab_image; ?>" width="150"></span2>
 				            		</li>
 				            		<li>
 				            			<span1><b>Price : </b></span1>
@@ -176,6 +180,10 @@
 				            		<li>
 				            			<span1><b>Item Name : </b></span1>
 				            			<span2><?php echo $fabArr->cartItem->itm_name; ?></span2>
+				            		</li>
+				            		<li>
+				            			<span1><b>Image : </b></span1>
+				            			<span2><img src="<?php echo Yii::app()->baseUrl; ?>/storage/products/<?php echo $fabArr->cartItem->itm_photo; ?>" width="150"></span2>
 				            		</li>
 				            		<li>
 				            			<span1><b>Price : </b></span1>
