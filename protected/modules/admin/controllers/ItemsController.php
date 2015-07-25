@@ -149,10 +149,31 @@ class ItemsController extends Controller
 		$fabricDetails = Fabrics::model()->findAll();
 		$buttonDetails = Buttons::model()->findAll();
 
-		$fabrics = CHtml::listData($fabricDetails,'fab_id','fab_name');
 		$buttons = CHtml::listData($buttonDetails,'but_id','but_name');
+		$fabrics = array();
+		if(!empty($fabricDetails)){
+			foreach ($fabricDetails as $key2 => $arr) {
+				$fabId = $arr->fab_id;
+				$fabrics[$fabId] = $arr;
+			}
+		}
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		$this->render('vieworders',array('model' => $model,'fabrics' => $fabrics,'buttons' => $buttons,'customizatiosData' => $customizatiosData));
+	}
+
+	public function actionUpdatestatus(){
+		if(!empty($_POST['id'])){
+			$id = $_POST['id'];
+			$value = $_POST['val'];
+			$cartModel = Cart::model()->findByPk($id);
+			if(!empty($cartModel)){
+				$cartModel->cart_order_status = $value;
+				$cartModel->save();
+			}
+			echo 'success';
+		}else
+			echo 'error';
+		exit;
 	}
 }

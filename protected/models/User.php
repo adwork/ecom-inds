@@ -83,6 +83,7 @@ class User extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'userCart'=>array(self::HAS_MANY, 'Cart','cart_user_id'),
+			'userAdd'=>array(self::HAS_MANY, 'UserAddress','uad_user_id'),
 		);
 	}
 

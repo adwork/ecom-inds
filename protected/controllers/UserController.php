@@ -55,7 +55,8 @@ class UserController extends Controller
 	public function actionProfile()
 	{
 		$this->tabs = true;
-		$model=$this->loadModel(Yii::app()->user->id);
+		$user_id = Yii::app()->user->id;
+		$model=$this->loadModel($user_id);
 		$model->scenario = 'useredit';		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -77,13 +78,59 @@ class UserController extends Controller
 				
 			}
 		}
-		$pro_type = Yii::app()->params['pro_type'];
-		$organisation_type = Yii::app()->params['organisation_type'];
+		$orderModel = new Cart;
+		$orderModel->cart_user_id = $user_id;
+		
+		$criteria=new CDbCriteria;
+		$criteria->order = 'cnt_name ASC';
+		$userAddressModel = new UserAddress;
+
+		$countriesData = Countries::model()->findAll($criteria);
+		$countries = CHtml::listData($countriesData,'cnt_id','cnt_name');
+		$states1 = array();
+		$states2 = array();
+
+		$criteria1=new CDbCriteria;
+		$criteria1->condition = "uad_user_id=:uad_user_id";
+		$criteria1->params = array(':uad_user_id' => $user_id);
+		$userAddress = UserAddress::model()->findAll();
+		$address = array();
+		if(!empty($userAddress)){
+			foreach ($userAddress as $key => $arr) {
+				$uad_type = $arr->uad_type;
+				$address[$uad_type]['uad_id'] = $arr->uad_id;
+				$address[$uad_type]['uad_add1'] = $arr->uad_add1;
+				$address[$uad_type]['uad_add2'] = $arr->uad_add2;
+				$address[$uad_type]['uad_country_id'] = $arr->uad_country_id;
+				$address[$uad_type]['uad_state_id'] = $arr->uad_state_id;
+				$address[$uad_type]['uad_city'] = $arr->uad_city;
+				$address[$uad_type]['uad_zipcode'] = $arr->uad_zipcode;
+				$address[$uad_type]['uad_mobile'] = $arr->uad_mobile;
+			}
+		}
+
+		$criteria=new CDbCriteria;
+		$criteria->order = "st_name ASC";
+		$criteria->condition = "st_cnt_id=:st_cnt_id";
+		if(!empty($address[1]['uad_country_id'])){
+			$criteria->params = array(':st_cnt_id' => $address[1]['uad_country_id']);					
+			$statesData = States::model()->findAll($criteria);
+			$states1 = CHtml::listData($statesData,'st_id','st_name');
+		}
+		if(!empty($address[2]['uad_country_id'])){
+			$criteria->params = array(':st_cnt_id' => $address[2]['uad_country_id']);					
+			$statesData = States::model()->findAll($criteria);
+			$states2 = CHtml::listData($statesData,'st_id','st_name');
+		}
 
 		$this->render('profile',array(
 			'model'=>$model,
-			'pro_type'=>$pro_type,
-			'organisation_type'=>$organisation_type
+			'orderModel'=> $orderModel,
+			'userAddressModel' => $userAddressModel,
+			'countries' => $countries,
+			'states1' => $states1,
+			'states2' => $states2,
+			'address' => $address		
 		));
 	}
 
@@ -271,5 +318,45 @@ class UserController extends Controller
 			}
 		}
 		$this->render('forgotpassword',array('model'=>$model));		
+	}
+
+	public function actionSaveaddress(){
+		$user_id = Yii::app()->user->id;
+		if(!empty($_POST['UserAddress']['uad_type'])){
+			foreach ($_POST['UserAddress']['uad_type'] as $key => $uad_type) {
+				$model = new UserAddress;
+				$model->uad_type = $uad_type;
+				$model->uad_user_id = $user_id;
+				$model->uad_add1 = $_POST['UserAddress']['uad_add1'][$uad_type];
+				$model->uad_add2 = $_POST['UserAddress']['uad_add2'][$uad_type];
+				$model->uad_country_id = $_POST['UserAddress']['uad_country_id'][$uad_type];
+				$model->uad_state_id = $_POST['UserAddress']['uad_state_id'][$uad_type];
+				$model->uad_city = $_POST['UserAddress']['uad_city'][$uad_type];
+				$model->uad_zipcode = $_POST['UserAddress']['uad_zipcode'][$uad_type];
+				$model->uad_mobile = $_POST['UserAddress']['uad_mobile'][$uad_type];
+				if(!empty($_POST['UserAddress']['uad_id'][$uad_type])){
+					$model->uad_id = $_POST['UserAddress']['uad_id'][$uad_type];
+					$model->isNewRecord = false;
+				}else{
+					$model->isNewRecord = true;
+				}				
+				$model->save(false);
+			}
+		}
+		Yii::app()->user->setFlash('success','Address updated successfully.');
+		$this->redirect(array('user/profile'));
+	}
+
+	public function actionStates(){
+		$states = array();
+		if(!empty($_POST['cnt_id'])){
+			$criteria=new CDbCriteria;
+			$criteria->order = "st_name ASC";
+			$criteria->condition = "st_cnt_id=:st_cnt_id";
+			$criteria->params = array(':st_cnt_id' => $_POST['cnt_id']);
+			$statesData = States::model()->findAll($criteria);
+			$states = CHtml::listData($statesData,'st_id','st_name');
+		}
+		$this->renderPartial('_states',array('states' => $states));
 	}
 }

@@ -1,23 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "{{cart}}".
+ * This is the model class for table "{{countries}}".
  *
- * The followings are the available columns in table '{{cart}}':
- * @property integer $cart_id
- * @property integer $cart_user_id
- * @property string $cart_created
- * @property string $cart_modified
+ * The followings are the available columns in table '{{countries}}':
+ * @property integer $cnt_id
+ * @property string $cnt_name
+ * @property string $cnt_code_char2
+ * @property string $cnt_code_char3
+ * @property string $cnt_un_region
+ * @property string $cnt_un_subregion
  */
-class Cart extends CActiveRecord
+class Countries extends CActiveRecord
 {
-	public $u_email;
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return '{{cart}}';
+		return '{{countries}}';
 	}
 
 	/**
@@ -28,12 +29,15 @@ class Cart extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('cart_user_id,cart_orderno', 'required'),
-			array('cart_user_id', 'numerical', 'integerOnly'=>true),
+			array('cnt_id, cnt_code_char2, cnt_code_char3', 'required'),
+			array('cnt_id', 'numerical', 'integerOnly'=>true),
+			array('cnt_name', 'length', 'max'=>100),
+			array('cnt_code_char2', 'length', 'max'=>2),
+			array('cnt_code_char3', 'length', 'max'=>3),
+			array('cnt_un_region, cnt_un_subregion', 'length', 'max'=>80),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('cart_payment_status, cart_order_status, cart_paypal_result', 'safe'),
-			array('cart_id, cart_user_id, cart_created, cart_modified', 'safe', 'on'=>'search'),
+			array('cnt_id, cnt_name, cnt_code_char2, cnt_code_char3, cnt_un_region, cnt_un_subregion', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -45,8 +49,7 @@ class Cart extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'cartCartItem'=>array(self::HAS_MANY, 'CartItems','citm_cart_id'),
-			'userCart'=>array(self::BELONGS_TO, 'User','cart_user_id'),
+			'userAddCountry'=>array(self::HAS_MANY, 'UserAddress','uad_country_id'),
 		);
 	}
 
@@ -56,11 +59,12 @@ class Cart extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'cart_orderno' => 'Order No',
-			'cart_user_id' => 'Username',
-			'cart_created' => 'Order Date'	,
-			'cart_order_status' => 'Order Status',
-			'u_email' => 'Customer email'		
+			'cnt_id' => 'Cnt',
+			'cnt_name' => 'Cnt Name',
+			'cnt_code_char2' => 'Cnt Code Char2',
+			'cnt_code_char3' => 'Cnt Code Char3',
+			'cnt_un_region' => 'Cnt Un Region',
+			'cnt_un_subregion' => 'Cnt Un Subregion',
 		);
 	}
 
@@ -81,39 +85,27 @@ class Cart extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-		if(empty($this->cart_user_id)){
-			$criteria->condition = "cart_payment_status=:cart_payment_status";
-			$criteria->params = array(':cart_payment_status' => 2);
-		}
-		$criteria->with = array('userCart'=>array('select' => array('u_email')));
-		$criteria->compare('u_email',$this->u_email,true);
-		$criteria->compare('cart_user_id',$this->cart_user_id);
-		$criteria->compare('cart_created',$this->cart_created,true);
-		$data = new CActiveDataProvider($this, array(
+
+		$criteria->compare('cnt_id',$this->cnt_id);
+		$criteria->compare('cnt_name',$this->cnt_name,true);
+		$criteria->compare('cnt_code_char2',$this->cnt_code_char2,true);
+		$criteria->compare('cnt_code_char3',$this->cnt_code_char3,true);
+		$criteria->compare('cnt_un_region',$this->cnt_un_region,true);
+		$criteria->compare('cnt_un_subregion',$this->cnt_un_subregion,true);
+
+		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
-		return $data; 
 	}
 
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Cart the static model class
+	 * @return Countries the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
-	}
-
-	public function behaviors(){
-		return array(
-			'CTimestampBehavior' => array(
-				'class' => 'zii.behaviors.CTimestampBehavior',
-				'createAttribute' => 'cart_created',
-				'updateAttribute' => 'cart_modified',
-				'setUpdateOnCreate'=> true
-			)
-		);
 	}
 }

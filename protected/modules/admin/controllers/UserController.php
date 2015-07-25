@@ -314,4 +314,14 @@ class UserController extends Controller
 		$this->render('forgotpassword',array('model'=>$model));		
 	}
 
+	public function actionViewaddress($id){
+		$criteria=new CDbCriteria;
+		$criteria->order = 'uad_type ASC';
+		$criteria->condition = 'uad_user_id=:uad_user_id';
+		$criteria->params = array(':uad_user_id' => $id);
+		$model = UserAddress::model()->findAll($criteria);
+		if($model===null)
+			throw new CHttpException(404,'The requested page does not exist.');
+		$this->render('viewaddress',array('model' => $model));
+	}
 }

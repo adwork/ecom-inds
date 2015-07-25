@@ -5,11 +5,11 @@
 	}
 	.panel-body ul li span1{
 		display: inline-block;
-		width: 30%;
+		width: 20%;
 	}
 	.panel-body ul li span2{
 		display: inline-block;
-		width: 68%;
+		width: 75%;
 	}
 	.panel-body .itemHeading{
 		padding:5px;
@@ -20,7 +20,10 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-                <div style="float:left;">Order Details</div>
+                <div style="float:left;"><h2>Order Details</h2></div>
+                <div style="float:right;">
+                	<?php echo CHtml::link('Back',array('user/profile')); ?>
+                </div>
                 <div style="clear:both;"></div>
             </div>
             <div class="panel-body">
@@ -48,31 +51,7 @@
 	            					echo 'Completed'; 
 	            				?>
 	            			</span2>
-	            		</li>
-	            		<li>
-	            			<span1><b>Customer name: </b></span1>
-	            			<span2><?php echo ucwords($model[0]->cartCartItem->userCart->u_first_name." ".$model[0]->cartCartItem->userCart->u_last_name); ?></span2>
-	            		</li>
-	            		<li>
-	            			<span1><b>Customer email: </b></span1>
-	            			<span2><?php echo $model[0]->cartCartItem->userCart->u_email; ?></span2>
-	            		</li>
-	            		<li>
-	            			<span1><b>Billing / Shipping Address: </b></span1>
-	            			<span2><?php echo CHtml::link('View',array('user/viewaddress','id'=>$model[0]->cartCartItem->userCart->u_id)); ?></span2>
-	            		</li>
-	            		<li>
-	            			<span1><b>Change Status: </b></span1>
-	            			<span2>
-	            				<select name="change_status" id="change_status" rel=<?php echo $model[0]->cartCartItem->cart_id; ?>"">
-	            					<option value="">Select status</option>
-	            					<option value="0">Pending</option>
-	            					<option value="1">Under process</option>
-	            					<option value="2">Deliver</option>
-	            					<option value="3">Complete</option>
-	            				</select>
-	            			</span2>
-	            		</li>
+	            		</li>	            		
 	            	</ul>
             	</div>
             	<?php
@@ -214,25 +193,3 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-	$('#change_status').change(function(){
-		var value = $(this).val();
-		var id = $(this).attr('rel');
-		$.ajax({
-          type:'POST',
-          url:'<?php echo Yii::app()->baseUrl; ?>/admin/items/updatestatus',
-          data:{id:id,val:value},
-          success:function(data){
-          	if(data){
-          		if(data=='success'){
-          			var status = $('#change_status option:selected').text();
-          			$('.orderStatus').html(status);
-          			alert('Status updated successfully.');
-          		}
-          		else if(data=='error')
-          			alert('Status not updated. Something went wrong.');
-          	}
-          },
-        });
-	});
-</script>
