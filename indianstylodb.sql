@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 24, 2015 at 08:39 AM
+-- Generation Time: Jul 25, 2015 at 07:46 AM
 -- Server version: 5.5.41-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.11
 
@@ -120,6 +120,7 @@ INSERT INTO `inds_authitem` (`name`, `type`, `description`, `bizrule`, `data`) V
 ('AdminUserProfile', 1, '', '', 's:0:"";'),
 ('AdminUserStatus', 1, '', '', 's:0:"";'),
 ('AdminUserUserlist', 1, '', '', 's:0:"";'),
+('AdminUserViewaddress', 1, NULL, NULL, NULL),
 ('CartAddtocart', 1, NULL, NULL, NULL),
 ('CartCancel', 1, NULL, NULL, NULL),
 ('CartCheckout', 1, NULL, NULL, NULL),
@@ -220,6 +221,7 @@ INSERT INTO `inds_authitemchild` (`parent`, `child`) VALUES
 ('admin', 'AdminUserProfile'),
 ('admin', 'AdminUserStatus'),
 ('admin', 'AdminUserUserlist'),
+('admin', 'AdminUserViewaddress'),
 ('guest', 'CartAddtocart'),
 ('member', 'CartCancel'),
 ('member', 'CartCheckout'),
@@ -5302,7 +5304,7 @@ CREATE TABLE IF NOT EXISTS `inds_user` (
 
 INSERT INTO `inds_user` (`u_id`, `u_first_name`, `u_last_name`, `u_email`, `u_password`, `u_role`, `u_gender`, `u_status`, `u_mail_verify`, `u_verkey`, `u_scrkey`, `u_last_login_date`, `u_created`, `u_modified`) VALUES
 (1, 'Indian', 'Stylo', 'admin@indianstylo.com', '$2a$13$mFlSnpEY4X7.gf3ff4UKdeeZhgIskbSYyIVPWaUn7x2icbsUs11Aa', 'admin', 1, 1, 1, NULL, '496788dbd0201735a4737f0c59d90fd6', '2015-06-03 01:26:27', '2014-12-23 02:20:00', '2015-06-04 02:58:41'),
-(5, 'testuser', 'One', 'testuserone@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2015-07-23 07:27:08', '2015-06-04 02:51:57', '2015-07-23 07:27:08');
+(5, 'testuser', 'One', 'testuserone@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2015-07-25 06:36:27', '2015-06-04 02:51:57', '2015-07-25 06:36:27');
 
 -- --------------------------------------------------------
 
@@ -5331,8 +5333,8 @@ CREATE TABLE IF NOT EXISTS `inds_user_address` (
 --
 
 INSERT INTO `inds_user_address` (`uad_id`, `uad_user_id`, `uad_add1`, `uad_add2`, `uad_country_id`, `uad_state_id`, `uad_city`, `uad_zipcode`, `uad_mobile`, `uad_type`, `uad_created`, `uad_modified`) VALUES
-(1, 5, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2015-07-24 07:45:43', '2015-07-24 07:45:43'),
-(2, 5, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 2, '2015-07-24 07:45:43', '2015-07-24 07:45:43');
+(1, 5, 'add1 hhhh', 'add2 lll', 240, 18655, 'jodhpur', '342001', '123456789', 1, '2015-07-24 07:45:43', '2015-07-25 07:03:47'),
+(2, 5, 'add1 hhhh', 'add2 lll', 240, 18655, 'jodhpur', '342001', '123456789', 2, '2015-07-24 07:45:43', '2015-07-25 07:03:47');
 
 --
 -- Constraints for dumped tables

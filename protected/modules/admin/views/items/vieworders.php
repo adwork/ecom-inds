@@ -5,11 +5,11 @@
 	}
 	.panel-body ul li span1{
 		display: inline-block;
-		width: 20%;
+		width: 30%;
 	}
 	.panel-body ul li span2{
 		display: inline-block;
-		width: 75%;
+		width: 68%;
 	}
 	.panel-body .itemHeading{
 		padding:5px;
@@ -56,6 +56,10 @@
 	            		<li>
 	            			<span1><b>Customer email: </b></span1>
 	            			<span2><?php echo $model[0]->cartCartItem->userCart->u_email; ?></span2>
+	            		</li>
+	            		<li>
+	            			<span1><b>Billing / Shipping Address: </b></span1>
+	            			<span2><?php echo CHtml::link('View',array('user/viewaddress','id'=>$model[0]->cartCartItem->userCart->u_id)); ?></span2>
 	            		</li>
 	            		<li>
 	            			<span1><b>Change Status: </b></span1>

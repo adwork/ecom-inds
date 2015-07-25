@@ -343,7 +343,7 @@ class UserController extends Controller
 				$model->save(false);
 			}
 		}
-		Yii::app()->user->setFlash('success','Address save successfully.');
+		Yii::app()->user->setFlash('success','Address updated successfully.');
 		$this->redirect(array('user/profile'));
 	}
 
