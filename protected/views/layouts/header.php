@@ -44,7 +44,7 @@ $this->widget('bootstrap.widgets.TbNavbar', array(
                 array('label'=>$this->loggedusername, 'visible'=>Yii::app()->user->checkAccess('member'), 'url'=>'#', 'items'=>array(
                     array('label'=>'Dashboard', 'url'=>array('user/dashboard')),
                     array('label'=>'Profile', 'url'=>array('user/profile')),                    
-                    array('label'=>'Editor', 'url'=>array('/editor')),
+                    //array('label'=>'Editor', 'url'=>array('/editor')),
                 	array('label'=>'Change Password', 'url'=>array('user/changepassword')),
                     '---',
                     array('label'=>'Logout', 'url'=>array('site/logout')),
@@ -72,7 +72,6 @@ $this->widget('bootstrap.widgets.TbNavbar', array(
         $("a[data-target=#cartModal]").click(function(ev) {
             ev.preventDefault();
             var target = $(this).attr("href");
-
             // load the url and show modal on success
             $("#cartModal .modal-body").load(target, function() { 
                  $("#cartModal").modal("show"); 

@@ -231,3 +231,10 @@ tr.read:hover, tr.unread:hover{background-color: #EEE;}
 textarea{
   resize:none;
 }
+.modal-lg{
+  width: 800px !important;
+  margin-left: -394px !important;
+}
+/*.modal-lg .modal-body{
+  max-height: auto !important;
+}*/

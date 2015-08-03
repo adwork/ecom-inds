@@ -1,4 +1,10 @@
 <?php
+$cs = Yii::app()->clientScript;		
+$cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.steps.min.js',CClientScript::POS_HEAD)
+->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.bxslider.min.js',CClientScript::POS_HEAD)
+->registerCssFile(Yii::app()->request->baseUrl.'/css/jquery.steps.css')
+->registerCssFile(Yii::app()->request->baseUrl.'/css/jquery.bxslider.css');
+
 $this->widget('zii.widgets.jui.CJuiTabs',array(
     'tabs'=>array(
         'ACCOUNT INFO'=>array(
