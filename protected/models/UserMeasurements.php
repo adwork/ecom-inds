@@ -52,8 +52,7 @@ class UserMeasurements extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('umr_name,umr_user_id', 'required'),
-			array('umr_id, umr_product_type, umr_type, umr_fit, umr_collor, umr_shirt_length, umr_long_sleeve, umr_short_sleeve, umr_shoulder, umr_chest_half, umr_mid_section_half, umr_hip_half, umr_short_sleeve_opening, umr_arm_half, umr_cuff, umr_height, umr_feet, umr_weight, umr_describe_arms, umr_wear_shirt, umr_prefer_wear, umr_stomach, umr_hip, umr_chest,umr_collor_measurment,umr_shoulder_structure', 'numerical', 'integerOnly'=>true),
-			array('umr_name, umr_size', 'length', 'max'=>200),
+			array('umr_name, umr_size, umr_id, umr_product_type, umr_type, umr_fit, umr_collor, umr_shirt_length, umr_long_sleeve, umr_short_sleeve, umr_shoulder, umr_chest_half, umr_mid_section_half, umr_hip_half, umr_short_sleeve_opening, umr_arm_half, umr_cuff, umr_height, umr_feet, umr_weight, umr_describe_arms, umr_wear_shirt, umr_prefer_wear, umr_stomach, umr_hip, umr_chest,umr_collor_measurment,umr_shoulder_structure', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('umr_id, umr_name, umr_product_type, umr_type, umr_size, umr_fit, umr_collor, umr_shirt_length, umr_long_sleeve, umr_short_sleeve, umr_shoulder, umr_chest_half, umr_mid_section_half, umr_hip_half, umr_short_sleeve_opening, umr_arm_half, umr_cuff, umr_height, umr_feet, umr_weight, umr_describe_arms, umr_wear_shirt, umr_prefer_wear, umr_stomach, umr_hip, umr_chest, umr_created, umr_modified', 'safe', 'on'=>'search'),

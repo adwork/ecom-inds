@@ -33,11 +33,6 @@
       	</div>
       	<div class="modal-body">
 			<?php 
-			$form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-				'id'=>'user-measurements-form',
-				'enableAjaxValidation'=>false,
-			)); 
-
 			$sizes = array(
 				1 => '37 (14.75in)',
 				2 => '38 (15in)',
@@ -91,12 +86,15 @@
 			);
 			?>
 			<p class="help-block">Fields with <span class="required">*</span> are required.</p>
-			<?php echo $form->errorSummary($model); ?>
-			<?php echo $form->hiddenField($model,'umr_type',array('value'=>$type)); ?>
 			<?php
 			switch ($type) {
 				case '1':
 				case '2':
+					$form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+						'id'=>'user-measurements-form',
+						'enableAjaxValidation'=>false,
+					));
+					echo $form->hiddenField($model,'umr_type',array('value'=>$type));
 					echo $form->textFieldRow($model,'umr_name',array('class'=>'span5','maxlength'=>200));
 					echo $form->dropDownListRow($model,'umr_size',$sizes,array('class'=>'span5','empty'=>'Select'));
 					echo $form->dropDownListRow($model,'umr_fit',array(1 => 'Regular Fit',2 => 'Slim Fit'),array('class'=>'span5','empty' => 'Select'));
@@ -113,9 +111,20 @@
 						echo $form->dropDownListRow($model,'umr_short_sleeve',$shortSleeve,array('class'=>'span5'));
 						?>
 					</div>
-					<?php
+					<?php	
+					$this->widget('bootstrap.widgets.TbButton', array(
+					'buttonType'=>'submit',
+					'type'=>'primary',
+					'label'=>'Save',
+					));			
+					$this->endWidget();				
 					break;
-				case '3':			
+				case '3':
+					$form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+						'id'=>'user-measurements-form',
+						'enableAjaxValidation'=>false,
+					));
+					echo $form->hiddenField($model,'umr_type',array('value'=>$type));
 					?>
 					<div>
 						Follow these simple steps to replicate the fit of your best fitting shirt:
@@ -134,9 +143,20 @@
 						?>
 					</div>
 					<?php
-					break;
+					$this->widget('bootstrap.widgets.TbButton', array(
+					'buttonType'=>'submit',
+					'type'=>'primary',
+					'label'=>'Save',
+					));			
+					$this->endWidget();	
+					break;					
 				case '4':
 				case '5':
+					$form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+						'id'=>'user-measurements-form',
+						'enableAjaxValidation'=>false,
+					));
+					echo $form->hiddenField($model,'umr_type',array('value'=>$type));
 					?>
 					<div style="width:30%;float:left;">
 						<?php
@@ -178,8 +198,19 @@
 			        	</div>
 					</div>
 					<?php
+					$this->widget('bootstrap.widgets.TbButton', array(
+					'buttonType'=>'submit',
+					'type'=>'primary',
+					'label'=>'Save',
+					));			
+					$this->endWidget();	
 					break;
-				case '6':			
+				case '6':	
+					$form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+						'id'=>'user-measurements-form',
+						'enableAjaxValidation'=>false,
+					));
+					echo $form->hiddenField($model,'umr_type',array('value'=>$type));
 					?>
 					<div>You do not need a tailor, nor do you need a friend's assistance.</div>
 					<div>You simply need a measure tape and 10 minutes to finish this guide.</div>
@@ -418,23 +449,11 @@
 					    </section>
 					</div>
 					<?php
-					break;
-				default:
-					# code...
-					break;
+					$this->endWidget();	
+					break;				
 			}
 			?>	
-		</div> 
-		<div class="modal-footer">				
-			<?php 
-			$this->widget('bootstrap.widgets.TbButton', array(
-			'buttonType'=>'submit',
-			'type'=>'primary',
-			'label'=>'Save',
-			)); 
-			?>
-			<?php $this->endWidget(); ?>
-		</div>      
+		</div> 		
 	</div>
 </div>
 <script type="text/javascript">
@@ -443,7 +462,17 @@
 		    headerTag: "h3",
 		    bodyTag: "section",
 		    transitionEffect: "slideLeft",
-		    autoFocus: true
+		    autoFocus: true,
+		    onFinished: function (event, currentIndex) { 
+		    	alert(1);
+		    },
+		    onFinishing: function (event, currentIndex) { 
+		    	alert(2);
+		    	return true; 
+		    },
+		    labels: {
+		    	finish: "Save",
+		    }
 		});	
 		$('.bxslider').bxSlider({
 			auto:true,
@@ -455,11 +484,11 @@
 			mode: 'horizontal',
 		});*/
 		$('.customizestdSize').click(function(event) {
-			if($('#UserMeasurements_umr_size').val()!=''){
+			if($('#UserMeasurements_umr_size').val()==''){
 				alert('Please select size.');
 				return false;
 			}
-			if($('#UserMeasurements_umr_fit').val()!=''){
+			if($('#UserMeasurements_umr_fit').val()==''){
 				alert('Please select fit.');
 				return false;
 			}
@@ -477,6 +506,26 @@
 			$('.shoulderFit li').removeClass('selected');
 			$(this).parent().addClass('selected');
 			$(this).parent().parent().parent().find('#UserMeasurements_umr_shoulder_structure').val(val);
+		});
+
+		$('#user-measurements-form').submit(function(event) {
+			event.preventDefault();
+			var data = $(this).serialize();
+			var url = $(this).attr('action');
+			$.ajax({
+				url: url,
+				type: 'POST',
+				dataType: 'json',
+				data: data,
+				success:function(data) {
+					if(data){
+						if(data.error==0){
+							alert(data.msg);
+							location.reload();
+						}
+					}
+				}
+			});			
 		});
 	});
 </script>

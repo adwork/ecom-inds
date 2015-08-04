@@ -25,9 +25,19 @@ class UserMeasurementsController extends Controller
 
 		if(isset($_POST['UserMeasurements']))
 		{
+			$user_id = Yii::app()->user->id;
+			$return['error'] = 1;
+			$return['msg'] = 'Required fields should not blank.';
 			$model->attributes=$_POST['UserMeasurements'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->umr_id));
+			$model->umr_user_id = $user_id;
+			//$error = CActiveForm::validate($model);
+			//prd($error);
+			if($model->save()){
+				$return['error'] = 0;
+				$return['msg'] = 'Save Successfully.';
+			}
+			echo json_encode($return,true);
+			Yii::app()->end();
 		}
 
 		$this->render('_form',array(
