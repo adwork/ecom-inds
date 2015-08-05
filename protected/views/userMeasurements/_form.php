@@ -94,7 +94,7 @@
 						'id'=>'user-measurements-form',
 						'enableAjaxValidation'=>false,
 					));
-					echo $form->hiddenField($model,'umr_type',array('value'=>$type));
+					echo $form->hiddenField($model,'umr_type',array('value'=>0));
 					echo $form->textFieldRow($model,'umr_name',array('class'=>'span5','maxlength'=>200));
 					echo $form->dropDownListRow($model,'umr_size',$sizes,array('class'=>'span5','empty'=>'Select'));
 					echo $form->dropDownListRow($model,'umr_fit',array(1 => 'Regular Fit',2 => 'Slim Fit'),array('class'=>'span5','empty' => 'Select'));
@@ -124,7 +124,7 @@
 						'id'=>'user-measurements-form',
 						'enableAjaxValidation'=>false,
 					));
-					echo $form->hiddenField($model,'umr_type',array('value'=>$type));
+					echo $form->hiddenField($model,'umr_type',array('value'=>1));
 					?>
 					<div>
 						Follow these simple steps to replicate the fit of your best fitting shirt:
@@ -156,7 +156,7 @@
 						'id'=>'user-measurements-form',
 						'enableAjaxValidation'=>false,
 					));
-					echo $form->hiddenField($model,'umr_type',array('value'=>$type));
+					echo $form->hiddenField($model,'umr_type',array('value'=>2));
 					?>
 					<div style="width:30%;float:left;">
 						<?php
@@ -210,7 +210,7 @@
 						'id'=>'user-measurements-form',
 						'enableAjaxValidation'=>false,
 					));
-					echo $form->hiddenField($model,'umr_type',array('value'=>$type));
+					echo $form->hiddenField($model,'umr_type',array('value'=>3));
 					?>
 					<div>You do not need a tailor, nor do you need a friend's assistance.</div>
 					<div>You simply need a measure tape and 10 minutes to finish this guide.</div>
@@ -464,10 +464,9 @@
 		    transitionEffect: "slideLeft",
 		    autoFocus: true,
 		    onFinished: function (event, currentIndex) { 
-		    	alert(1);
+		    	return $('#user-measurements-form').submit();
 		    },
 		    onFinishing: function (event, currentIndex) { 
-		    	alert(2);
 		    	return true; 
 		    },
 		    labels: {
@@ -521,7 +520,7 @@
 					if(data){
 						if(data.error==0){
 							alert(data.msg);
-							location.reload();
+							window.location = '<?php echo Yii::app()->baseUrl; ?>/user/profile/#myMeasurmentTab';
 						}
 					}
 				}

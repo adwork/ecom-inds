@@ -123,6 +123,17 @@ class UserController extends Controller
 			$states2 = CHtml::listData($statesData,'st_id','st_name');
 		}
 
+		$criteria1=new CDbCriteria;
+		$criteria1->condition = "umr_user_id=:umr_user_id";
+		$criteria1->params = array(':umr_user_id' => $user_id);
+		$userMesurementData = UserMeasurements::model()->findAll($criteria1);
+		$userMesurements = array();
+		if(!empty($userMesurementData)){
+			foreach ($userMesurementData as $umKey => $umArr) {
+				$umType = $umArr->umr_type;
+				$userMesurements[$umType][] = $umArr;
+			}
+		}
 		$this->render('profile',array(
 			'model'=>$model,
 			'orderModel'=> $orderModel,
@@ -130,7 +141,8 @@ class UserController extends Controller
 			'countries' => $countries,
 			'states1' => $states1,
 			'states2' => $states2,
-			'address' => $address		
+			'address' => $address,
+			'userMesurements' => $userMesurements		
 		));
 	}
 

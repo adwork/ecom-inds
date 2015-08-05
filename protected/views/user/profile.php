@@ -24,7 +24,8 @@ $this->widget('zii.widgets.jui.CJuiTabs',array(
         'MY MEASURMENT'=>array(
         	'content'=>$this->renderPartial(
         		'_mymeasurment',array(
-        			'model' => $model
+        			'model' => $model,
+        			'userMesurements' => $userMesurements
         		),
         		true
         	),

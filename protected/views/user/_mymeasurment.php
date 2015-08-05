@@ -12,6 +12,21 @@
 	.mymeasurment .sleeve_buttons{
 		float:right;margin-right:5px;display: none;
 	}
+	.mymeasurment .details ul li{
+		display: inline-block;
+	}
+	.mymeasurment .details ul li.srno{
+		min-width: 2%;
+	}
+	.mymeasurment .details ul li.name{
+		min-width: 78%;
+	}
+	.mymeasurment .details ul li.view{
+		min-width: 9%;
+	}
+	.mymeasurment .details ul li.delete{
+		min-width: 9%;
+	}
 </style>
 <div class="mymeasurment">
 	<div>
@@ -27,7 +42,27 @@
 		<div style="clear:both;"></div>
 	</div>
 	<div class="details">
-		<div>You have no measurement profile saved under this option.</div>
+		<?php
+		if(!empty($userMesurements[0])){
+			foreach ($userMesurements[0] as $stKey => $stArr) {
+				?>
+				<div>
+					<ul>
+						<li class="srno"><?php echo ($stKey+1); ?>.</li>
+						<li class="name"><?php echo $stArr->umr_name; ?></li>
+						<li class="view">View</li>
+						<li class="delete">Delete</li>
+					</ul>
+				</div>
+				<div>&nbsp;</div>
+				<?php
+			}
+		}else{
+			?>
+			<div>You have no measurement profile saved under this option.</div>
+			<?php
+		}
+		?>		
 	</div>
 	<div>&nbsp;</div>
 	<div>
@@ -38,7 +73,27 @@
 		<div style="clear:both;"></div>
 	</div>
 	<div class="details">
-		<div>You have no measurement profile saved under this option.</div>
+		<?php
+		if(!empty($userMesurements[1])){
+			foreach ($userMesurements[1] as $ssKey => $ssArr) {
+				?>
+				<div>
+					<ul>
+						<li class="srno"><?php echo ($ssKey+1); ?>.</li>
+						<li class="name"><?php echo $ssArr->umr_name; ?></li>
+						<li class="view">View</li>
+						<li class="delete">Delete</li>
+					</ul>
+				</div>
+				<div>&nbsp;</div>
+				<?php
+			}
+		}else{
+			?>
+			<div>You have no measurement profile saved under this option.</div>
+			<?php
+		}
+		?>
 	</div>
 	<div>&nbsp;</div>
 	<div>
@@ -54,7 +109,27 @@
 		<div style="clear:both;"></div>
 	</div>
 	<div class="details">
-		<div>You have no measurement profile saved under this option.</div>
+		<?php
+		if(!empty($userMesurements[2])){
+			foreach ($userMesurements[2] as $smKey => $smArr) {
+				?>
+				<div>
+					<ul>
+						<li class="srno"><?php echo ($smKey+1); ?>.</li>
+						<li class="name"><?php echo $smArr->umr_name; ?></li>
+						<li class="view">View</li>
+						<li class="delete">Delete</li>
+					</ul>
+				</div>
+				<div>&nbsp;</div>
+				<?php
+			}
+		}else{
+			?>
+			<div>You have no measurement profile saved under this option.</div>
+			<?php
+		}
+		?>
 	</div>
 	<div>&nbsp;</div>
 	<div>
@@ -65,7 +140,27 @@
 		<div style="clear:both;"></div>
 	</div>
 	<div class="details">
-		<div>You have no measurement profile saved under this option.</div>
+		<?php
+		if(!empty($userMesurements[3])){
+			foreach ($userMesurements[3] as $bmKey => $bmArr) {
+				?>
+				<div>
+					<ul>
+						<li class="srno"><?php echo ($bmKey+1); ?>.</li>
+						<li class="name"><?php echo $bmArr->umr_name; ?></li>
+						<li class="view">View</li>
+						<li class="delete">Delete</li>
+					</ul>
+				</div>
+				<div>&nbsp;</div>
+				<?php
+			}
+		}else{
+			?>
+			<div>You have no measurement profile saved under this option.</div>
+			<?php
+		}
+		?>
 	</div>
 </div>
 <div class="modal fade modal-lg" id="measurementModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
