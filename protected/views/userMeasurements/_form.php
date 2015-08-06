@@ -227,9 +227,15 @@
 					    </section>
 					    <h3></h3>
 					    <section>
-					    	<?php echo $form->hiddenField($model,'umr_feet'); ?>
+					    	<?php 
+					    	echo $form->hiddenField($model,'umr_feet'); 
+					    	$umr_feet_select = '';
+					    	if(!empty($model->umr_feet)){
+					    		$umr_feet_select = $model->umr_feet;
+					    	}
+					    	?>
 					    	<ul class="bodyFits">
-					    		<li>
+					    		<li class="<?php echo ($umr_feet_select==1) ? 'selected' : ''; ?>">
 					    			<a href="javascript:void(0);" rel="1">
 								        <div>
 								        	<div align="center">SLIM</div>
@@ -238,7 +244,7 @@
 								        </div>
 							        </a>
 					        	</li>
-					        	<li>
+					        	<li class="<?php echo ($umr_feet_select==2) ? 'selected' : ''; ?>">
 					        		<a href="javascript:void(0);" rel="2">
 								        <div>
 								        	<div align="center">REGULAR</div>
@@ -247,7 +253,7 @@
 								        </div>
 							        </a>
 					        	</li>
-					        	<li>
+					        	<li class="<?php echo ($umr_feet_select==3) ? 'selected' : ''; ?>">
 					        		<a href="javascript:void(0);" rel="3">
 								        <div>
 								        	<div align="center">LOOSE</div>
@@ -414,30 +420,36 @@
 					    <h3></h3>
 					    <section>
 					        <div> 
-					        	<?php echo $form->hiddenField($model,'umr_shoulder_structure'); ?>
+					        	<?php 
+					        	echo $form->hiddenField($model,'umr_shoulder_structure'); 
+					        	$umr_shoulder_structure_select = '';
+						    	if(!empty($model->umr_shoulder_structure)){
+						    		$umr_shoulder_structure_select = $model->umr_shoulder_structure;
+						    	}
+					        	?>
 					        	<ul class="shoulderFit">
-					        		<li>
+					        		<li class="<?php echo ($umr_shoulder_structure_select==1) ? 'selected' : ''; ?>">
 					        			<a href="javascript:void(0);" rel="1">
 						        			<div align="center">Extremely Narrow</div>
 						        			<div><img src="<?php echo Yii::app()->baseUrl; ?>/images/bm-extremly-narrow-preview.png"></div>
 						        			<div>Noticed only in overweight men. For such men, readymade shirts droop significantly at the shoulders</div>
 					        			</a>
 					        		</li>
-					        		<li>
+					        		<li class="<?php echo ($umr_shoulder_structure_select==2) ? 'selected' : ''; ?>">
 					        			<a href="javascript:void(0);" rel="2">
 						        			<div align="center">Narrow</div>
 						        			<div><img src="<?php echo Yii::app()->baseUrl; ?>/images/bm-narrow-preview.png"></div>
 						        			<div>Such men have rounded or sloping shoulders and find that readymade shirts droop at their shoulders</div>
 					        			</a>
 					        		</li>
-					        		<li>
+					        		<li class="<?php echo ($umr_shoulder_structure_select==3) ? 'selected' : ''; ?>">
 					        			<a href="javascript:void(0);" rel="3">
 						        			<div align="center">Regular</div>
 						        			<div><img src="<?php echo Yii::app()->baseUrl; ?>/images/bm-regular-preview.png"></div>
 						        			<div>More than 60% of men fall in this category, so don't be surprise if you do too</div>
 					        			</a>
 					        		</li>
-					        		<li>
+					        		<li class="<?php echo ($umr_shoulder_structure_select==4) ? 'selected' : ''; ?>">
 					        			<a href="javascript:void(0);" rel="4">
 						        			<div align="center">Broad</div>
 						        			<div><img src="<?php echo Yii::app()->baseUrl; ?>/images/bm-broad-preview.png"></div>
@@ -520,7 +532,8 @@
 					if(data){
 						if(data.error==0){
 							alert(data.msg);
-							window.location = '<?php echo Yii::app()->baseUrl; ?>/user/profile/#myMeasurmentTab';
+							//window.location = '<?php echo Yii::app()->baseUrl; ?>/user/profile/#myMeasurmentTab';
+							location.reload();
 						}
 					}
 				}

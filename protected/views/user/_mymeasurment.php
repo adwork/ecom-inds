@@ -50,8 +50,12 @@
 					<ul>
 						<li class="srno"><?php echo ($stKey+1); ?>.</li>
 						<li class="name"><?php echo $stArr->umr_name; ?></li>
-						<li class="view">View</li>
-						<li class="delete">Delete</li>
+						<li class="view">
+							<?php echo CHtml::link('Edit',array('userMeasurements/update','umid' => $stArr->umr_id,'type' => 1),array('data-toggle' => 'modal' ,'data-target' => '#measurementModal1')); ?>
+						</li>
+						<li class="delete">
+							<?php echo CHtml::link('Delete',array('userMeasurements/delete','id' => $stArr->umr_id)); ?>
+						</li>
 					</ul>
 				</div>
 				<div>&nbsp;</div>
@@ -81,8 +85,12 @@
 					<ul>
 						<li class="srno"><?php echo ($ssKey+1); ?>.</li>
 						<li class="name"><?php echo $ssArr->umr_name; ?></li>
-						<li class="view">View</li>
-						<li class="delete">Delete</li>
+						<li class="view">
+							<?php echo CHtml::link('Edit',array('userMeasurements/update','umid' => $ssArr->umr_id,'type' => 3),array('data-toggle' => 'modal' ,'data-target' => '#measurementModal3')); ?>
+						</li>
+						<li class="delete">
+							<?php echo CHtml::link('Delete',array('userMeasurements/delete','id' => $ssArr->umr_id)); ?>
+						</li>
 					</ul>
 				</div>
 				<div>&nbsp;</div>
@@ -117,8 +125,12 @@
 					<ul>
 						<li class="srno"><?php echo ($smKey+1); ?>.</li>
 						<li class="name"><?php echo $smArr->umr_name; ?></li>
-						<li class="view">View</li>
-						<li class="delete">Delete</li>
+						<li class="view">
+							<?php echo CHtml::link('Edit',array('userMeasurements/update','umid' => $smArr->umr_id,'type' => 4),array('data-toggle' => 'modal' ,'data-target' => '#measurementModal4')); ?>
+						</li>
+						<li class="delete">
+							<?php echo CHtml::link('Delete',array('userMeasurements/delete','id' => $smArr->umr_id)); ?>
+						</li>
 					</ul>
 				</div>
 				<div>&nbsp;</div>
@@ -148,8 +160,12 @@
 					<ul>
 						<li class="srno"><?php echo ($bmKey+1); ?>.</li>
 						<li class="name"><?php echo $bmArr->umr_name; ?></li>
-						<li class="view">View</li>
-						<li class="delete">Delete</li>
+						<li class="view">
+							<?php echo CHtml::link('Edit',array('userMeasurements/update','umid' => $bmArr->umr_id,'type' => 6),array('data-toggle' => 'modal' ,'data-target' => '#measurementModal6')); ?>
+						</li>
+						<li class="delete">
+							<?php echo CHtml::link('Delete',array('userMeasurements/delete','id' => $bmArr->umr_id)); ?>
+						</li>
 					</ul>
 				</div>
 				<div>&nbsp;</div>
@@ -176,7 +192,21 @@
     </div>
   </div>
 </div>
-<div class="modal fade modal-lg" id="measurementModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"></div>
+
+<div class="modal fade modal-lg" id="measurementModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Standard Size</h4>
+      </div>
+      <div class="modal-body">
+          
+      </div>       
+    </div>
+  </div>
+</div>
+
 <div class="modal fade" id="measurementModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -190,6 +220,7 @@
     </div>
   </div>
 </div>
+
 <div class="modal fade modal-lg" id="measurementModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -203,6 +234,7 @@
     </div>
   </div>
 </div>
+
 <div class="modal fade modal-lg" id="measurementModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -216,6 +248,7 @@
     </div>
   </div>
 </div>
+
 <div class="modal fade modal-lg" id="measurementModal6" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -243,6 +276,28 @@
 				$(this).parent().parent().find('.sleeve_buttons').hide('slow');
 				$(this).parent().show('slow');
 			}
+		});
+
+		$('.delete a').click(function(event) {
+			event.preventDefault();
+			var url = $(this).attr('href');
+			var con = confirm('Are you sure want to delete this record?');
+			if(con){
+			$.ajax({
+				url: url,
+				type: 'POST',
+				dataType: 'json',
+				success:function(data) {
+					if(data){
+						if(data.error==0){
+							alert(data.msg);
+							//window.location = '<?php echo Yii::app()->baseUrl; ?>/user/profile/#myMeasurmentTab';
+							location.reload();
+						}
+					}
+				}
+			});
+		    }
 		});
 	});
 </script>

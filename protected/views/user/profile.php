@@ -29,7 +29,7 @@ $this->widget('zii.widgets.jui.CJuiTabs',array(
         		),
         		true
         	),
-        	'id' => 'myMeasurmentTab'
+        	'id' => 'myMeasurmentTab',        	
         ),
         'MY ORDER HISTORY'=>array(
         	'content'=>$this->renderPartial(
@@ -39,9 +39,15 @@ $this->widget('zii.widgets.jui.CJuiTabs',array(
         		true
         	),
         	'id' => 'myOrderHistory'
-        ),
-    )    
-));
+        ),        
+    ),
+    /*'options'=>array(
+        'select' => 'javascript://function(){
+			location.hash = "myMeasurmentTab"
+			alert("sadasdasd");
+		}'
+    ),*/    
+)); 
 ?>			
 <script type="text/javascript">
 	$(document).ready(function($) {

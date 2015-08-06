@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 05, 2015 at 07:56 AM
+-- Generation Time: Aug 06, 2015 at 08:24 AM
 -- Server version: 5.5.41-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.11
 
@@ -144,6 +144,9 @@ INSERT INTO `inds_authitem` (`name`, `type`, `description`, `bizrule`, `data`) V
 ('UserDashboard', 1, '', '', 's:0:"";'),
 ('UserForgotpassword', 1, '', '', 's:0:"";'),
 ('UserMeasurementsCreate', 1, NULL, NULL, NULL),
+('UserMeasurementsDelete', 1, NULL, NULL, NULL),
+('UserMeasurementsUpdate', 1, NULL, NULL, NULL),
+('UserMeasurementsView', 1, NULL, NULL, NULL),
 ('UserProfile', 1, '', '', 's:0:"";'),
 ('UserResetpassword', 1, '', '', 's:0:"";'),
 ('UserSaveaddress', 1, NULL, NULL, NULL),
@@ -244,6 +247,9 @@ INSERT INTO `inds_authitemchild` (`parent`, `child`) VALUES
 ('member', 'UserDashboard'),
 ('guest', 'UserForgotpassword'),
 ('member', 'UserMeasurementsCreate'),
+('member', 'UserMeasurementsDelete'),
+('member', 'UserMeasurementsUpdate'),
+('member', 'UserMeasurementsView'),
 ('member', 'UserProfile'),
 ('guest', 'UserResetpassword'),
 ('member', 'UserSaveaddress'),
@@ -5377,16 +5383,16 @@ CREATE TABLE IF NOT EXISTS `inds_user_measurements` (
   `umr_created` datetime NOT NULL,
   `umr_modified` datetime NOT NULL,
   PRIMARY KEY (`umr_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `inds_user_measurements`
 --
 
 INSERT INTO `inds_user_measurements` (`umr_id`, `umr_user_id`, `umr_name`, `umr_product_type`, `umr_type`, `umr_size`, `umr_fit`, `umr_collor`, `umr_shirt_length`, `umr_long_sleeve`, `umr_short_sleeve`, `umr_shoulder`, `umr_chest_half`, `umr_mid_section_half`, `umr_hip_half`, `umr_short_sleeve_opening`, `umr_arm_half`, `umr_cuff`, `umr_height`, `umr_feet`, `umr_weight`, `umr_describe_arms`, `umr_wear_shirt`, `umr_prefer_wear`, `umr_stomach`, `umr_hip`, `umr_chest`, `umr_collor_measurment`, `umr_shoulder_structure`, `umr_created`, `umr_modified`) VALUES
-(1, 5, 'st size', 0, 0, '1', 1, 14, 24, 22, 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-08-05 07:09:29', '2015-08-05 07:09:29'),
-(2, 5, 'send_a_shirt', 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-08-05 07:09:50', '2015-08-05 07:09:50'),
-(3, 5, 'shirt_measurement', 0, 2, NULL, NULL, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-08-05 07:15:11', '2015-08-05 07:15:11'),
+(1, 5, 'st _size', 0, 0, '1', 1, 14, 24, 22, 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-08-05 07:09:29', '2015-08-06 07:21:04'),
+(2, 5, 'send a shirt', 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-08-05 07:09:50', '2015-08-06 07:21:44'),
+(3, 5, 'shirt measurement', 0, 2, NULL, NULL, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-08-05 07:15:11', '2015-08-06 07:22:42'),
 (4, 5, 'body_measurement', 0, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20, 2, 20, 2, 3, 1, 30, 30, 36, 20, 4, '2015-08-05 07:24:15', '2015-08-05 07:24:15');
 
 --

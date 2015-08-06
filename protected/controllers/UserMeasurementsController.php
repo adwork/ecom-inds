@@ -14,10 +14,8 @@ class UserMeasurementsController extends Controller
 	 */
 	public function actionCreate($type)
 	{
-		
 		if($type===null)
 			throw new CHttpException(404,'The requested page does not exist.');
-
 		$model=new UserMeasurements;
 
 		// Uncomment the following line if AJAX validation is needed
@@ -47,26 +45,49 @@ class UserMeasurementsController extends Controller
 	}
 
 	/**
+	 * View a new model.
+	 */
+	public function actionView($umid,$type)
+	{
+		$this->layout = false;
+		if($type===null && $umid===null)
+			throw new CHttpException(404,'The requested page does not exist.');
+
+		$model=$this->loadModel($umid);
+		$this->render('view',array(
+			'model'=>$model,
+			'type' => $type
+		));
+	}
+
+	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate($id)
+	public function actionUpdate($umid,$type)
 	{
-		$model=$this->loadModel($id);
+		$model=$this->loadModel($umid);
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['UserMeasurements']))
 		{
+			$return['error'] = 1;
+			$return['msg'] = 'Required fields should not blank.';
 			$model->attributes=$_POST['UserMeasurements'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->umr_id));
+			if($model->save()){
+				$return['error'] = 0;
+				$return['msg'] = 'Save Successfully.';
+			}
+			echo json_encode($return,true);
+			Yii::app()->end();
 		}
 
 		$this->render('_form',array(
-			'model'=>$model,
+			'model' => $model,
+			'type' => $type
 		));
 	}
 
@@ -79,12 +100,15 @@ class UserMeasurementsController extends Controller
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
+			$return['error'] = 1;
+			$return['msg'] = 'Something went wrong.';
 			// we only allow deletion via POST request
-			$this->loadModel($id)->delete();
-
-			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-			if(!isset($_GET['ajax']))
-				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			if($this->loadModel($id)->delete()){
+				$return['error'] = 0;
+				$return['msg'] = 'Delete Successfully.';
+			}
+			echo json_encode($return,true);
+			Yii::app()->end();			
 		}
 		else
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
