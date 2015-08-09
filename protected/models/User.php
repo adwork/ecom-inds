@@ -84,6 +84,7 @@ class User extends CActiveRecord
 		return array(
 			'userCart'=>array(self::HAS_MANY, 'Cart','cart_user_id'),
 			'userAdd'=>array(self::HAS_MANY, 'UserAddress','uad_user_id'),
+			'userMeasurement'=>array(self::HAS_MANY, 'UserMeasurements','umr_user_id'),
 		);
 	}
 

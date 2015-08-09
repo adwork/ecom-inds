@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 25, 2015 at 07:46 AM
+-- Generation Time: Aug 06, 2015 at 08:24 AM
 -- Server version: 5.5.41-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.11
 
@@ -143,6 +143,10 @@ INSERT INTO `inds_authitem` (`name`, `type`, `description`, `bizrule`, `data`) V
 ('UserChangepassword', 1, '', '', 's:0:"";'),
 ('UserDashboard', 1, '', '', 's:0:"";'),
 ('UserForgotpassword', 1, '', '', 's:0:"";'),
+('UserMeasurementsCreate', 1, NULL, NULL, NULL),
+('UserMeasurementsDelete', 1, NULL, NULL, NULL),
+('UserMeasurementsUpdate', 1, NULL, NULL, NULL),
+('UserMeasurementsView', 1, NULL, NULL, NULL),
 ('UserProfile', 1, '', '', 's:0:"";'),
 ('UserResetpassword', 1, '', '', 's:0:"";'),
 ('UserSaveaddress', 1, NULL, NULL, NULL),
@@ -242,6 +246,10 @@ INSERT INTO `inds_authitemchild` (`parent`, `child`) VALUES
 ('member', 'UserChangepassword'),
 ('member', 'UserDashboard'),
 ('guest', 'UserForgotpassword'),
+('member', 'UserMeasurementsCreate'),
+('member', 'UserMeasurementsDelete'),
+('member', 'UserMeasurementsUpdate'),
+('member', 'UserMeasurementsView'),
 ('member', 'UserProfile'),
 ('guest', 'UserResetpassword'),
 ('member', 'UserSaveaddress'),
@@ -5304,7 +5312,7 @@ CREATE TABLE IF NOT EXISTS `inds_user` (
 
 INSERT INTO `inds_user` (`u_id`, `u_first_name`, `u_last_name`, `u_email`, `u_password`, `u_role`, `u_gender`, `u_status`, `u_mail_verify`, `u_verkey`, `u_scrkey`, `u_last_login_date`, `u_created`, `u_modified`) VALUES
 (1, 'Indian', 'Stylo', 'admin@indianstylo.com', '$2a$13$mFlSnpEY4X7.gf3ff4UKdeeZhgIskbSYyIVPWaUn7x2icbsUs11Aa', 'admin', 1, 1, 1, NULL, '496788dbd0201735a4737f0c59d90fd6', '2015-06-03 01:26:27', '2014-12-23 02:20:00', '2015-06-04 02:58:41'),
-(5, 'testuser', 'One', 'testuserone@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2015-07-25 06:36:27', '2015-06-04 02:51:57', '2015-07-25 06:36:27');
+(5, 'testuser', 'One', 'testuserone@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2015-08-05 07:05:37', '2015-06-04 02:51:57', '2015-08-05 07:05:37');
 
 -- --------------------------------------------------------
 
@@ -5335,6 +5343,57 @@ CREATE TABLE IF NOT EXISTS `inds_user_address` (
 INSERT INTO `inds_user_address` (`uad_id`, `uad_user_id`, `uad_add1`, `uad_add2`, `uad_country_id`, `uad_state_id`, `uad_city`, `uad_zipcode`, `uad_mobile`, `uad_type`, `uad_created`, `uad_modified`) VALUES
 (1, 5, 'add1 hhhh', 'add2 lll', 240, 18655, 'jodhpur', '342001', '123456789', 1, '2015-07-24 07:45:43', '2015-07-25 07:03:47'),
 (2, 5, 'add1 hhhh', 'add2 lll', 240, 18655, 'jodhpur', '342001', '123456789', 2, '2015-07-24 07:45:43', '2015-07-25 07:03:47');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inds_user_measurements`
+--
+
+CREATE TABLE IF NOT EXISTS `inds_user_measurements` (
+  `umr_id` int(11) NOT NULL AUTO_INCREMENT,
+  `umr_user_id` int(11) NOT NULL,
+  `umr_name` varchar(200) NOT NULL,
+  `umr_product_type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0=Shirt, 1=Trouser, 2=Blazer',
+  `umr_type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0=Standard size, 1=send a shirt, 2=shirt measurment, 3=body measurment',
+  `umr_size` varchar(200) DEFAULT NULL,
+  `umr_fit` tinyint(2) DEFAULT NULL COMMENT '0=slim,1=regular,2=loose',
+  `umr_collor` int(11) DEFAULT NULL,
+  `umr_shirt_length` int(11) DEFAULT NULL,
+  `umr_long_sleeve` int(11) DEFAULT NULL,
+  `umr_short_sleeve` int(11) DEFAULT NULL,
+  `umr_shoulder` int(11) DEFAULT NULL,
+  `umr_chest_half` int(11) DEFAULT NULL,
+  `umr_mid_section_half` int(11) DEFAULT NULL,
+  `umr_hip_half` int(11) DEFAULT NULL,
+  `umr_short_sleeve_opening` int(11) DEFAULT NULL,
+  `umr_arm_half` int(11) DEFAULT NULL,
+  `umr_cuff` int(11) DEFAULT NULL,
+  `umr_height` int(11) DEFAULT NULL,
+  `umr_feet` int(11) DEFAULT NULL,
+  `umr_weight` int(11) DEFAULT NULL,
+  `umr_describe_arms` int(11) DEFAULT NULL,
+  `umr_wear_shirt` int(11) DEFAULT NULL,
+  `umr_prefer_wear` tinyint(2) DEFAULT NULL COMMENT '0 = formal short sleeves,1 = casual short sleeves,2 = short sleeves',
+  `umr_stomach` int(11) DEFAULT NULL,
+  `umr_hip` int(11) DEFAULT NULL,
+  `umr_chest` int(11) DEFAULT NULL,
+  `umr_collor_measurment` int(11) DEFAULT NULL,
+  `umr_shoulder_structure` tinyint(2) DEFAULT NULL,
+  `umr_created` datetime NOT NULL,
+  `umr_modified` datetime NOT NULL,
+  PRIMARY KEY (`umr_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `inds_user_measurements`
+--
+
+INSERT INTO `inds_user_measurements` (`umr_id`, `umr_user_id`, `umr_name`, `umr_product_type`, `umr_type`, `umr_size`, `umr_fit`, `umr_collor`, `umr_shirt_length`, `umr_long_sleeve`, `umr_short_sleeve`, `umr_shoulder`, `umr_chest_half`, `umr_mid_section_half`, `umr_hip_half`, `umr_short_sleeve_opening`, `umr_arm_half`, `umr_cuff`, `umr_height`, `umr_feet`, `umr_weight`, `umr_describe_arms`, `umr_wear_shirt`, `umr_prefer_wear`, `umr_stomach`, `umr_hip`, `umr_chest`, `umr_collor_measurment`, `umr_shoulder_structure`, `umr_created`, `umr_modified`) VALUES
+(1, 5, 'st _size', 0, 0, '1', 1, 14, 24, 22, 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-08-05 07:09:29', '2015-08-06 07:21:04'),
+(2, 5, 'send a shirt', 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-08-05 07:09:50', '2015-08-06 07:21:44'),
+(3, 5, 'shirt measurement', 0, 2, NULL, NULL, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-08-05 07:15:11', '2015-08-06 07:22:42'),
+(4, 5, 'body_measurement', 0, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20, 2, 20, 2, 3, 1, 30, 30, 36, 20, 4, '2015-08-05 07:24:15', '2015-08-05 07:24:15');
 
 --
 -- Constraints for dumped tables

@@ -1,4 +1,10 @@
 <?php
+$cs = Yii::app()->clientScript;		
+$cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.steps.min.js',CClientScript::POS_HEAD)
+->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.bxslider.min.js',CClientScript::POS_HEAD)
+->registerCssFile(Yii::app()->request->baseUrl.'/css/jquery.steps.css')
+->registerCssFile(Yii::app()->request->baseUrl.'/css/jquery.bxslider.css');
+
 $this->widget('zii.widgets.jui.CJuiTabs',array(
     'tabs'=>array(
         'ACCOUNT INFO'=>array(
@@ -18,11 +24,12 @@ $this->widget('zii.widgets.jui.CJuiTabs',array(
         'MY MEASURMENT'=>array(
         	'content'=>$this->renderPartial(
         		'_mymeasurment',array(
-        			'model' => $model
+        			'model' => $model,
+        			'userMesurements' => $userMesurements
         		),
         		true
         	),
-        	'id' => 'myMeasurmentTab'
+        	'id' => 'myMeasurmentTab',        	
         ),
         'MY ORDER HISTORY'=>array(
         	'content'=>$this->renderPartial(
@@ -32,9 +39,15 @@ $this->widget('zii.widgets.jui.CJuiTabs',array(
         		true
         	),
         	'id' => 'myOrderHistory'
-        ),
-    )    
-));
+        ),        
+    ),
+    /*'options'=>array(
+        'select' => 'javascript://function(){
+			location.hash = "myMeasurmentTab"
+			alert("sadasdasd");
+		}'
+    ),*/    
+)); 
 ?>			
 <script type="text/javascript">
 	$(document).ready(function($) {
