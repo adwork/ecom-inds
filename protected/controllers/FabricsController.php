@@ -34,17 +34,20 @@ class FabricsController extends Controller
 		if(!empty($_GET['color']))
 			$model->searchCriteria['fab_color'] 	= $_GET['color'];
 
+		$fabricdata = $model->find('fab_id=:fabric_id',array(':fabric_id'=>$id));
 		$params = array(
 			'model' => $model,
 			'fabricDetail' => $fabricDetail,
 			'id' => $id,
-			'buttons' => $buttons
+			'buttons' => $buttons,
+			'fabric_for' => $fabricdata->fab_for
 		);
 
-		if(!empty($_GET['ajax']))
+		if(!empty($_GET['ajax'])){
 			$this->renderPartial('view',$params);
-		else
-			$this->render('view',$params);		
+		}else{
+			$this->render('view',$params);
+		}
 	}	
 
 	/**

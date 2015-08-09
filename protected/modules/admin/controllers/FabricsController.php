@@ -30,28 +30,27 @@ class FabricsController extends Controller
 			
 			if($model->save()){
 				$dir_name 			= Yii::getPathOfAlias('webroot').'/storage/fabrics/';
-				$fabFolder 			= $dir_name.$model->fab_id;
-				$fabFolderBack 		= $dir_name.$model->fab_id."/back";
-				$fabFolderCollor 	= $dir_name.$model->fab_id."/collar";
-				$fabFolderCuff 		= $dir_name.$model->fab_id."/cuff";
-				$fabFolderFront 	= $dir_name.$model->fab_id."/front";
-				$fabFolderPlacket 	= $dir_name.$model->fab_id."/placket";
-				$fabFolderPocket 	= $dir_name.$model->fab_id."/pocket";
-				$fabFolderSleeve 	= $dir_name.$model->fab_id."/sleeve";
-				$fabFolderYoke 		= $dir_name.$model->fab_id."/yoke";
 				if(!empty($model->fab_for)){
 					if($model->fab_for==1){
-						mkdir($fabFolder, 0777);
-						mkdir($fabFolderBack, 0777);
-						mkdir($fabFolderCollor, 0777);
-						mkdir($fabFolderCuff, 0777);
-						mkdir($fabFolderFront, 0777);
-						mkdir($fabFolderPlacket, 0777);
-						mkdir($fabFolderPocket, 0777);
-						mkdir($fabFolderSleeve, 0777);
-						mkdir($fabFolderYoke, 0777);
+						// fro shirt
+						mkdir($dir_name.$model->fab_id, 0777);
+						mkdir($dir_name.$model->fab_id."/back", 0777);
+						mkdir($dir_name.$model->fab_id."/collar", 0777);
+						mkdir($dir_name.$model->fab_id."/cuff", 0777);
+						mkdir($dir_name.$model->fab_id."/front", 0777);
+						mkdir($dir_name.$model->fab_id."/placket", 0777);
+						mkdir($dir_name.$model->fab_id."/pocket", 0777);
+						mkdir($dir_name.$model->fab_id."/sleeve", 0777);
+						mkdir($dir_name.$model->fab_id."/yoke", 0777);
 					}else if($model->fab_for==2){
 						// fro trouser	
+						mkdir($dir_name.$model->fab_id, 0777);
+						mkdir($dir_name.$model->fab_id."/back", 0777);
+						mkdir($dir_name.$model->fab_id."/bottom_style", 0777);
+						mkdir($dir_name.$model->fab_id."/front", 0777);
+						mkdir($dir_name.$model->fab_id."/pleated", 0777);
+						mkdir($dir_name.$model->fab_id."/side_pocket", 0777);
+						mkdir($dir_name.$model->fab_id."/lining", 0777);
 					}else if($model->fab_for==3){
 						// for blazer
 					}
@@ -226,16 +225,16 @@ class FabricsController extends Controller
 
 	private function imageuploadandstatus($fabid,$fab_for,$option,$suboption,$name = NULL,$tmp_name = NULL,$is_upload = false){
 		$dir_name 			= 'fabrics/'.$fabid;
-		$fabFolderBack 		= $dir_name."/back/";
-		$fabFolderCollor 	= $dir_name."/collar/";
-		$fabFolderCuff 		= $dir_name."/cuff/";
-		$fabFolderFront 	= $dir_name."/front/";
-		$fabFolderPlacket 	= $dir_name."/placket/";
-		$fabFolderPocket 	= $dir_name."/pocket/";
-		$fabFolderSleeve 	= $dir_name."/sleeve/";
-		$fabFolderYoke 		= $dir_name."/yoke/";
 
 		if($fab_for==1){ //Shirt
+			$fabFolderBack 		= $dir_name."/back/";
+			$fabFolderCollor 	= $dir_name."/collar/";
+			$fabFolderCuff 		= $dir_name."/cuff/";
+			$fabFolderFront 	= $dir_name."/front/";
+			$fabFolderPlacket 	= $dir_name."/placket/";
+			$fabFolderPocket 	= $dir_name."/pocket/";
+			$fabFolderSleeve 	= $dir_name."/sleeve/";
+			$fabFolderYoke 		= $dir_name."/yoke/";
 			switch ($option) {
 				case 1: //Sleeve
 					$dname = $fabFolderSleeve;
@@ -415,7 +414,104 @@ class FabricsController extends Controller
 					break;					
 			}
 		}else if($fab_for==2){ //Trousre
-
+			$fabFolderFront 	= $dir_name."/front/";
+			$fabFolderPleated 	= $dir_name."/pleated/";
+			$fabFolderSidePocket = $dir_name."/side_pocket/";			
+			$fabFolderBack 		= $dir_name."/back/";
+			$fabFolderBottomStyle = $dir_name."/bottom_style/";
+			$fabFolderLining = $dir_name."/lining/";
+			switch ($option) {
+				case 1: //Front
+					$dname = $fabFolderFront;
+					if($suboption==1){ //Trouser
+						$image_name = 'front_trouser.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderFront,$image_name);
+					}
+					break;
+				case 2: //pleated
+					$dname = $fabFolderPleated;
+					if($suboption==1){ //Single Pleated
+						$image_name = 'single_pleated.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderPleated,$image_name);
+					}else if($suboption==2){ //Double Pleated
+						$image_name = 'double_pleated.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderPleated,$image_name);
+					}else if($suboption==3){ //Flat Front Pleated
+						// No need to upload any image
+					}
+					break;
+				case 3: //Side Pocket
+					$dname = $fabFolderSidePocket;
+					if($suboption==1){ //Slant Pocket
+						$image_name = 'slant_pocket.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderSidePocket,$image_name);
+					}else if($suboption==2){ //Straight Pocket
+						$image_name = 'straight_pocket.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderSidePocket,$image_name);
+					}
+					break;
+				case 4: //Back Pocket
+					$dname = $fabFolderBack;
+					if($suboption==1){ //Flap Left
+						$image_name = 'back_left_pocket_flap.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderBack,$image_name);
+					}else if($suboption==2){ //Flap Right
+						$image_name = 'back_right_pocket_flap.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderBack,$image_name);
+					}else if($suboption==3){ //Double Welp Pocket Left
+						$image_name = 'back_left_pocket_doublewelt.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderBack,$image_name);
+					}else if($suboption==4){ //Double Welp Pocket Right
+						$image_name = 'back_right_pocket_doublewelt.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderBack,$image_name);
+					}else if($suboption==5){ //Back side trouser
+						$image_name = 'back_pockets.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderBack,$image_name);
+					}
+					break;
+				case 5: //Bottom Style
+					$dname = $fabFolderBottomStyle;
+					if($suboption==1){ //straight_hem
+						$image_name = 'straight_hem.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderBottomStyle,$image_name);
+					}else if($suboption==2){ //shoe_cut
+						$image_name = 'shoe_cut.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderBottomStyle,$image_name);
+					}else if($suboption==3){ //turn_up
+						$image_name = 'turn_up.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderBottomStyle,$image_name);
+					}
+					break;	
+				case 6: //Lining
+					$dname = $fabFolderLining;
+					if($suboption==1){ //no_lining
+						$image_name = 'no_lining.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderBottomStyle,$image_name);
+					}else if($suboption==2){ //half_front_lining
+						$image_name = 'half_front_lining.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderBottomStyle,$image_name);
+					}else if($suboption==3){ //half_front_and_back_lining
+						$image_name = 'half_front_and_back_lining.png';
+						if($is_upload==true)
+							$this->imageUpload($name,$tmp_name,$fabFolderBottomStyle,$image_name);
+					}
+					break;	
+			}
 		}else if($fab_for==3){ //Blazer
 
 		}
