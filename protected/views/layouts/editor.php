@@ -20,8 +20,13 @@
   		Yii::app()->clientScript->registerCoreScript('jquery');
       $cs = Yii::app()->clientScript;   
       $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery-ui.js');
-      $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/lang/en.js');
+      // For the shirt editor      
+      $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/lang/se_en.js');
       $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/StyloSEMin.js');
+      // For the trouser editor
+      $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/lang/te_en.js');
+      $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/StyloTEMin.js');
+      // $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/indianStyloTEApi.js');
       //LOAD BOOTSTRAP
       Yii::app()->bootstrap->register();    
   	?>

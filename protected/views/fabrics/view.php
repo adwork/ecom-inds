@@ -43,78 +43,84 @@
     list-style: none;
   }
 </style>
+
 <div style="width:39%;float:left;border:1px solid #ccc;min-height:500px;border-radius:5px;margin-right:10px;padding:5px;">
 	<div>&nbsp;</div>
 	<div align="center">
 		<div>
-      <ul class="fabricTabs">
-  			<li class="selected" rel="fabrics">FABRIC</li>
-  			<li rel="style">STYLE</li>
-  			<li rel="buttons">BUTTONS</li>
-  		</ul>
-    </div>    
+          <ul class="fabricTabs">
+      			<li class="selected" rel="fabrics">FABRIC</li>
+      			<li rel="style">STYLE</li>
+      			<li rel="buttons">BUTTONS</li>
+      		</ul>
+        </div>    
 	</div>
+
 	<div id="fabrics">
-    <div>&nbsp;</div>
-    <div>
-      <ul class="fabricFilters">
-        <li>
-          <select name="fabric_patterns" id="fabric_patterns">
-            <option value="">All Patterns</option>
-            <?php
-            foreach (Yii::app()->params['fabPattern'] as $pKey => $pattern) {
-              ?>
-              <option value="<?php echo $pKey; ?>"><?php echo $pattern; ?></option>
-              <?php
-            }
-            ?>
-          </select>
-        </li>
-        <li>
-          <select name="fabric_all" id="fabric_all">
-            <option value="">All Fabrics</option>
-            <?php
-            foreach (Yii::app()->params['fabrics'] as $fKey => $fabricname) {
-              ?>
-              <option value="<?php echo $fKey; ?>"><?php echo $fabricname; ?></option>
-              <?php
-            }
-            ?>
-          </select>
-        </li>
-        <li>
-          <select name="fabric_colors" id="fabric_colors">
-            <option value="">All Colors</option>
-            <?php
-            foreach (Yii::app()->params['fabColors'] as $fcKey => $fabriccolor) {
-              ?>
-              <option value="<?php echo $fcKey; ?>"><?php echo $fabriccolor; ?></option>
-              <?php
-            }
-            ?>
-          </select>
-        </li>
-      </ul>
-    </div>
-    <div>&nbsp;</div>
-    <div>
-  		<ul class="fabrics">
-  		  <?php      
-  		  $this->widget('zii.widgets.CListView', array(
-  		    'id'=>'fabrics-grid',
-  		    'dataProvider'=>$model->search(),                       
-  		    'template'=>'{items}{pager}',        
-  		    'itemView'=>'_fabrics',   
-  		    'viewData' => array('id' => $id),		
-  		    //'emptyText'=>($model->un_content=='')?'No Notes Found':'No notes found for the keyword "<b>'.$model->un_content.'</b>"',
-  		    'summaryText'=>'Showing {start} to {end} of {count} entries',       
-  		  ));        
-  		  ?>
-  		</ul>
-    </div>
+
+        <div>&nbsp;</div>
+
+        <div>
+          <ul class="fabricFilters">
+            <li>
+              <select name="fabric_patterns" id="fabric_patterns">
+                <option value="">All Patterns</option>
+                <?php
+                foreach (Yii::app()->params['fabPattern'] as $pKey => $pattern) {
+                  ?>
+                  <option value="<?php echo $pKey; ?>"><?php echo $pattern; ?></option>
+                  <?php
+                }
+                ?>
+              </select>
+            </li>
+            <li>
+              <select name="fabric_all" id="fabric_all">
+                <option value="">All Fabrics</option>
+                <?php
+                foreach (Yii::app()->params['fabrics'] as $fKey => $fabricname) {
+                  ?>
+                  <option value="<?php echo $fKey; ?>"><?php echo $fabricname; ?></option>
+                  <?php
+                }
+                ?>
+              </select>
+            </li>
+            <li>
+              <select name="fabric_colors" id="fabric_colors">
+                <option value="">All Colors</option>
+                <?php
+                foreach (Yii::app()->params['fabColors'] as $fcKey => $fabriccolor) {
+                  ?>
+                  <option value="<?php echo $fcKey; ?>"><?php echo $fabriccolor; ?></option>
+                  <?php
+                }
+                ?>
+              </select>
+            </li>
+          </ul>
+        </div>
+
+        <div>&nbsp;</div>
+        <div>
+      		<ul class="fabrics">
+      		  <?php      
+      		  $this->widget('zii.widgets.CListView', array(
+      		    'id'=>'fabrics-grid',
+      		    'dataProvider'=>$model->search(),                       
+      		    'template'=>'{items}{pager}',        
+      		    'itemView'=>'_fabrics',   
+      		    'viewData' => array('id' => $id),		
+      		    //'emptyText'=>($model->un_content=='')?'No Notes Found':'No notes found for the keyword "<b>'.$model->un_content.'</b>"',
+      		    'summaryText'=>'Showing {start} to {end} of {count} entries',       
+      		  ));        
+      		  ?>
+      		</ul>
+        </div>
 	</div>
-	<div id="style" style="display:none;">
-		<div id="tabs">
+    <?php if($fabric_for==1){ ?>
+    <div id="style" style="display:none;">
+        <div id="tabs">
               <ul>
                <!--  <li><a href="#tabs-1">Fabric</a></li> -->
                 <li><a href="#tabs-2">Sleeve</a></li>                
@@ -283,8 +289,144 @@
                   </li>
                 </ul>
               </div>
-            </div>
-	</div>
+        </div>
+    </div>
+    <?php }else if($fabric_for==2){ ?>
+    <div id="style" style="display:none;">
+        <div id="tabs">
+              <ul>
+               <!--  <li><a href="#tabs-1">Fabric</a></li> -->
+                <li><a href="#tabs-2">Belt</a></li>                
+                <li><a href="#tabs-3">Pleats</a></li>
+                <li><a href="#tabs-4">Side Pocket</a></li>
+                <li><a href="#tabs-5">Back Pocket</a></li>
+                <li><a href="#tabs-6">Bottom Style</a></li>
+                <li><a href="#tabs-7">Trouser Lining</a></li>
+                <!-- <li><a href="#tabs-8">Buttons</a></li> -->
+              </ul>
+              <div id="tabs-2">
+                <li>
+                    <label onclick="updateElements(2,'belt_button',this)">
+                      <div><input type="radio" value="Belt Button" checked="checked" name="belt" rel="Belt Button" > Belt Button</div> 
+                      <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/t_customizations/belt/beltbutton_belt.png" alt=""></div>
+                    </label>
+                  </li>
+                  <li>
+                    <label onclick="updateElements(2,'extended_belt_button',this)">
+                      <div><input type="radio" value="Extended Belt Button" name="belt" rel="Extended Belt Button" > Extended Belt Button</div>
+                      <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/t_customizations/belt/extendedbeltbutton_belt.png" alt=""></div>
+                    </label>    
+                  </li>
+              </div>
+
+              <div id="tabs-3">  
+                <ul class="arrange_horizontal">
+                  <li>
+                    <label onclick="updateElements(3,'single_pleated',this)">
+                      <div><input type="radio" value="Single Pleated" name="pleated" rel="Single Pleated" > Single Pleated</div> 
+                      <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/t_customizations/pleats/single_pleated.png" alt=""></div>
+                    </label>
+                  </li>
+                  <li>
+                    <label onclick="updateElements(3,'double_pleated',this)">
+                      <div><input type="radio" value="Double Pleated" name="pleated" rel="Double Pleated" > Double Pleated</div> 
+                      <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/t_customizations/pleats/double_pleated.png" alt=""></div>
+                    </label>
+                  </li>
+                  <li>
+                    <label onclick="updateElements(3,'flat_pleated',this)">
+                      <div><input type="radio" value="Flat front Pleated" checked="checked" name="pleated" rel="Flat front Pleated" > Flat front Pleated</div> 
+                      <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/t_customizations/pleats/flatfront_pleated.png" alt=""></div>
+                    </label>
+                  </li>
+                </ul>
+              </div>
+              
+              <div id="tabs-4"> 
+                <ul class="arrange_horizontal">
+                  <li>
+                    <label onclick="updateElements(4,'slant_pocket',this)">
+                      <div><input type="radio" value="Slant Pocket" checked="checked" name="sidepocket" rel="Slant Pocket" > Slant Pocket</div> 
+                      <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/t_customizations/sidepocket/slant_pocket.png" alt=""></div>
+                    </label>
+                  </li>
+                  <li>
+                    <label onclick="updateElements(4,'straight_pocket',this)">
+                      <div><input type="radio" value="Straight Pocket" name="sidepocket" rel="Straight Pocket"> Straight Pocket</div> 
+                      <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/t_customizations/sidepocket/straight_pocket.png" alt=""></div>
+                    </label>
+                  </li>
+                </ul>
+              </div>
+
+              <div id="tabs-5">  
+                <ul class="arrange_horizontal">
+                  <li style="width:100%;">
+                    <label>
+                      <div><select name="back_pocket_type" onchange="updateElements(6,this.value)"><option value="0" selected="selected">None</option><option value="1">One</option><option value="2">Two</option></select> Round</div> </label>
+                      <label onclick="updateElements(7,'flap',this)" ><div><input type="radio" value="Flap Pocket" checked="checked" name="backpocket" rel="Flap Pocket" > Flap Pocket</div> 
+                      <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/t_customizations/backpocket/flappocket_backpocket.png" alt=""></div>
+                    </label>
+                  </li>
+                  <li>
+                    <label onclick="updateElements(7,'doublewelt',this)">
+                      <div><input type="radio" value="Bouble Welp Pocket" name="backpocket" rel="Bouble Welp Pocket"> Bouble Welp Pocket</div> 
+                      <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/t_customizations/backpocket/doubleweltpocket_backpocket.png" alt=""></div>
+                    </label>
+                  </li>
+                </ul>
+              </div>
+
+              <div id="tabs-6"> 
+                <ul class="arrange_horizontal">
+                  <li>
+                    <label onclick="updateElements(5,'straight_hem',this)">
+                      <div><input type="radio" value="Straight Hem" checked="checked" name="bottomstyle" rel="Straight Hem"> Straight Hem</div> 
+                      <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/t_customizations/bottomstyle/straighthemtrouser_bottomstyle.png" alt=""></div>
+                    </label>
+                  </li>
+                  <li>
+                    <label onclick="updateElements(5,'shoe_cut',this)">
+                      <div><input type="radio" value="Shoe cut" name="bottomstyle" rel="Shoe cut"> Shoe cut</div> 
+                      <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/t_customizations/bottomstyle/shoecut_bottomstyle.png" alt=""></div>
+                    </label>
+                  </li>
+                  <li>
+                    <label onclick="updateElements(5,'turn_up',this)">
+                      <div><input type="radio" value="Turn Up" name="bottomstyle" rel="Turn Up"> Turn Up</div> 
+                      <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/t_customizations/bottomstyle/turnup_bottomstyle.png" alt=""></div>
+                    </label>
+                  </li>
+                </ul>
+              </div>
+
+              <div id="tabs-7"> 
+                <ul class="arrange_horizontal">
+                  <li>
+                    <label onclick="updateElements(0,'lining',this)">
+                      <div><input type="radio" value="No lining" checked="checked" name="lining" rel="No lining"> No lining</div> 
+                      <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/t_customizations/lining/no_lining.png" alt=""></div>
+                    </label>
+                  </li>
+                  <li>
+                    <label onclick="updateElements(0,'lining',this)">
+                      <div><input type="radio" value="Half front Lining" name="lining" rel="Half front Lining"> Half front Lining</div> 
+                      <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/t_customizations/lining/half_front_lining.png" alt=""></div>
+                    </label>
+                  </li>
+                  <li>
+                    <label onclick="updateElements(0,'lining',this)">
+                      <div><input type="radio" value="Half front and Back Lining" name="lining" rel="Half front and Back Lining"> Half front and Back Lining</div> 
+                      <div><img src="<?php echo Yii::app()->request->baseUrl;?>/storage/t_customizations/lining/half_front_and_back_lining.png" alt=""></div>
+                    </label>
+                  </li>
+                </ul>
+              </div>
+        </div>
+    </div>
+    <?php } ?>
+	
+
 	<div id="buttons" style="display:none;">
 		<ul class="buttons">
 		  <?php      
@@ -298,90 +440,140 @@
 		  ?>
 		</ul>
 	</div>
+
 </div>
+
 <div style="width:58%;float:left;border:1px solid #ccc;min-height:500px;border-radius:5px;padding:5px;">
-	<div class="main_inr_box_new">
-    <div id="shirt_editor" class="editmyshirt"></div>
-  </div>    
-  <div class="view_summery_details">
-    <h1>Summary</h1>
-    <form name="addtocart" id="addtocart" method="post" action="">
-      <input type="hidden" name="YII_CSRF_TOKEN" value="<?php echo Yii::app()->request->csrfToken; ?>">
-      <div>
-        <ul>
-          <li>
-            <span><b>Fabric:</b></span>
-            <span id="fabric"><?php echo $fabricDetail->fab_name; ?></span>
-            <input type="hidden" name="txt_fabric" id="txt_fabric" value="<?php echo $id; ?>">
-          </li>
-          <li>
-            <span><b>Sleeve:</b></span>
-            <span id="sleeve"></span>
-            <input type="hidden" name="txt_sleeve" id="txt_sleeve">
-          </li>
-          <li>
-            <span><b>Collar:</b></span>
-            <span id="collar"></span>
-            <input type="hidden" name="txt_collor" id="txt_collar">
-          </li>
-          <li>
-            <span><b>Cuff:</b></span>
-            <span id="cuff"></span>
-            <input type="hidden" name="txt_cuff" id="txt_cuff">
-          </li>
-          <li>
-            <span><b>Placket:</b></span>
-            <span id="placket"></span>
-            <input type="hidden" name="txt_placket" id="txt_placket">
-          </li>
-          <li>
-            <span><b>Pocket:</b></span>
-            <span id="pocket"></span>
-            <input type="hidden" name="txt_pocket" id="txt_pocket">
-          </li>
-          <li>
-            <span><b>Back:</b></span>
-            <span id="back_shirt"></span>
-            <input type="hidden" name="txt_back_shirt" id="txt_back_shirt">
-          </li>
-          <li>
-            <span><b>Bottom Cut:</b></span>
-            <span id="front_shirt"></span>
-            <input type="hidden" name="txt_front_shirt" id="txt_front_shirt">
-          </li>
-          <li>
-            <span><b>Button:</b></span>
-            <span id="button"></span>
-            <input type="hidden" name="txt_button" id="txt_button">
-          </li>
-          <li>
-            <span><b>Monogram:</b></span>
-            <span id="monogram"></span>
-            <input type="hidden" name="txt_monogram" id="txt_monogram">
-          </li>
-        </ul>
-      </div>
-    </form>
-  </div>
+    <div class="main_inr_box_new">
+        <div id="product_editor" class="editmyshirt"></div>
+    </div>    
+    <div class="view_summery_details">
+        <h1>Summary</h1>
+        <?php if($fabric_for==1){ ?>
+        <form name="addtocart" id="addtocart" method="post" action="">
+          <input type="hidden" name="YII_CSRF_TOKEN" value="<?php echo Yii::app()->request->csrfToken; ?>">
+          <div>
+            <ul>
+              <li>
+                <span><b>Fabric:</b></span>
+                <span id="fabric"><?php echo $fabricDetail->fab_name; ?></span>
+                <input type="hidden" name="txt_fabric" id="txt_fabric" value="<?php echo $id; ?>">
+              </li>
+              <li>
+                <span><b>Sleeve:</b></span>
+                <span id="sleeve"></span>
+                <input type="hidden" name="txt_sleeve" id="txt_sleeve">
+              </li>
+              <li>
+                <span><b>Collar:</b></span>
+                <span id="collar"></span>
+                <input type="hidden" name="txt_collor" id="txt_collar">
+              </li>
+              <li>
+                <span><b>Cuff:</b></span>
+                <span id="cuff"></span>
+                <input type="hidden" name="txt_cuff" id="txt_cuff">
+              </li>
+              <li>
+                <span><b>Placket:</b></span>
+                <span id="placket"></span>
+                <input type="hidden" name="txt_placket" id="txt_placket">
+              </li>
+              <li>
+                <span><b>Pocket:</b></span>
+                <span id="pocket"></span>
+                <input type="hidden" name="txt_pocket" id="txt_pocket">
+              </li>
+              <li>
+                <span><b>Back:</b></span>
+                <span id="back_shirt"></span>
+                <input type="hidden" name="txt_back_shirt" id="txt_back_shirt">
+              </li>
+              <li>
+                <span><b>Bottom Cut:</b></span>
+                <span id="front_shirt"></span>
+                <input type="hidden" name="txt_front_shirt" id="txt_front_shirt">
+              </li>
+              <li>
+                <span><b>Button:</b></span>
+                <span id="button"></span>
+                <input type="hidden" name="txt_button" id="txt_button">
+              </li>
+              <li>
+                <span><b>Monogram:</b></span>
+                <span id="monogram"></span>
+                <input type="hidden" name="txt_monogram" id="txt_monogram">
+              </li>
+            </ul>
+          </div>
+        </form>
+        <?php }else if($fabric_for==2){ ?>
+        <form name="addtocart" id="addtocart" method="post" action="">
+          <input type="hidden" name="YII_CSRF_TOKEN" value="<?php echo Yii::app()->request->csrfToken; ?>">
+          <div>
+            <ul>
+              <li>
+                <span><b>Fabric:</b></span>
+                <span id="fabric"><?php echo $fabricDetail->fab_name; ?></span>
+                <input type="hidden" name="txt_fabric" id="txt_fabric" value="<?php echo $id; ?>">
+              </li>
+              <li>
+                <span><b>Belt:</b></span>
+                <span id="belt"></span>
+                <input type="hidden" name="txt_belt" id="txt_belt">
+              </li>
+              <li>
+                <span><b>Pleated:</b></span>
+                <span id="pleated"></span>
+                <input type="hidden" name="txt_pleated" id="txt_pleated">
+              </li>
+              <li>
+                <span><b>Side Pocket:</b></span>
+                <span id="sidepocket"></span>
+                <input type="hidden" name="txt_sidepocket" id="txt_sidepocket">
+              </li>
+              <li>
+                <span><b>Back Pocket:</b></span>
+                <span id="backpocket"></span>
+                <input type="hidden" name="txt_backpocket" id="txt_backpocket">
+              </li>
+              <li>
+                <span><b>Bottom Style:</b></span>
+                <span id="bottomstyle"></span>
+                <input type="hidden" name="txt_bottomstyle" id="txt_bottomstyle">
+              </li>
+              <li>
+                <span><b>Lining:</b></span>
+                <span id="lining"></span>
+                <input type="hidden" name="txt_lining" id="txt_lining">
+              </li>
+            </ul>
+          </div>
+        </form>
+        <?php } ?>
+    </div>
 </div>
+
 <div>&nbsp;</div>
+
 <div align="right">
   <input type="button" name="view_summery" id="view_summery" value="View Summary" class="btn btn-primary">
   <input type="button" name="add_to_cart" id="add_to_cart" value="Add to Cart" class="btn btn-primary">
 </div>
-<script type="text/javascript">
-	var indianStyloSEJson = {fabricId:<?php echo $id;?>,buttonId:1};
 
-	$(document).ready(function(){
-		$('.fabricTabs li').click(function(){
-			$('.fabricTabs li').attr('class','');
-			$(this).addClass('selected');
-			var rel = $(this).attr('rel');
-			$('#fabrics').hide();
-			$('#style').hide();
-			$('#buttons').hide();
-			$('#'+rel).show();
-		});
+<script type="text/javascript">
+var indianStyloEditorJson = {fabricId:<?php echo $id;?>,buttonId:1};
+
+$(document).ready(function(){
+	$('.fabricTabs li').click(function(){
+		$('.fabricTabs li').attr('class','');
+		$(this).addClass('selected');
+		var rel = $(this).attr('rel');
+		$('#fabrics').hide();
+		$('#style').hide();
+		$('#buttons').hide();
+		$('#'+rel).show();
+	});
 
     $('.fabricClick').click(function(e){
       e.preventDefault();
@@ -451,94 +643,178 @@
       });
     });
 
-    setDefaultOptions();
-    indianStyloSEObj = $("#shirt_editor").indianStyloSE(indianStyloSEJson);
-		$("#tabs").tabs({
-                        activate: function(event,ui){ 
-                        	// console.	log(ui.newTab.index()); 
-                        	if(ui.newTab.index()==5){ 
-                        		indianStyloSEObj.showRear(); 
-                        	}else{ 
-                        		indianStyloSEObj.showFront(); 
-                        	} 
-                       	}
-                    });
-	});
+    <?php if($fabric_for==1){ ?>
+        setShirtDefaultOptions();
+        indianStyloEditorObject = $("#product_editor").indianStyloSE(indianStyloEditorJson);
+        $("#tabs").tabs({
+            activate: function(event,ui){
+                if(ui.newTab.index()==5){ 
+                    indianStyloEditorObject.showRear(); 
+                }else{ 
+                    indianStyloEditorObject.showFront(); 
+                } 
+            }
+        });
+    <?php }else if($fabric_for==2){ ?>
+        setTrouserDefaultOptions();
+        indianStyloEditorObject = $("#product_editor").indianStyloTE(indianStyloEditorJson);
+        $("#tabs").tabs({
+            activate: function(event,ui){
+                if(ui.newTab.index()==3){ 
+                    indianStyloEditorObject.showRear(); 
+                }else{ 
+                    indianStyloEditorObject.showFront(); 
+                } 
+            }
+        });
+    <?php } ?>
+});
 
-	function updateElements(elem,newobj,obj){
-      var text = $(obj).find('input').attr('rel');
-      var name = $(obj).find('input').attr('name');
-      $('.view_summery_details #'+name).text(text);
-      $('.view_summery_details #txt_'+name).val(text);
-      if($(obj).find('input').attr('fab_id')){
-        $('.view_summery_details #txt_fabric').val($(obj).find('input').attr('fab_id'));  
-      }
-      if($(obj).find('input').attr('but_id')){
-        $('.view_summery_details #txt_button').val($(obj).find('input').attr('but_id'));
-      }
-      switch(elem){
-        case 1:
-          indianStyloSEObj.updateFabric(newobj);
-        break;
-        case 2:
-          indianStyloSEObj.updateSleeves(newobj);          
-        break;
-        case 3:
-          indianStyloSEObj.updateCollar(newobj);
-        break;
-        case 4:
-          indianStyloSEObj.updateFrontShirt(newobj);
-        break;
-        case 5:
-          indianStyloSEObj.updatePocket(newobj);
-        break;
-        case 6:
-          indianStyloSEObj.updatePocketVisibility(newobj);
-        break;
-        case 7:
-          indianStyloSEObj.updateCuff(newobj);
-        break;
-        case 8:
-          indianStyloSEObj.updateBackPleats(newobj);
-        break;
-        case 10:
-          indianStyloSEObj.updatePlacket(newobj);
-        break;
-        case 11:
-          indianStyloSEObj.updateButton(newobj);
-        break;
-      }
+
+function refreshImages(){
+    indianStyloEditorObject.refreshFabricImages();
+}
+
+function setShirtDefaultOptions(){
+    var val = $("input[type='radio'][name='front_shirt']:checked").val();
+    $('.view_summery_details #front_shirt').text(val);
+    $('.view_summery_details #txt_front_shirt').val(val);
+
+    val = $("input[type='radio'][name='back_shirt']:checked").val();
+    $('.view_summery_details #back_shirt').text(val);
+    $('.view_summery_details #txt_back_shirt').val(val);
+
+    val = $("input[type='radio'][name='pocket']:checked").val();
+    $('.view_summery_details #pocket').text(val);
+    $('.view_summery_details #txt_pocket').val(val);
+
+    val = $("input[type='radio'][name='placket']:checked").val();
+    $('.view_summery_details #placket').text(val);
+    $('.view_summery_details #txt_placket').val(val);
+
+    val = $("input[type='radio'][name='cuff']:checked").val();
+    $('.view_summery_details #cuff').text(val);
+    $('.view_summery_details #txt_cuff').val(val);
+
+    val = $("input[type='radio'][name='collar']:checked").val();
+    $('.view_summery_details #collar').text(val);
+    $('.view_summery_details #txt_collar').val(val);
+
+    val = $("input[type='radio'][name='sleeve']:checked").val();
+    $('.view_summery_details #sleeve').text(val);
+    $('.view_summery_details #txt_sleeve').val(val);
+}
+function setTrouserDefaultOptions(){
+    var val = $("input[type='radio'][name='belt']:checked").val();
+    $('.view_summery_details #belt').text(val);
+    $('.view_summery_details #txt_belt').val(val);
+
+    val = $("input[type='radio'][name='pleated']:checked").val();
+    $('.view_summery_details #pleated').text(val);
+    $('.view_summery_details #txt_txt_pleated').val(val);
+
+    val = $("input[type='radio'][name='sidepocket']:checked").val();
+    $('.view_summery_details #sidepocket').text(val);
+    $('.view_summery_details #txt_sidepocket').val(val);
+
+    val = $("input[type='radio'][name='backpocket']:checked").val();
+    $('.view_summery_details #backpocket').text(val);
+    $('.view_summery_details #txt_backpocket').val(val);
+
+    val = $("input[type='radio'][name='bottomstyle']:checked").val();
+    $('.view_summery_details #bottomstyle').text(val);
+    $('.view_summery_details #txt_bottomstyle').val(val);
+
+    val = $("input[type='radio'][name='lining']:checked").val();
+    $('.view_summery_details #lining').text(val);
+    $('.view_summery_details #txt_lining').val(val);
+}
+
+<?php if($fabric_for==1){ ?>
+    function updateElements(elem,newobj,obj){
+        var text = $(obj).find('input').attr('rel');
+        var name = $(obj).find('input').attr('name');
+        $('.view_summery_details #'+name).text(text);
+        $('.view_summery_details #txt_'+name).val(text);
+        if($(obj).find('input').attr('fab_id')){
+            $('.view_summery_details #txt_fabric').val($(obj).find('input').attr('fab_id'));  
+        }
+        if($(obj).find('input').attr('but_id')){
+            $('.view_summery_details #txt_button').val($(obj).find('input').attr('but_id'));
+        }
+        switch(elem){
+            case 1:
+              indianStyloEditorObject.updateFabric(newobj);
+            break;
+            case 2:
+              indianStyloEditorObject.updateSleeves(newobj);          
+            break;
+            case 3:
+              indianStyloEditorObject.updateCollar(newobj);
+            break;
+            case 4:
+              indianStyloEditorObject.updateFrontShirt(newobj);
+            break;
+            case 5:
+              indianStyloEditorObject.updatePocket(newobj);
+            break;
+            case 6:
+              indianStyloEditorObject.updatePocketVisibility(newobj);
+            break;
+            case 7:
+              indianStyloEditorObject.updateCuff(newobj);
+            break;
+            case 8:
+              indianStyloEditorObject.updateBackPleats(newobj);
+            break;
+            case 10:
+              indianStyloEditorObject.updatePlacket(newobj);
+            break;
+            case 11:
+              indianStyloEditorObject.updateButton(newobj);
+            break;
+        }
     }
-    function refreshImages(){
-    	indianStyloSEObj.refreshFabricImages();
+<?php }else if($fabric_for==2){ ?>
+    function updateElements(elem,newobj,obj){
+        var text = $(obj).find('input').attr('rel');
+        var name = $(obj).find('input').attr('name');
+        $('.view_summery_details #'+name).text(text);
+        $('.view_summery_details #txt_'+name).val(text);
+        if($(obj).find('input').attr('fab_id')){
+            $('.view_summery_details #txt_fabric').val($(obj).find('input').attr('fab_id'));  
+        }
+        if($(obj).find('input').attr('but_id')){
+            $('.view_summery_details #txt_button').val($(obj).find('input').attr('but_id'));
+        }
+        switch(elem){
+            case 1:
+              indianStyloEditorObject.updateFabric(newobj);
+            break;
+            case 2:
+              indianStyloEditorObject.updateBeltButton(newobj);
+            break;
+            case 3:
+              indianStyloEditorObject.updatePleated(newobj);
+            break;
+            case 4:
+              indianStyloEditorObject.updateSidePocket(newobj);
+            break;
+            case 5:
+              indianStyloEditorObject.updateBottomStyle(newobj);
+            break;
+            case 6:
+              indianStyloEditorObject.updatePocketVisibility(newobj);
+            break;
+            case 7:
+              indianStyloEditorObject.updateBackPocket(newobj);
+            break;
+            case 8:
+            case 11:
+              indianStyloEditorObject.updateButton(newobj);
+            break;
+        }
     }
-    function setDefaultOptions(){
-      var val = $("input[type='radio'][name='front_shirt']:checked").val();
-      $('.view_summery_details #front_shirt').text(val);
-      $('.view_summery_details #txt_front_shirt').val(val);
+<?php } ?>
 
-      val = $("input[type='radio'][name='back_shirt']:checked").val();
-      $('.view_summery_details #back_shirt').text(val);
-      $('.view_summery_details #txt_back_shirt').val(val);
-
-      val = $("input[type='radio'][name='pocket']:checked").val();
-      $('.view_summery_details #pocket').text(val);
-      $('.view_summery_details #txt_pocket').val(val);
-
-      val = $("input[type='radio'][name='placket']:checked").val();
-      $('.view_summery_details #placket').text(val);
-      $('.view_summery_details #txt_placket').val(val);
-
-      val = $("input[type='radio'][name='cuff']:checked").val();
-      $('.view_summery_details #cuff').text(val);
-      $('.view_summery_details #txt_cuff').val(val);
-
-      val = $("input[type='radio'][name='collar']:checked").val();
-      $('.view_summery_details #collar').text(val);
-      $('.view_summery_details #txt_collar').val(val);
-
-      val = $("input[type='radio'][name='sleeve']:checked").val();
-      $('.view_summery_details #sleeve').text(val);
-      $('.view_summery_details #txt_sleeve').val(val);
-    }
 </script>
