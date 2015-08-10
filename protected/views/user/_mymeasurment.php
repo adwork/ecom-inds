@@ -180,7 +180,7 @@
 	</div>
 </div>
 <?php
-$this->renderPartial('_measurementModals');
+$this->renderPartial('/userMeasurements/_measurementModals');
 ?>
 <script type="text/javascript">
 	$(document).ready(function() {
