@@ -40,7 +40,7 @@ class CartItems extends CActiveRecord
 			array('citm_cart_id, citm_price', 'required'),
 			array('citm_id, citm_cart_id', 'numerical', 'integerOnly'=>true),
 			
-			array('citm_discount, citm_color, citm_pattern, citm_fabric, citm_type, citm_customization, citm_measurement, citm_rental, citm_created, citm_modified, citm_qty, citm_item_id','safe'),
+			array('citm_discount, citm_color, citm_pattern, citm_fabric, citm_type, citm_customization, citm_measurement, citm_rental, citm_created, citm_modified, citm_qty, citm_item_id,citm_user_measurement_id','safe'),
 
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -54,10 +54,11 @@ class CartItems extends CActiveRecord
 	public function relations()
 	{
 		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
+		// class name for the relations automatically generated below. 
 		return array(
 			'cartCartItem'=>array(self::BELONGS_TO, 'Cart','citm_cart_id'),
 			'cartItem'=>array(self::BELONGS_TO, 'Items','citm_item_id'),
+			'cartUserMeasurement'=>array(self::BELONGS_TO, 'UserMeasurements','citm_user_measurement_id'),
 		);
 	}
 

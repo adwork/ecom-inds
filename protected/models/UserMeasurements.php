@@ -68,6 +68,7 @@ class UserMeasurements extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'userMeasurement'=>array(self::BELONGS_TO, 'User','umr_user_id'),
+			'cartUserMeasurement'=>array(self::HAS_MANY, 'CartItems','citm_user_measurement_id'),
 		);
 	}
 

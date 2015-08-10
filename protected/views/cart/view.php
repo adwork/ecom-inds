@@ -1,3 +1,10 @@
+<?php
+$cs = Yii::app()->clientScript;     
+$cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.steps.min.js',CClientScript::POS_HEAD)
+->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.bxslider.min.js',CClientScript::POS_HEAD)
+->registerCssFile(Yii::app()->request->baseUrl.'/css/jquery.steps.css')
+->registerCssFile(Yii::app()->request->baseUrl.'/css/jquery.bxslider.css');
+?>
 <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -25,10 +32,12 @@
                                     <tr style="border-bottom:1px solid #CCC;margin-bottom:5px;">
                                           <td align="center">
                                                 <div>
+                                                   <div>
                                                       <?php echo $itemArr->itm_name; ?>
+                                                   </div>
                                                 </div>
                                                 <div>
-                                                      <img src="<?php echo Yii::app()->baseUrl; ?>/storage/products/<?php echo $itemArr->itm_photo; ?>" width="50">
+                                                   <img src="<?php echo Yii::app()->baseUrl; ?>/storage/products/<?php echo $itemArr->itm_photo; ?>" width="50">
                                                 </div>
                                           </td>
                                           <td align="right"><?php echo $itemArr->itm_price; ?></td>
@@ -53,12 +62,20 @@
                                     ?>
                                     <tr style="border-bottom:1px solid #CCC;margin-bottom:5px;">
                                           <td align="center">
-                                                <div>
-                                                      <?php echo $fabricArr->fab_name; ?>
+                                                <div style="float:left;">
+                                                   <img src="<?php echo Yii::app()->baseUrl; ?>/storage/fabrics/<?php echo $fabricArr->fab_image; ?>" width="50">
                                                 </div>
-                                                <div>
-                                                      <img src="<?php echo Yii::app()->baseUrl; ?>/storage/fabrics/<?php echo $fabricArr->fab_image; ?>" width="50">
+                                                <div style="float:left;">
+                                                   <div>
+                                                         <?php echo $fabricArr->fab_name; ?>
+                                                   </div>
+                                                   <div>
+                                                      <a href="<?php echo Yii::app()->baseUrl; ?>/userMeasurements/selectedmeasurements/?fab_id=<?php echo $fabricArr->fab_id; ?>" data-target="#checkoutMeasurements" id="open_select_measurement_modal" data-toggle='modal'>
+                                                         Add Measurement
+                                                      </a>
+                                                   </div>
                                                 </div>
+                                                <div style="clear:both;"></div>
                                           </td>
                                           <td align="right"><?php echo $fabricArr->fab_price; ?></td>
                                           <td align="right"><?php echo $cart_items['fabric'][$fabricArr->fab_id]['qty']; ?></td>
@@ -116,8 +133,11 @@
       </div>
     </div>
 </div>
+<?php
+$this->renderPartial('/userMeasurements/_measurementModals');
+?>
 <script type="text/javascript">
-  $(document).ready(function(){
+   $(document).ready(function(){
       $('body').on('click','.removeItem',function(e){
           e.preventDefault();
           var con = confirm('Are you sure want to delete this record?');

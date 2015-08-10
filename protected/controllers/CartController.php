@@ -103,7 +103,6 @@ class CartController extends Controller
 
 	public function actionConfirm(){
 		$itemData = $this->processItems();
-
 		$token = trim($_GET['token']);
 		$payerId = trim($_GET['PayerID']);		
 		
@@ -212,6 +211,10 @@ class CartController extends Controller
 						//$cartItemsModel->citm_rental	
 						//$errors = $cartItemsModel->getErrors();
 						//pr($errors);
+						if(!empty($cart_items['fabric'][$fabId]['user_measurement_id'])){
+							$cartItemsModel->citm_user_measurement_id = $cart_items['fabric'][$fabId]['user_measurement_id'];
+						}
+						
 						$cartItemsModel->isNewRecord = true;
 						$cartItemsModel->save();
 					}
@@ -314,5 +317,24 @@ class CartController extends Controller
 
 		$data = array('total' => $total,'qty' => $qtyTotal, 'itemDetails' => $itemNames);
 		return $data;
+	}
+
+	public function actionUpdateusermeasurement(){
+		$this->layout = false;
+		$cart_items = Yii::app()->session['cartItems'];
+		if(!empty($_POST['fabid'])){
+			$fabid = $_POST['fabid'];
+			$id = $_POST['id'];
+			if(!empty($cart_items['fabric'])){
+				foreach ($cart_items['fabric'] as $fabIdKey => $arr) {
+					$cart_items['fabric'][$fabIdKey] = $arr;
+					if($fabIdKey==$fabid){
+						$cart_items['fabric'][$fabIdKey]['user_measurement_id'] = $id;
+					}
+				}
+			}
+		}
+		echo 'success';
+		exit;
 	}
 }

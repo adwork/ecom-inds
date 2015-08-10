@@ -150,4 +150,21 @@ class UserMeasurementsController extends Controller
 			Yii::app()->end();
 		}
 	}
+
+	public function actionSelectedmeasurements($fab_id = NULL){
+		$this->layout = false;
+		$user_id = Yii::app()->user->id;
+		$criteria1=new CDbCriteria;
+		$criteria1->condition = "umr_user_id=:umr_user_id";
+		$criteria1->params = array(':umr_user_id' => $user_id);
+		$userMesurementData = UserMeasurements::model()->findAll($criteria1);
+		$userMesurements = array();
+		if(!empty($userMesurementData)){
+			foreach ($userMesurementData as $umKey => $umArr) {
+				$umType = $umArr->umr_type;
+				$userMesurements[$umType][] = $umArr;
+			}
+		}
+		$this->render('selectedmeasurements',array('userMesurements' => $userMesurements,'fab_id' => $fab_id));
+	}
 }
