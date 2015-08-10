@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.3.11
+-- version 4.0.10deb1
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Aug 09, 2015 at 05:59 AM
--- Server version: 5.6.24
--- PHP Version: 5.5.24
+-- Host: localhost
+-- Generation Time: Aug 10, 2015 at 07:28 AM
+-- Server version: 5.5.41-0ubuntu0.14.04.1
+-- PHP Version: 5.5.9-1ubuntu4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -30,7 +30,8 @@ CREATE TABLE IF NOT EXISTS `inds_authassignment` (
   `itemname` varchar(64) NOT NULL,
   `userid` varchar(64) NOT NULL,
   `bizrule` text,
-  `data` text
+  `data` text,
+  PRIMARY KEY (`itemname`,`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -55,7 +56,8 @@ CREATE TABLE IF NOT EXISTS `inds_authitem` (
   `type` int(11) NOT NULL COMMENT '1 for action 2 for role',
   `description` text,
   `bizrule` text,
-  `data` text
+  `data` text,
+  PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -125,6 +127,7 @@ INSERT INTO `inds_authitem` (`name`, `type`, `description`, `bizrule`, `data`) V
 ('CartConfirm', 1, NULL, NULL, NULL),
 ('CartRemoveitem', 1, NULL, NULL, NULL),
 ('CartUpdateqty', 1, NULL, NULL, NULL),
+('CartUpdateusermeasurement', 1, NULL, NULL, NULL),
 ('CartView', 1, NULL, NULL, NULL),
 ('FabricsIndex', 1, NULL, NULL, NULL),
 ('FabricsView', 1, NULL, NULL, NULL),
@@ -143,6 +146,7 @@ INSERT INTO `inds_authitem` (`name`, `type`, `description`, `bizrule`, `data`) V
 ('UserForgotpassword', 1, '', '', 's:0:"";'),
 ('UserMeasurementsCreate', 1, NULL, NULL, NULL),
 ('UserMeasurementsDelete', 1, NULL, NULL, NULL),
+('UserMeasurementsSelectedmeasurements', 1, NULL, NULL, NULL),
 ('UserMeasurementsUpdate', 1, NULL, NULL, NULL),
 ('UserMeasurementsView', 1, NULL, NULL, NULL),
 ('UserProfile', 1, '', '', 's:0:"";'),
@@ -159,7 +163,9 @@ INSERT INTO `inds_authitem` (`name`, `type`, `description`, `bizrule`, `data`) V
 
 CREATE TABLE IF NOT EXISTS `inds_authitemchild` (
   `parent` varchar(64) NOT NULL,
-  `child` varchar(64) NOT NULL
+  `child` varchar(64) NOT NULL,
+  PRIMARY KEY (`parent`,`child`),
+  KEY `child` (`child`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -228,6 +234,7 @@ INSERT INTO `inds_authitemchild` (`parent`, `child`) VALUES
 ('member', 'CartConfirm'),
 ('guest', 'CartRemoveitem'),
 ('guest', 'CartUpdateqty'),
+('member', 'CartUpdateusermeasurement'),
 ('guest', 'CartView'),
 ('guest', 'FabricsIndex'),
 ('guest', 'FabricsView'),
@@ -244,6 +251,7 @@ INSERT INTO `inds_authitemchild` (`parent`, `child`) VALUES
 ('guest', 'UserForgotpassword'),
 ('member', 'UserMeasurementsCreate'),
 ('member', 'UserMeasurementsDelete'),
+('member', 'UserMeasurementsSelectedmeasurements'),
 ('member', 'UserMeasurementsUpdate'),
 ('member', 'UserMeasurementsView'),
 ('member', 'UserProfile'),
@@ -259,11 +267,12 @@ INSERT INTO `inds_authitemchild` (`parent`, `child`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `inds_buttons` (
-  `but_id` int(11) NOT NULL,
+  `but_id` int(11) NOT NULL AUTO_INCREMENT,
   `but_name` varchar(255) NOT NULL,
   `but_image` varchar(255) NOT NULL,
-  `but_price` double NOT NULL DEFAULT '0'
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `but_price` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`but_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `inds_buttons`
@@ -280,15 +289,16 @@ INSERT INTO `inds_buttons` (`but_id`, `but_name`, `but_image`, `but_price`) VALU
 --
 
 CREATE TABLE IF NOT EXISTS `inds_cart` (
-  `cart_id` int(11) NOT NULL,
+  `cart_id` int(11) NOT NULL AUTO_INCREMENT,
   `cart_orderno` varchar(200) NOT NULL,
   `cart_user_id` int(11) NOT NULL,
   `cart_payment_status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0=not chekout,1=checkout,2=success,3=cancel',
   `cart_order_status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0=pending,1=under process,2=deliver,3=complete',
   `cart_paypal_result` text,
   `cart_created` datetime NOT NULL,
-  `cart_modified` datetime NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+  `cart_modified` datetime NOT NULL,
+  PRIMARY KEY (`cart_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `inds_cart`
@@ -298,7 +308,10 @@ INSERT INTO `inds_cart` (`cart_id`, `cart_orderno`, `cart_user_id`, `cart_paymen
 (2, '55ac42134c1ea', 5, 0, 0, '{"status":"not checkout yet"}', '2015-07-20 06:04:27', '2015-07-20 06:04:27'),
 (3, '55ac436835842', 5, 1, 0, '{"TOKEN":"EC-68B5355957899074A","TIMESTAMP":"2015-07-20T00:40:08Z","CORRELATIONID":"442dc1fcc3929","ACK":"Success","VERSION":"3.0","BUILD":"17403434"}', '2015-07-20 06:08:43', '2015-07-20 06:10:08'),
 (4, '55ac444c3e780', 5, 2, 1, '{"TOKEN":"EC-2EA908743F5101649","TIMESTAMP":"2015-07-20T00:43:56Z","CORRELATIONID":"95fae32298e38","ACK":"Success","VERSION":"3.0","BUILD":"17403434","TRANSACTIONID":"0Y7477099T293963L","TRANSACTIONTYPE":"expresscheckout","PAYMENTTYPE":"instant","ORDERTIME":"2015-07-20T00:43:55Z","AMT":"1050.00","FEEAMT":"41.25","TAXAMT":"0.00","CURRENCYCODE":"USD","PAYMENTSTATUS":"Completed","PENDINGREASON":"None","REASONCODE":"None"}', '2015-07-20 06:12:34', '2015-07-22 07:58:52'),
-(5, '55ac4543991d3', 5, 3, 0, '{"status":"cancel","token":"EC-43C21967X4911952Y"}', '2015-07-20 06:17:34', '2015-07-20 06:18:03');
+(5, '55ac4543991d3', 5, 3, 0, '{"status":"cancel","token":"EC-43C21967X4911952Y"}', '2015-07-20 06:17:34', '2015-07-20 06:18:03'),
+(6, '55c800a5bbf16', 5, 2, 0, '{"TOKEN":"EC-6TJ48879CX130081A","TIMESTAMP":"2015-08-10T01:38:44Z","CORRELATIONID":"1b1b9dfdadcc1","ACK":"Success","VERSION":"3.0","BUILD":"000000","TRANSACTIONID":"5L823151E4926873M","TRANSACTIONTYPE":"expresscheckout","PAYMENTTYPE":"instant","ORDERTIME":"2015-08-10T01:38:44Z","AMT":"1750.00","FEEAMT":"68.55","TAXAMT":"0.00","CURRENCYCODE":"USD","PAYMENTSTATUS":"Completed","PENDINGREASON":"None","REASONCODE":"None"}', '2015-08-10 07:05:56', '2015-08-10 07:08:45'),
+(7, '55c8012e60c54', 5, 2, 0, '{"TOKEN":"EC-82525550FY458014R","TIMESTAMP":"2015-08-10T01:41:01Z","CORRELATIONID":"880045cee2f70","ACK":"Success","VERSION":"3.0","BUILD":"000000","TRANSACTIONID":"5CJ581402L895843D","TRANSACTIONTYPE":"expresscheckout","PAYMENTTYPE":"instant","ORDERTIME":"2015-08-10T01:41:01Z","AMT":"300.00","FEEAMT":"12.00","TAXAMT":"0.00","CURRENCYCODE":"USD","PAYMENTSTATUS":"Completed","PENDINGREASON":"None","REASONCODE":"None"}', '2015-08-10 07:10:21', '2015-08-10 07:11:02'),
+(8, '55c802b770730', 5, 2, 0, '{"TOKEN":"EC-21K80817F5500552J","TIMESTAMP":"2015-08-10T01:47:35Z","CORRELATIONID":"5c0536a0b9912","ACK":"Success","VERSION":"3.0","BUILD":"000000","TRANSACTIONID":"3ET94789T2492512C","TRANSACTIONTYPE":"expresscheckout","PAYMENTTYPE":"instant","ORDERTIME":"2015-08-10T01:47:34Z","AMT":"1000.00","FEEAMT":"39.30","TAXAMT":"0.00","CURRENCYCODE":"USD","PAYMENTSTATUS":"Completed","PENDINGREASON":"None","REASONCODE":"None"}', '2015-08-10 07:15:18', '2015-08-10 07:17:35');
 
 -- --------------------------------------------------------
 
@@ -307,7 +320,7 @@ INSERT INTO `inds_cart` (`cart_id`, `cart_orderno`, `cart_user_id`, `cart_paymen
 --
 
 CREATE TABLE IF NOT EXISTS `inds_cart_items` (
-  `citm_id` int(11) NOT NULL,
+  `citm_id` int(11) NOT NULL AUTO_INCREMENT,
   `citm_cart_id` int(11) NOT NULL,
   `citm_item_id` int(11) DEFAULT '0',
   `citm_price` double DEFAULT '0',
@@ -320,21 +333,27 @@ CREATE TABLE IF NOT EXISTS `inds_cart_items` (
   `citm_customization` text,
   `citm_measurement` text,
   `citm_rental` int(11) DEFAULT NULL,
+  `citm_user_measurement_id` int(11) DEFAULT NULL,
   `citm_created` datetime NOT NULL,
-  `citm_modified` datetime NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+  `citm_modified` datetime NOT NULL,
+  PRIMARY KEY (`citm_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `inds_cart_items`
 --
 
-INSERT INTO `inds_cart_items` (`citm_id`, `citm_cart_id`, `citm_item_id`, `citm_price`, `citm_discount`, `citm_qty`, `citm_color`, `citm_pattern`, `citm_fabric`, `citm_type`, `citm_customization`, `citm_measurement`, `citm_rental`, `citm_created`, `citm_modified`) VALUES
-(1, 3, 0, 1000, 0, 1, 1, 4, 1, 2, '{"product":"1","shirt":{"sleeve":"Short","collor":"Chinese","cuff":"","placket":"Hidden","pocket":"Round","back_shirt":"Box Pleat","front_shirt":"Round","button":"2","monogram":"","fabid":3},"trouser":[],"blazer":[],"suit":[]}', NULL, NULL, '2015-07-20 06:08:43', '2015-07-20 06:08:43'),
-(2, 3, 4, 750, 0, 1, 0, 0, 0, 0, NULL, NULL, NULL, '2015-07-20 06:08:43', '2015-07-20 06:08:43'),
-(3, 4, 0, 300, 0, 1, 1, 2, 1, 2, '{"product":"1","shirt":{"sleeve":"Long","collor":"Classic","cuff":"Double Button","placket":"French","pocket":"Square","back_shirt":"Box Pleat","front_shirt":"Round","button":"2","monogram":"","fabid":4},"trouser":[],"blazer":[],"suit":[]}', NULL, NULL, '2015-07-20 06:12:34', '2015-07-20 06:12:34'),
-(4, 4, 4, 750, 0, 1, 0, 0, 0, 0, NULL, NULL, NULL, '2015-07-20 06:12:34', '2015-07-20 06:12:34'),
-(5, 5, 0, 1000, 0, 1, 1, 4, 1, 2, '{"product":"1","shirt":{"sleeve":"Short","collor":"Chinese","cuff":"","placket":"Hidden","pocket":"Square","back_shirt":"Side Pleat","front_shirt":"Round","button":"2","monogram":"","fabid":3},"trouser":[],"blazer":[],"suit":[]}', NULL, NULL, '2015-07-20 06:17:34', '2015-07-20 06:17:34'),
-(6, 5, 3, 250, 0, 1, 0, 0, 0, 0, NULL, NULL, NULL, '2015-07-20 06:17:34', '2015-07-20 06:17:34');
+INSERT INTO `inds_cart_items` (`citm_id`, `citm_cart_id`, `citm_item_id`, `citm_price`, `citm_discount`, `citm_qty`, `citm_color`, `citm_pattern`, `citm_fabric`, `citm_type`, `citm_customization`, `citm_measurement`, `citm_rental`, `citm_user_measurement_id`, `citm_created`, `citm_modified`) VALUES
+(1, 3, 0, 1000, 0, 1, 1, 4, 1, 2, '{"product":"1","shirt":{"sleeve":"Short","collor":"Chinese","cuff":"","placket":"Hidden","pocket":"Round","back_shirt":"Box Pleat","front_shirt":"Round","button":"2","monogram":"","fabid":3},"trouser":[],"blazer":[],"suit":[]}', NULL, NULL, NULL, '2015-07-20 06:08:43', '2015-07-20 06:08:43'),
+(2, 3, 4, 750, 0, 1, 0, 0, 0, 0, NULL, NULL, NULL, NULL, '2015-07-20 06:08:43', '2015-07-20 06:08:43'),
+(3, 4, 0, 300, 0, 1, 1, 2, 1, 2, '{"product":"1","shirt":{"sleeve":"Long","collor":"Classic","cuff":"Double Button","placket":"French","pocket":"Square","back_shirt":"Box Pleat","front_shirt":"Round","button":"2","monogram":"","fabid":4},"trouser":[],"blazer":[],"suit":[]}', NULL, NULL, NULL, '2015-07-20 06:12:34', '2015-07-20 06:12:34'),
+(4, 4, 4, 750, 0, 1, 0, 0, 0, 0, NULL, NULL, NULL, NULL, '2015-07-20 06:12:34', '2015-07-20 06:12:34'),
+(5, 5, 0, 1000, 0, 1, 1, 4, 1, 2, '{"product":"1","shirt":{"sleeve":"Short","collor":"Chinese","cuff":"","placket":"Hidden","pocket":"Square","back_shirt":"Side Pleat","front_shirt":"Round","button":"2","monogram":"","fabid":3},"trouser":[],"blazer":[],"suit":[]}', NULL, NULL, NULL, '2015-07-20 06:17:34', '2015-07-20 06:17:34'),
+(6, 5, 3, 250, 0, 1, 0, 0, 0, 0, NULL, NULL, NULL, NULL, '2015-07-20 06:17:34', '2015-07-20 06:17:34'),
+(7, 6, 0, 1000, 0, 1, 1, 4, 1, 2, '{"product":"1","shirt":{"sleeve":"Long","collor":"Classic","cuff":"Single Button","placket":"American","pocket":"Angled","back_shirt":"No Pleats","front_shirt":"Round","button":"2","monogram":"","fabid":"4"},"trouser":[],"blazer":[],"suit":[]}', NULL, NULL, NULL, '2015-08-10 07:05:56', '2015-08-10 07:05:56'),
+(8, 6, 4, 750, 0, 1, 0, 0, 0, 0, NULL, NULL, NULL, NULL, '2015-08-10 07:05:56', '2015-08-10 07:05:56'),
+(9, 7, 0, 300, 0, 1, 1, 2, 1, 2, '{"product":"1","shirt":{"sleeve":"Long","collor":"Classic","cuff":"Single Button","placket":"American","pocket":"Angled","back_shirt":"No Pleats","front_shirt":"Round","button":"2","monogram":"","fabid":"3"},"trouser":[],"blazer":[],"suit":[]}', NULL, NULL, NULL, '2015-08-10 07:10:21', '2015-08-10 07:10:21'),
+(10, 8, 0, 1000, 0, 1, 1, 4, 1, 2, '{"product":"1","shirt":{"sleeve":"Long","collor":"Classic","cuff":"Single Button","placket":"American","pocket":"Angled","back_shirt":"No Pleats","front_shirt":"Round","button":"2","monogram":"","fabid":"4"},"trouser":[],"blazer":[],"suit":[]}', NULL, NULL, NULL, '2015-08-10 07:15:18', '2015-08-10 07:15:18');
 
 -- --------------------------------------------------------
 
@@ -343,13 +362,14 @@ INSERT INTO `inds_cart_items` (`citm_id`, `citm_cart_id`, `citm_item_id`, `citm_
 --
 
 CREATE TABLE IF NOT EXISTS `inds_categories` (
-  `cat_id` int(11) NOT NULL,
+  `cat_id` int(11) NOT NULL AUTO_INCREMENT,
   `cat_name` varchar(255) NOT NULL,
   `cat_description` text,
   `cat_meta_title` text,
   `cat_meta_keyword` text,
-  `cat_meta_description` text
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+  `cat_meta_description` text,
+  PRIMARY KEY (`cat_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `inds_categories`
@@ -365,7 +385,7 @@ INSERT INTO `inds_categories` (`cat_id`, `cat_name`, `cat_description`, `cat_met
 --
 
 CREATE TABLE IF NOT EXISTS `inds_cmspage` (
-  `c_id` int(11) NOT NULL,
+  `c_id` int(11) NOT NULL AUTO_INCREMENT,
   `c_pagename` varchar(100) NOT NULL,
   `c_title` varchar(250) NOT NULL,
   `c_subtitle` varchar(250) NOT NULL,
@@ -376,8 +396,9 @@ CREATE TABLE IF NOT EXISTS `inds_cmspage` (
   `c_meta_description` text NOT NULL,
   `c_status` tinyint(3) NOT NULL DEFAULT '1' COMMENT '0=inactive, 1=active',
   `c_created` datetime NOT NULL,
-  `c_modified` datetime NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  `c_modified` datetime NOT NULL,
+  PRIMARY KEY (`c_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `inds_cmspage`
@@ -400,7 +421,8 @@ CREATE TABLE IF NOT EXISTS `inds_countries` (
   `cnt_code_char2` varchar(2) NOT NULL,
   `cnt_code_char3` varchar(3) NOT NULL,
   `cnt_un_region` varchar(80) CHARACTER SET utf8 DEFAULT NULL,
-  `cnt_un_subregion` varchar(80) CHARACTER SET utf8 DEFAULT NULL
+  `cnt_un_subregion` varchar(80) CHARACTER SET utf8 DEFAULT NULL,
+  PRIMARY KEY (`cnt_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -666,13 +688,14 @@ INSERT INTO `inds_countries` (`cnt_id`, `cnt_name`, `cnt_code_char2`, `cnt_code_
 --
 
 CREATE TABLE IF NOT EXISTS `inds_email_manager` (
-  `em_id` int(11) NOT NULL,
+  `em_id` int(11) NOT NULL AUTO_INCREMENT,
   `em_title` varchar(100) DEFAULT NULL,
   `em_email_subject` varchar(100) DEFAULT NULL,
   `em_email_template` text,
   `em_created` datetime DEFAULT NULL,
-  `em_modified` datetime DEFAULT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `em_modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`em_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `inds_email_manager`
@@ -689,15 +712,16 @@ INSERT INTO `inds_email_manager` (`em_id`, `em_title`, `em_email_subject`, `em_e
 --
 
 CREATE TABLE IF NOT EXISTS `inds_fabrics` (
-  `fab_id` int(11) NOT NULL,
+  `fab_id` int(11) NOT NULL AUTO_INCREMENT,
   `fab_name` varchar(255) NOT NULL,
   `fab_image` varchar(255) NOT NULL,
   `fab_price` double NOT NULL,
   `fab_color` tinyint(2) NOT NULL COMMENT '1=White,2=Black,3=Blue,4=Pink,5=Red,6=Yellow,7=Brown,8=Purple,9=Grey,10=Beige,11=Green,12=Orange,13=Maroon',
   `fab_pattern` tinyint(2) NOT NULL COMMENT '1=Stripes, 2=Checks, 3=Solid, 4=Prints & Others',
   `fab_fabric` int(11) NOT NULL COMMENT '1 = ''Cotton'', 2 = ''Linen'', 3 = ''Linen Cotton'', 4 = ''Egyptian_Giza_Cotton'', 5 = "2/120''s Egyptian Giza Cotton", 6 = "2/140''s Egyptian Giza Cotton"',
-  `fab_for` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0=None,1=Shirt,2=Trousre,3=Blazer'
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+  `fab_for` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0=None,1=Shirt,2=Trousre,3=Blazer',
+  PRIMARY KEY (`fab_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `inds_fabrics`
@@ -717,10 +741,11 @@ INSERT INTO `inds_fabrics` (`fab_id`, `fab_name`, `fab_image`, `fab_price`, `fab
 --
 
 CREATE TABLE IF NOT EXISTS `inds_fabric_buttons` (
-  `fbt_id` int(11) NOT NULL,
+  `fbt_id` int(11) NOT NULL AUTO_INCREMENT,
   `fbt_fabric_id` int(11) NOT NULL,
-  `fbt_button_id` int(11) NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `fbt_button_id` int(11) NOT NULL,
+  PRIMARY KEY (`fbt_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `inds_fabric_buttons`
@@ -737,7 +762,7 @@ INSERT INTO `inds_fabric_buttons` (`fbt_id`, `fbt_fabric_id`, `fbt_button_id`) V
 --
 
 CREATE TABLE IF NOT EXISTS `inds_items` (
-  `itm_id` int(11) NOT NULL,
+  `itm_id` int(11) NOT NULL AUTO_INCREMENT,
   `itm_name` varchar(255) NOT NULL,
   `itm_subcategory_id` int(11) NOT NULL,
   `itm_fabric_id` int(11) DEFAULT '0',
@@ -751,8 +776,9 @@ CREATE TABLE IF NOT EXISTS `inds_items` (
   `itm_meta_description` text NOT NULL,
   `itm_slug` varchar(255) NOT NULL,
   `itm_created` datetime NOT NULL,
-  `itm_modified` datetime NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+  `itm_modified` datetime NOT NULL,
+  PRIMARY KEY (`itm_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `inds_items`
@@ -772,12 +798,13 @@ INSERT INTO `inds_items` (`itm_id`, `itm_name`, `itm_subcategory_id`, `itm_fabri
 --
 
 CREATE TABLE IF NOT EXISTS `inds_seo_pages` (
-  `sep_id` int(11) NOT NULL,
+  `sep_id` int(11) NOT NULL AUTO_INCREMENT,
   `sep_page_name` varchar(255) NOT NULL,
   `sep_page_title` text,
   `sep_page_keyword` text,
-  `sep_page_meta_desc` text
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `sep_page_meta_desc` text,
+  PRIMARY KEY (`sep_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -786,10 +813,11 @@ CREATE TABLE IF NOT EXISTS `inds_seo_pages` (
 --
 
 CREATE TABLE IF NOT EXISTS `inds_site_settings` (
-  `sst_id` int(11) NOT NULL,
+  `sst_id` int(11) NOT NULL AUTO_INCREMENT,
   `sst_name` varchar(255) NOT NULL,
-  `sst_value` varchar(255) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `sst_value` varchar(255) NOT NULL,
+  PRIMARY KEY (`sst_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -805,7 +833,8 @@ CREATE TABLE IF NOT EXISTS `inds_states` (
   `st_name` varchar(80) CHARACTER SET utf8 DEFAULT NULL,
   `st_alternate_name` varchar(200) CHARACTER SET utf8 DEFAULT NULL,
   `st_primary_level_name` varchar(80) CHARACTER SET utf8 DEFAULT NULL,
-  `st_code` varchar(50) NOT NULL
+  `st_code` varchar(50) NOT NULL,
+  PRIMARY KEY (`st_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -1514,13 +1543,13 @@ INSERT INTO `inds_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_co
 (13052, 51, 'CO', 'COL', 'Chocó', '', 'department', 'CO-CHO'),
 (13053, 51, 'CO', 'COL', 'Córdoba', '', 'department', 'CO-COR'),
 (13054, 51, 'CO', 'COL', 'Guainía', '', 'department', 'CO-GUA'),
-(13055, 51, 'CO', 'COL', 'Antioquia', '', 'department', 'CO-ANT'),
+(13055, 51, 'CO', 'COL', 'Antioquia', '', 'department', 'CO-ANT');
+INSERT INTO `inds_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code_char3`, `st_name`, `st_alternate_name`, `st_primary_level_name`, `st_code`) VALUES
 (13056, 51, 'CO', 'COL', 'Distrito Capital de Bogotá', 'Santafé de Bogotá Distrito Capital', 'capital district', 'CO-DC'),
 (13057, 51, 'CO', 'COL', 'Boyacá', '', 'department', 'CO-BOY'),
 (13058, 51, 'CO', 'COL', 'Casanare', '', 'department', 'CO-CAS'),
 (13059, 51, 'CO', 'COL', 'Cesar', '', 'department', 'CO-CES'),
-(13060, 51, 'CO', 'COL', 'Cundinamarca', '', 'department', 'CO-CUN');
-INSERT INTO `inds_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code_char3`, `st_name`, `st_alternate_name`, `st_primary_level_name`, `st_code`) VALUES
+(13060, 51, 'CO', 'COL', 'Cundinamarca', '', 'department', 'CO-CUN'),
 (13061, 51, 'CO', 'COL', 'Guaviare', '', 'department', 'CO-GUV'),
 (13062, 51, 'CO', 'COL', 'Magdalena', '', 'department', 'CO-MAG'),
 (13063, 51, 'CO', 'COL', 'Huila', '', 'department', 'CO-HUI'),
@@ -2224,7 +2253,8 @@ INSERT INTO `inds_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_co
 (14752, 107, 'IR', 'IRN', 'Hamadan', 'Hamedan', 'Province', 'IR-24'),
 (14753, 107, 'IR', 'IRN', 'Ilam', 'Ilam', 'Province', 'IR-05'),
 (14754, 107, 'IR', 'IRN', 'Semnan', '', 'Province', 'IR-12'),
-(14755, 107, 'IR', 'IRN', 'Tehran', 'Teheran', 'Province', 'IR-07'),
+(14755, 107, 'IR', 'IRN', 'Tehran', 'Teheran', 'Province', 'IR-07');
+INSERT INTO `inds_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code_char3`, `st_name`, `st_alternate_name`, `st_primary_level_name`, `st_code`) VALUES
 (14756, 107, 'IR', 'IRN', 'Az¯arbayjan-e Gharbi', 'Azarbayjān-e Bakhtari, West Azerbaijan', 'Province', 'IR-02'),
 (14757, 107, 'IR', 'IRN', 'Bushehr', '', 'Province', 'IR-06'),
 (14758, 107, 'IR', 'IRN', 'Esfahan', 'Isfahan', 'Province', 'IR-04'),
@@ -2233,8 +2263,7 @@ INSERT INTO `inds_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_co
 (14761, 107, 'IR', 'IRN', 'Hormozgan', '', 'Province', 'IR-23'),
 (14762, 107, 'IR', 'IRN', 'Kerman', '', 'Province', 'IR-15'),
 (14763, 107, 'IR', 'IRN', 'Yazd', '', 'Province', 'IR-25'),
-(14764, 107, 'IR', 'IRN', 'Sistan va Baluchestan', 'Sistan-e Baluchistan', 'Province', 'IR-13');
-INSERT INTO `inds_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code_char3`, `st_name`, `st_alternate_name`, `st_primary_level_name`, `st_code`) VALUES
+(14764, 107, 'IR', 'IRN', 'Sistan va Baluchestan', 'Sistan-e Baluchistan', 'Province', 'IR-13'),
 (14765, 108, 'IQ', 'IRQ', 'At Ta''mim', 'at-Tamim', 'Province', 'IQ-TS'),
 (14766, 108, 'IQ', 'IRQ', 'Al Qadisiyah', 'al-Qadisiyah', 'Province', 'IQ-QA'),
 (14767, 108, 'IQ', 'IRQ', 'Salah ad Din', 'Salah-ad-Din', 'Province', 'IQ-SD'),
@@ -2919,7 +2948,8 @@ INSERT INTO `inds_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_co
 (15771, 163, 'NI', 'NIC', 'Atlántico Sur*', 'RAAS, Región Autónoma Atlántico Sur, Zelaya Sur', 'autonomous region', 'NI-AS'),
 (15772, 163, 'NI', 'NIC', 'Boaco', '', 'department', 'NI-BO'),
 (15773, 163, 'NI', 'NIC', 'Estelí', '', 'department', 'NI-ES'),
-(15774, 163, 'NI', 'NIC', 'León', '', 'department', 'NI-LE'),
+(15774, 163, 'NI', 'NIC', 'León', '', 'department', 'NI-LE');
+INSERT INTO `inds_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code_char3`, `st_name`, `st_alternate_name`, `st_primary_level_name`, `st_code`) VALUES
 (15775, 163, 'NI', 'NIC', 'Matagalpa', '', 'department', 'NI-MT'),
 (15776, 163, 'NI', 'NIC', 'Rivas', '', 'department', 'NI-RI'),
 (15777, 163, 'NI', 'NIC', 'Granada', '', 'department', 'NI-GR'),
@@ -2932,8 +2962,7 @@ INSERT INTO `inds_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_co
 (15786, 164, 'NE', 'NER', 'Niamey', '', 'Capital District', 'NE-8'),
 (15787, 164, 'NE', 'NER', 'Tahoua', '', 'Region', 'NE-5'),
 (15788, 164, 'NE', 'NER', 'Tillabéri', 'Tillaberi', 'Region', 'NE-6'),
-(15789, 164, 'NE', 'NER', 'Zinder', '', 'Region', 'NE-7');
-INSERT INTO `inds_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code_char3`, `st_name`, `st_alternate_name`, `st_primary_level_name`, `st_code`) VALUES
+(15789, 164, 'NE', 'NER', 'Zinder', '', 'Region', 'NE-7'),
 (15792, 165, 'NG', 'NGA', 'Zamfara', '', 'state', 'NG-ZA'),
 (15793, 165, 'NG', 'NGA', 'Taraba', '', 'state', 'NG-TA'),
 (15794, 165, 'NG', 'NGA', 'Nassarawa', 'Nasarawa', 'state', 'NG-NA'),
@@ -3587,7 +3616,8 @@ INSERT INTO `inds_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_co
 (18228, 217, 'SZ', 'SWZ', 'Lubombo', 'Lebombo', 'District', 'SZ-LU'),
 (18230, 218, 'SE', 'SWE', 'Östergötlands län [SE-05]', '', 'County', 'SE-E'),
 (18231, 218, 'SE', 'SWE', 'Södermanlands län [SE-04]', '', 'County', 'SE-D'),
-(18232, 218, 'SE', 'SWE', 'Uppsala län [SE-03]', '', 'County', 'SE-C'),
+(18232, 218, 'SE', 'SWE', 'Uppsala län [SE-03]', '', 'County', 'SE-C');
+INSERT INTO `inds_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code_char3`, `st_name`, `st_alternate_name`, `st_primary_level_name`, `st_code`) VALUES
 (18233, 218, 'SE', 'SWE', 'Värmlands län [SE-17]', '', 'County', 'SE-S'),
 (18234, 218, 'SE', 'SWE', 'Västernorrlands län [SE-22]', '', 'County', 'SE-Y'),
 (18235, 218, 'SE', 'SWE', 'Västra Götalands län [SE-14]', '', 'County', 'SE-O'),
@@ -3601,8 +3631,7 @@ INSERT INTO `inds_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_co
 (18247, 218, 'SE', 'SWE', 'Skåne län [SE-12]', 'Scania', 'County', 'SE-M'),
 (18248, 218, 'SE', 'SWE', 'Dalarnas län [SE-20]', 'Dalarnas, Dalecarlia, Kopparberg', 'County', 'SE-W'),
 (18249, 218, 'SE', 'SWE', 'Gotlands län [SE-09]', '', 'County', 'SE-I'),
-(18250, 218, 'SE', 'SWE', 'Jönköpings län [SE-06]', '', 'County', 'SE-F');
-INSERT INTO `inds_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code_char3`, `st_name`, `st_alternate_name`, `st_primary_level_name`, `st_code`) VALUES
+(18250, 218, 'SE', 'SWE', 'Jönköpings län [SE-06]', '', 'County', 'SE-F'),
 (18251, 218, 'SE', 'SWE', 'Norrbottens län [SE-25]', '', 'County', 'SE-BD'),
 (18252, 218, 'SE', 'SWE', 'Stockholms län [SE-01]', '', 'County', 'SE-AB'),
 (18253, 218, 'SE', 'SWE', 'Västmanlands län [SE-19]', '', 'County', 'SE-U'),
@@ -4288,7 +4317,8 @@ INSERT INTO `inds_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_co
 (19419, 46, 'TD', 'TCD', 'Māyū Kībbī al Gharbī', '', 'Region', 'TD-MO'),
 (19420, 46, 'TD', 'TCD', 'Madīnat Injamīnā', '', 'Region', 'TD-ND'),
 (19421, 46, 'TD', 'TCD', 'Wādī Fīrā', '', 'Region', 'TD-WF'),
-(19428, 60, 'CY', 'CYP', 'Keryneia', '', 'District', 'CY-06'),
+(19428, 60, 'CY', 'CYP', 'Keryneia', '', 'District', 'CY-06');
+INSERT INTO `inds_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code_char3`, `st_name`, `st_alternate_name`, `st_primary_level_name`, `st_code`) VALUES
 (19429, 60, 'CY', 'CYP', 'Larnaka', '', 'District', 'CY-03'),
 (19430, 60, 'CY', 'CYP', 'Lefkosia', '', 'District', 'CY-01'),
 (19431, 60, 'CY', 'CYP', 'Lemesos', '', 'District', 'CY-02'),
@@ -4307,8 +4337,7 @@ INSERT INTO `inds_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_co
 (19445, 103, 'HU', 'HUN', 'Eger', '', 'city of county right', 'HU-EG'),
 (19446, 103, 'HU', 'HUN', 'Gyor', '', 'city of county right', 'HU-GY'),
 (19447, 103, 'HU', 'HUN', 'Hódmezovásárhely', '', 'city of county right', 'HU-HV'),
-(19448, 103, 'HU', 'HUN', 'Kaposvár', '', 'city of county right', 'HU-KV');
-INSERT INTO `inds_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code_char3`, `st_name`, `st_alternate_name`, `st_primary_level_name`, `st_code`) VALUES
+(19448, 103, 'HU', 'HUN', 'Kaposvár', '', 'city of county right', 'HU-KV'),
 (19449, 103, 'HU', 'HUN', 'Kecskemét', '', 'city of county right', 'HU-KM'),
 (19450, 103, 'HU', 'HUN', 'Miskolc', '', 'city of county right', 'HU-MI'),
 (19451, 103, 'HU', 'HUN', 'Nagykanizsa', '', 'city of county right', 'HU-NK'),
@@ -5034,7 +5063,8 @@ INSERT INTO `inds_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_co
 (47999, 239, 'GB', 'GBR', 'Limavady', '', 'district council area (Northern Ireland)', 'GB-LMV'),
 (48000, 239, 'GB', 'GBR', 'Larne', '', 'district council area (Northern Ireland)', 'GB-LRN'),
 (48001, 239, 'GB', 'GBR', 'Fermanagh', '', 'district council area (Northern Ireland)', 'GB-FER'),
-(48002, 239, 'GB', 'GBR', 'Dungannon', '', 'district council area (Northern Ireland)', 'GB-DGN'),
+(48002, 239, 'GB', 'GBR', 'Dungannon', '', 'district council area (Northern Ireland)', 'GB-DGN');
+INSERT INTO `inds_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code_char3`, `st_name`, `st_alternate_name`, `st_primary_level_name`, `st_code`) VALUES
 (48003, 239, 'GB', 'GBR', 'Down', '', 'district council area (Northern Ireland)', 'GB-DOW'),
 (48004, 239, 'GB', 'GBR', 'Craigavon', '', 'district council area (Northern Ireland)', 'GB-CGV'),
 (48005, 239, 'GB', 'GBR', 'Cookstown', '', 'district council area (Northern Ireland)', 'GB-CKT'),
@@ -5050,8 +5080,7 @@ INSERT INTO `inds_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_co
 (48015, 239, 'GB', 'GBR', 'Antrim', '', 'district council area (Northern Ireland)', 'GB-ANT'),
 (48016, 239, 'GB', 'GBR', 'York', '', 'unitary authority', 'GB-YOR'),
 (48017, 239, 'GB', 'GBR', 'Worcestershire', '', 'two-tier county', 'GB-WOR'),
-(48018, 239, 'GB', 'GBR', 'Wokingham', '', 'unitary authority', 'GB-WOK');
-INSERT INTO `inds_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code_char3`, `st_name`, `st_alternate_name`, `st_primary_level_name`, `st_code`) VALUES
+(48018, 239, 'GB', 'GBR', 'Wokingham', '', 'unitary authority', 'GB-WOK'),
 (48019, 239, 'GB', 'GBR', 'Windsor and Maidenhead', '', 'unitary authority', 'GB-WNM'),
 (48020, 239, 'GB', 'GBR', 'Wiltshire', '', 'unitary authority', 'GB-WIL'),
 (48022, 239, 'GB', 'GBR', 'West Sussex', '', 'two-tier county', 'GB-WSX'),
@@ -5245,14 +5274,15 @@ INSERT INTO `inds_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_co
 --
 
 CREATE TABLE IF NOT EXISTS `inds_subcategories` (
-  `sub_id` int(11) NOT NULL,
+  `sub_id` int(11) NOT NULL AUTO_INCREMENT,
   `sub_cat_id` int(11) NOT NULL,
   `sub_cat_name` varchar(200) NOT NULL,
   `sub_cat_description` text,
   `sub_cat_title` text,
   `sub_cat_keyword` text,
-  `sub_meta_description` text
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+  `sub_meta_description` text,
+  PRIMARY KEY (`sub_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `inds_subcategories`
@@ -5271,7 +5301,7 @@ INSERT INTO `inds_subcategories` (`sub_id`, `sub_cat_id`, `sub_cat_name`, `sub_c
 --
 
 CREATE TABLE IF NOT EXISTS `inds_user` (
-  `u_id` int(11) NOT NULL,
+  `u_id` int(11) NOT NULL AUTO_INCREMENT,
   `u_first_name` varchar(200) NOT NULL,
   `u_last_name` varchar(200) NOT NULL,
   `u_email` varchar(200) DEFAULT NULL,
@@ -5284,8 +5314,9 @@ CREATE TABLE IF NOT EXISTS `inds_user` (
   `u_scrkey` varchar(250) DEFAULT NULL COMMENT 'Forgot password link ',
   `u_last_login_date` datetime DEFAULT NULL,
   `u_created` datetime NOT NULL,
-  `u_modified` datetime NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+  `u_modified` datetime NOT NULL,
+  PRIMARY KEY (`u_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `inds_user`
@@ -5293,7 +5324,7 @@ CREATE TABLE IF NOT EXISTS `inds_user` (
 
 INSERT INTO `inds_user` (`u_id`, `u_first_name`, `u_last_name`, `u_email`, `u_password`, `u_role`, `u_gender`, `u_status`, `u_mail_verify`, `u_verkey`, `u_scrkey`, `u_last_login_date`, `u_created`, `u_modified`) VALUES
 (1, 'Indian', 'Stylo', 'admin@indianstylo.com', '$2a$13$mFlSnpEY4X7.gf3ff4UKdeeZhgIskbSYyIVPWaUn7x2icbsUs11Aa', 'admin', 1, 1, 1, NULL, '496788dbd0201735a4737f0c59d90fd6', '2015-06-03 01:26:27', '2014-12-23 02:20:00', '2015-06-04 02:58:41'),
-(5, 'testuser', 'One', 'testuserone@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2015-08-05 07:05:37', '2015-06-04 02:51:57', '2015-08-05 07:05:37');
+(5, 'testuser', 'One', 'testuserone@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2015-08-10 06:27:03', '2015-06-04 02:51:57', '2015-08-10 06:27:03');
 
 -- --------------------------------------------------------
 
@@ -5302,7 +5333,7 @@ INSERT INTO `inds_user` (`u_id`, `u_first_name`, `u_last_name`, `u_email`, `u_pa
 --
 
 CREATE TABLE IF NOT EXISTS `inds_user_address` (
-  `uad_id` int(11) NOT NULL,
+  `uad_id` int(11) NOT NULL AUTO_INCREMENT,
   `uad_user_id` int(11) NOT NULL,
   `uad_add1` varchar(255) NOT NULL,
   `uad_add2` varchar(255) DEFAULT NULL,
@@ -5313,8 +5344,9 @@ CREATE TABLE IF NOT EXISTS `inds_user_address` (
   `uad_mobile` varchar(200) NOT NULL,
   `uad_type` tinyint(2) NOT NULL COMMENT '1=Shipping Address, 2=Billing Address',
   `uad_created` datetime NOT NULL,
-  `uad_modified` datetime NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `uad_modified` datetime NOT NULL,
+  PRIMARY KEY (`uad_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `inds_user_address`
@@ -5331,7 +5363,7 @@ INSERT INTO `inds_user_address` (`uad_id`, `uad_user_id`, `uad_add1`, `uad_add2`
 --
 
 CREATE TABLE IF NOT EXISTS `inds_user_measurements` (
-  `umr_id` int(11) NOT NULL,
+  `umr_id` int(11) NOT NULL AUTO_INCREMENT,
   `umr_user_id` int(11) NOT NULL,
   `umr_name` varchar(200) NOT NULL,
   `umr_product_type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0=Shirt, 1=Trouser, 2=Blazer',
@@ -5361,8 +5393,9 @@ CREATE TABLE IF NOT EXISTS `inds_user_measurements` (
   `umr_collor_measurment` int(11) DEFAULT NULL,
   `umr_shoulder_structure` tinyint(2) DEFAULT NULL,
   `umr_created` datetime NOT NULL,
-  `umr_modified` datetime NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+  `umr_modified` datetime NOT NULL,
+  PRIMARY KEY (`umr_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `inds_user_measurements`
@@ -5375,209 +5408,6 @@ INSERT INTO `inds_user_measurements` (`umr_id`, `umr_user_id`, `umr_name`, `umr_
 (4, 5, 'body_measurement', 0, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20, 2, 20, 2, 3, 1, 30, 30, 36, 20, 4, '2015-08-05 07:24:15', '2015-08-05 07:24:15');
 
 --
--- Indexes for dumped tables
---
-
---
--- Indexes for table `inds_authassignment`
---
-ALTER TABLE `inds_authassignment`
-  ADD PRIMARY KEY (`itemname`,`userid`);
-
---
--- Indexes for table `inds_authitem`
---
-ALTER TABLE `inds_authitem`
-  ADD PRIMARY KEY (`name`);
-
---
--- Indexes for table `inds_authitemchild`
---
-ALTER TABLE `inds_authitemchild`
-  ADD PRIMARY KEY (`parent`,`child`), ADD KEY `child` (`child`);
-
---
--- Indexes for table `inds_buttons`
---
-ALTER TABLE `inds_buttons`
-  ADD PRIMARY KEY (`but_id`);
-
---
--- Indexes for table `inds_cart`
---
-ALTER TABLE `inds_cart`
-  ADD PRIMARY KEY (`cart_id`);
-
---
--- Indexes for table `inds_cart_items`
---
-ALTER TABLE `inds_cart_items`
-  ADD PRIMARY KEY (`citm_id`);
-
---
--- Indexes for table `inds_categories`
---
-ALTER TABLE `inds_categories`
-  ADD PRIMARY KEY (`cat_id`);
-
---
--- Indexes for table `inds_cmspage`
---
-ALTER TABLE `inds_cmspage`
-  ADD PRIMARY KEY (`c_id`);
-
---
--- Indexes for table `inds_countries`
---
-ALTER TABLE `inds_countries`
-  ADD PRIMARY KEY (`cnt_id`);
-
---
--- Indexes for table `inds_email_manager`
---
-ALTER TABLE `inds_email_manager`
-  ADD PRIMARY KEY (`em_id`);
-
---
--- Indexes for table `inds_fabrics`
---
-ALTER TABLE `inds_fabrics`
-  ADD PRIMARY KEY (`fab_id`);
-
---
--- Indexes for table `inds_fabric_buttons`
---
-ALTER TABLE `inds_fabric_buttons`
-  ADD PRIMARY KEY (`fbt_id`);
-
---
--- Indexes for table `inds_items`
---
-ALTER TABLE `inds_items`
-  ADD PRIMARY KEY (`itm_id`);
-
---
--- Indexes for table `inds_seo_pages`
---
-ALTER TABLE `inds_seo_pages`
-  ADD PRIMARY KEY (`sep_id`);
-
---
--- Indexes for table `inds_site_settings`
---
-ALTER TABLE `inds_site_settings`
-  ADD PRIMARY KEY (`sst_id`);
-
---
--- Indexes for table `inds_states`
---
-ALTER TABLE `inds_states`
-  ADD PRIMARY KEY (`st_id`);
-
---
--- Indexes for table `inds_subcategories`
---
-ALTER TABLE `inds_subcategories`
-  ADD PRIMARY KEY (`sub_id`);
-
---
--- Indexes for table `inds_user`
---
-ALTER TABLE `inds_user`
-  ADD PRIMARY KEY (`u_id`);
-
---
--- Indexes for table `inds_user_address`
---
-ALTER TABLE `inds_user_address`
-  ADD PRIMARY KEY (`uad_id`);
-
---
--- Indexes for table `inds_user_measurements`
---
-ALTER TABLE `inds_user_measurements`
-  ADD PRIMARY KEY (`umr_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `inds_buttons`
---
-ALTER TABLE `inds_buttons`
-  MODIFY `but_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `inds_cart`
---
-ALTER TABLE `inds_cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `inds_cart_items`
---
-ALTER TABLE `inds_cart_items`
-  MODIFY `citm_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT for table `inds_categories`
---
-ALTER TABLE `inds_categories`
-  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
---
--- AUTO_INCREMENT for table `inds_cmspage`
---
-ALTER TABLE `inds_cmspage`
-  MODIFY `c_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `inds_email_manager`
---
-ALTER TABLE `inds_email_manager`
-  MODIFY `em_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `inds_fabrics`
---
-ALTER TABLE `inds_fabrics`
-  MODIFY `fab_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT for table `inds_fabric_buttons`
---
-ALTER TABLE `inds_fabric_buttons`
-  MODIFY `fbt_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `inds_items`
---
-ALTER TABLE `inds_items`
-  MODIFY `itm_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT for table `inds_seo_pages`
---
-ALTER TABLE `inds_seo_pages`
-  MODIFY `sep_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `inds_site_settings`
---
-ALTER TABLE `inds_site_settings`
-  MODIFY `sst_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `inds_subcategories`
---
-ALTER TABLE `inds_subcategories`
-  MODIFY `sub_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT for table `inds_user`
---
-ALTER TABLE `inds_user`
-  MODIFY `u_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `inds_user_address`
---
-ALTER TABLE `inds_user_address`
-  MODIFY `uad_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `inds_user_measurements`
---
-ALTER TABLE `inds_user_measurements`
-  MODIFY `umr_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
---
 -- Constraints for dumped tables
 --
 
@@ -5585,14 +5415,14 @@ ALTER TABLE `inds_user_measurements`
 -- Constraints for table `inds_authassignment`
 --
 ALTER TABLE `inds_authassignment`
-ADD CONSTRAINT `inds_authassignment_ibfk_1` FOREIGN KEY (`itemname`) REFERENCES `inds_authitem` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `inds_authassignment_ibfk_1` FOREIGN KEY (`itemname`) REFERENCES `inds_authitem` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `inds_authitemchild`
 --
 ALTER TABLE `inds_authitemchild`
-ADD CONSTRAINT `inds_authitemchild_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `inds_authitem` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `inds_authitemchild_ibfk_2` FOREIGN KEY (`child`) REFERENCES `inds_authitem` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `inds_authitemchild_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `inds_authitem` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `inds_authitemchild_ibfk_2` FOREIGN KEY (`child`) REFERENCES `inds_authitem` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
