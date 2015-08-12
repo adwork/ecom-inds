@@ -95,6 +95,7 @@ class CartController extends Controller
 		}else { 
 			// send user to paypal 
 			$token = urldecode($result["TOKEN"]); 			
+			Yii::app()->session['paypaltoken'] = $result["TOKEN"];
 			$payPalURL = Yii::app()->Paypal->paypalUrl.$token; 
 			$this->saveOrders(1,$result);
 			$this->redirect($payPalURL); 
@@ -141,19 +142,20 @@ class CartController extends Controller
 				$this->saveOrders(2,$paymentResult);
 				Yii::app()->session['cartItems'] = array();
 				Yii::app()->session['cartId'] = '';
-				$this->redirect(array('confirm'));
+				$this->render('confirm');
 			}			
 		}
 	}
         
     public function actionCancel(){
 		//The token of the cancelled payment typically used to cancel the payment within your application
+		prd($_REQUEST);
 		$token = $_GET['token'];	
 		$result = array('status' => 'cancel','token' => $token);	
 		$this->saveOrders(3,$result);
 		Yii::app()->session['cartItems'] = array();
 		Yii::app()->session['cartId'] = '';
-		$this->redirect(array('cancel'));
+		$this->redirect('cancel');
 	}
 
 	public function saveOrders($status,$result){
@@ -325,15 +327,9 @@ class CartController extends Controller
 		if(!empty($_POST['fabid'])){
 			$fabid = $_POST['fabid'];
 			$id = $_POST['id'];
-			if(!empty($cart_items['fabric'])){
-				foreach ($cart_items['fabric'] as $fabIdKey => $arr) {
-					$cart_items['fabric'][$fabIdKey] = $arr;
-					if($fabIdKey==$fabid){
-						$cart_items['fabric'][$fabIdKey]['user_measurement_id'] = $id;
-					}
-				}
-			}
+			$cart_items['fabric'][$fabid]['user_measurement_id'] = $id;			
 		}
+		Yii::app()->session['cartItems'] = $cart_items;
 		echo 'success';
 		exit;
 	}

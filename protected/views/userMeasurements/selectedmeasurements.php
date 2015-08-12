@@ -45,7 +45,7 @@
       					}
       					?>      					
       					<div align="right">
-      						<?php echo CHtml::link('Add New',array('userMeasurements/create','type' => 1),array('data-toggle' => 'modal' ,'data-target' => '#measurementModal1')); ?>
+      						<?php /*echo CHtml::link('Add New',array('userMeasurements/create','type' => 1),array('data-toggle' => 'modal' ,'data-target' => '#measurementModal1'));*/ ?>
       					</div>
       				</div>
       				<div class="tabsSelectedMeasurement">
@@ -62,7 +62,7 @@
       					}
       					?>
       					<div align="right">
-      						<?php echo CHtml::link('Create New Profile',array('userMeasurements/create','type' => 3),array('data-toggle' => 'modal' ,'data-target' => '#measurementModal3')); ?>
+      						<?php /*echo CHtml::link('Create New Profile',array('userMeasurements/create','type' => 3),array('data-toggle' => 'modal' ,'data-target' => '#measurementModal3'));*/ ?>
       					</div>
       				</div>
       				<div style="clear:both;"></div>
@@ -82,7 +82,7 @@
       					}
       					?>
       					<div align="right">
-      						<?php echo CHtml::link('Create New Profile',array('userMeasurements/create','type' => 4),array('data-toggle' => 'modal' ,'data-target' => '#measurementModal4')); ?>
+      						<?php /*echo CHtml::link('Create New Profile',array('userMeasurements/create','type' => 4),array('data-toggle' => 'modal' ,'data-target' => '#measurementModal4'));*/ ?>
       					</div>
       				</div>
       				<div class="tabsSelectedMeasurement">
@@ -99,7 +99,7 @@
       					}
       					?>
       					<div align="right">
-      						<?php echo CHtml::link('Add New',array('userMeasurements/create','type' => 6),array('data-toggle' => 'modal' ,'data-target' => '#measurementModal6')); ?>
+      						<?php /*echo CHtml::link('Add New',array('userMeasurements/create','type' => 6),array('data-toggle' => 'modal' ,'data-target' => '#measurementModal6'));*/ ?>
       					</div>
       				</div>
       				<div style="clear:both;"></div>

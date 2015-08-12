@@ -1,4 +1,4 @@
-<div class="modal fade modal-lg" id="measurementModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade modal-lg" id="measurementModal1" tabindex="1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -12,7 +12,7 @@
   </div>
 </div>
 
-<div class="modal fade modal-lg" id="measurementModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade modal-lg" id="measurementModal2" tabindex="2" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -26,7 +26,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="measurementModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="measurementModal3" tabindex="3" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -40,7 +40,7 @@
   </div>
 </div>
 
-<div class="modal fade modal-lg" id="measurementModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade modal-lg" id="measurementModal4" tabindex="4" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -54,7 +54,7 @@
   </div>
 </div>
 
-<div class="modal fade modal-lg" id="measurementModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade modal-lg" id="measurementModal5" tabindex="5" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -68,7 +68,7 @@
   </div>
 </div>
 
-<div class="modal fade modal-lg" id="measurementModal6" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade modal-lg" id="measurementModal6" tabindex="6" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -82,7 +82,7 @@
   </div>
 </div>
 
-<div class="modal fade modal-lg" id="checkoutMeasurements" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade modal-lg" id="checkoutMeasurements" tabindex="7" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">

@@ -167,6 +167,46 @@
 				            				?>				            				
 				            			</ul>
 				            		</li>
+				            		<?php
+				            		if(!empty($fabArr->cartUserMeasurement)){
+					            		?>
+					            		<li>
+					            			<div><b>User Measurements</b></div>
+					            			<div>
+					            				<span><b>Name :</b> </span>
+				            					<span><?php echo $fabArr->cartUserMeasurement->umr_name; ?></span>
+				            				</div>				            			
+					            			<?php 
+					            			switch ($fabArr->cartUserMeasurement->umr_type) {
+					            				case '0':
+					            					?>
+					            					<div>
+							            				<span><b>Name :</b> </span>
+						            					<span><?php echo $fabArr->cartUserMeasurement->umr_name; ?></span>
+						            				</div>				            			
+					            					<?php
+					            					break;
+					            				
+					            				case '1':
+					            					?>
+					            					<?php
+					            					break;
+
+					            				case '2':
+					            					?>
+					            					<?php
+					            					break;
+
+					            				case '3':
+					            					?>
+					            					<?php
+					            					break;
+					            			}
+					            			?>					            			
+					            		</li>
+					            		<?php
+				            		}
+				            		?>
 				            	</ul>
 				            </div>
 				            <?php
