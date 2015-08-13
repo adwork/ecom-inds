@@ -169,6 +169,57 @@
 				            		</li>
 				            		<?php
 				            		if(!empty($fabArr->cartUserMeasurement)){
+				            			$sizes = array(
+											1 => '37 (14.75in)',
+											2 => '38 (15in)',
+											3 => '39 (15.5in)',
+											4 => '40 (15.75in)',
+											5 => '41 (16in)',
+											6 => '42 (16.5in)',
+											7 => '43 (17in)',
+											8 => '44 (17.25in)',
+											9 => '45 (17.5in)'
+										);
+										$collorSizes = array(
+											"14" => '14 in.',
+											"14.5" => '14.5 in.',
+											"15" => '15 in. (Default)',
+											"15.5" => '15.5 in.',
+											"16" => '16 in.',
+										);
+										$shirtLength = array(
+											"24" => '24 in.',
+											"25" => '25 in.',
+											"26" => '26 in.',
+											"27" => '27 in.',
+											"28" => '28 in.(Default)',
+											"29" => '29 in.',
+											"30" => '30 in.',
+											"31" => '31 in.',
+											"32" => '32 in.',
+										);
+										$longSleeve = array(
+											"22" => '22 in.',
+											"22.5" => '22.5 in.',
+											"23" => '23 in.',
+											"23.5" => '23.5 in.',
+											"24" => '24 in. (Default)',
+											"24.5" => '24.5 in.',
+											"25" => '25 in.',
+											"25.5" => '25.5 in.',
+											"26" => '26 in.',
+											"26.5" => '26.5 in.',
+										);
+										$shortSleeve = array(
+											"7.5" => '7.5 in.',
+											"8" => '8 in.',
+											"8.5" => '8.5 in.',
+											"9" => '9 in. (Default)',
+											"9.5" => '9.5 in.',
+											"10" => '10 in.',
+											"10.5" => '10.5 in.',
+										);
+										$fit = array(1 => 'Regular Fit',2 => 'Slim Fit');
 					            		?>
 					            		<li>
 					            			<div><b>User Measurements</b></div>
@@ -181,8 +232,28 @@
 					            				case '0':
 					            					?>
 					            					<div>
-							            				<span><b>Name :</b> </span>
-						            					<span><?php echo $fabArr->cartUserMeasurement->umr_name; ?></span>
+							            				<span><b>Size :</b> </span>
+						            					<span><?php echo @$sizes[$fabArr->cartUserMeasurement->umr_size]; ?></span>
+						            				</div>				            			
+						            				<div>
+							            				<span><b>Fit :</b> </span>
+						            					<span><?php echo @$fit[$fabArr->cartUserMeasurement->umr_fit]; ?></span>
+						            				</div>				            			
+						            				<div>
+							            				<span><b>Collor :</b> </span>
+						            					<span><?php echo @$collorSizes[$fabArr->cartUserMeasurement->umr_collor]; ?></span>
+						            				</div>				            			
+						            				<div>
+							            				<span><b>Shirt Length :</b> </span>
+						            					<span><?php echo @$shirtLength[$fabArr->cartUserMeasurement->umr_shirt_length]; ?></span>
+						            				</div>				            			
+						            				<div>
+							            				<span><b>Long Sleeve Length :</b> </span>
+						            					<span><?php echo @$longSleeve[$fabArr->cartUserMeasurement->umr_long_sleeve]; ?></span>
+						            				</div>				            			
+						            				<div>
+							            				<span><b>Short Sleeve Length :</b> </span>
+						            					<span><?php echo @$shortSleeve[$fabArr->cartUserMeasurement->umr_short_sleeve]; ?></span>
 						            				</div>				            			
 					            					<?php
 					            					break;
@@ -194,12 +265,138 @@
 
 					            				case '2':
 					            					?>
+					            					<div>
+							            				<span><b>Collor :</b> </span>
+						            					<span><?php echo @$fabArr->cartUserMeasurement->umr_collor; ?>(inches)</span>
+						            				</div>
+						            				<div>
+							            				<span><b>Shoulder :</b> </span>
+						            					<span><?php echo @$fabArr->cartUserMeasurement->umr_shoulder; ?>(inches)</span>
+						            				</div>
+						            				<div>
+							            				<span><b>Chest(half) :</b> </span>
+						            					<span><?php echo @$fabArr->cartUserMeasurement->umr_chest_half; ?>(inches)</span>
+						            				</div>
+						            				<div>
+							            				<span><b>Mid Section(half) :</b> </span>
+						            					<span><?php echo @$fabArr->cartUserMeasurement->umr_mid_section_half; ?>(inches)</span>
+						            				</div>
+						            				<div>
+							            				<span><b>Hip(half) :</b> </span>
+						            					<span><?php echo @$fabArr->cartUserMeasurement->umr_hip_half; ?>(inches)</span>
+						            				</div>
+						            				<div>
+							            				<span><b>Shirt length :</b> </span>
+						            					<span><?php echo @$fabArr->cartUserMeasurement->umr_shirt_length; ?>(inches)</span>
+						            				</div>
+						            				<div>
+							            				<span><b>Long sleeve length :</b> </span>
+						            					<span><?php echo @$fabArr->cartUserMeasurement->umr_long_sleeve; ?>(inches)</span>
+						            				</div>
+						            				<div>
+							            				<span><b>Short sleeve length :</b> </span>
+						            					<span><?php echo @$fabArr->cartUserMeasurement->umr_short_sleeve; ?>(inches)</span>
+						            				</div>
+						            				<div>
+							            				<span><b>Short sleeve opening :</b> </span>
+						            					<span><?php echo @$fabArr->cartUserMeasurement->umr_short_sleeve_opening; ?>(inches)</span>
+						            				</div>
+						            				<div>
+							            				<span><b>Arm half :</b> </span>
+						            					<span><?php echo @$fabArr->cartUserMeasurement->umr_arm_half; ?>(inches)</span>
+						            				</div>
+						            				<div>
+							            				<span><b>Cuff :</b> </span>
+						            					<span><?php echo @$fabArr->cartUserMeasurement->umr_cuff; ?>(inches)</span>
+						            				</div>
 					            					<?php
 					            					break;
 
 					            				case '3':
 					            					?>
-					            					<?php
+					            					<div>
+							            				<span><b>Height :</b> </span>
+						            					<span><?php echo @$fabArr->cartUserMeasurement->umr_height; ?>(feet)&nbsp;<?php echo @$fabArr->cartUserMeasurement->umr_feet; ?>(inch)</span>
+						            				</div>
+						            				<div>
+							            				<span><b>Weight :</b> </span>
+						            					<span><?php echo @$fabArr->cartUserMeasurement->umr_weight; ?>(Kgs)</span>
+						            				</div>
+						            				<div>
+							            				<span><b>What type of shirt fit do you prefer? :</b> </span>
+						            					<span><?php echo @$fit[$fabArr->cartUserMeasurement->umr_fit]; ?></span>
+						            				</div>
+						            				<div>
+							            				<span><b>How would you describe your arms? :</b> </span>
+						            					<span>
+						            						<?php 
+						            						$arms = array(
+										        				'1'=>'Not muscular',
+										        				'2'=>'Slightly muscular',
+										        				'3'=>'My arms are muscular'
+										        			);
+						            						echo @$arms[$fabArr->cartUserMeasurement->umr_describe_arms]; 
+						            						?>
+						            					</span>
+						            				</div>
+						            				<div>
+							            				<span><b>How do you like to wear your shirt? :</b> </span>
+						            					<span>
+						            						<?php 
+						            						$wearshirt = array(
+										        				'1'=>'I keep my shirt tucked in at all times',
+										        				'2'=>'I keep my shirt tucked out and I prefer a short length',
+										        				'3'=>'I keep my shirt tucked out, but I prefer a longer length',
+										        				'4'=>'I sometimes tuck in my shirt and sometimes keep it out'
+										        			);
+						            						echo @$wearshirt[$fabArr->cartUserMeasurement->umr_wear_shirt]; 
+						            						?>
+						            					</span>
+						            				</div>
+						            				<div>
+							            				<span><b>How do you like to wear your short sleeves? :</b> </span>
+						            					<span>
+						            						<?php 
+						            						$shortsleeves = array(
+										        				'0'=>'I prefer formal short sleeves (Formal short sleeves end closer to the elbow).',
+										        				'1'=>'I prefer casual short sleeves (Casual short sleeves end about mid-way between the shoulder and elbow).',
+										        				'2'=>'I never wear short sleeves'				        				
+										        			);
+						            						echo @$shortsleeves[$fabArr->cartUserMeasurement->umr_prefer_wear]; 
+						            						?>
+						            					</span>
+						            				</div>
+						            				<div>
+							            				<span><b>Stomach Measurement :</b> </span>
+						            					<span><?php echo @$fabArr->cartUserMeasurement->umr_stomach; ?>(inches)</span>
+						            				</div>
+						            				<div>
+							            				<span><b>Hip Measurement :</b> </span>
+						            					<span><?php echo @$fabArr->cartUserMeasurement->umr_hip; ?>(inches)</span>
+						            				</div>
+						            				<div>
+							            				<span><b>Chest Measurement :</b> </span>
+						            					<span><?php echo @$fabArr->cartUserMeasurement->umr_chest; ?>(inches)</span>
+						            				</div>
+						            				<div>
+							            				<span><b>Collar Measurement (Estimated size: 15 inches) :</b> </span>
+						            					<span><?php echo @$fabArr->cartUserMeasurement->umr_collor_measurment; ?>(inches)</span>
+						            				</div>
+						            				<div>
+							            				<span><b>Shoulder structure in comparison to your chest :</b> </span>
+						            					<span>
+						            						<?php 
+						            						$shoulderstructure = array(
+						            							1 => 'Noticed only in overweight men. For such men, readymade shirts droop significantly at the shoulders',
+						            							2 => 'Such men have rounded or sloping shoulders and find that readymade shirts droop at their shoulders',
+						            							3 => "More than 60% of men fall in this category, so don't be surprise if you do too",
+						            							4 => 'Noticed in skinny men with a wide shoulder frame and in men with very muscular shoulders'
+						            						);
+						            						echo @$shoulderstructure[$fabArr->cartUserMeasurement->umr_shoulder_structure]; 
+						            						?>
+						            					</span>
+						            				</div>
+						            				<?php
 					            					break;
 					            			}
 					            			?>					            			

@@ -212,60 +212,79 @@
 					));
 					echo $form->hiddenField($model,'umr_type',array('value'=>3));
 					?>
-					<div>You do not need a tailor, nor do you need a friend's assistance.</div>
-					<div>You simply need a measure tape and 10 minutes to finish this guide.</div>
-					<div>Get started by entering your height and weight below.</div>
 					<div id="example-basic">
 					    <h3></h3>
 					    <section>
-					        <?php
-							echo $form->textFieldRow($model,'umr_name',array('class'=>'span5','maxlength'=>200));
-							echo $form->textFieldRow($model,'umr_height',array('class'=>'span5'));
-							echo $form->textFieldRow($model,'umr_feet',array('class'=>'span5'));
-							echo $form->textFieldRow($model,'umr_weight',array('class'=>'span5'));
-							?>
+					    	<div>
+					    		<div>You do not need a tailor, nor do you need a friend's assistance.</div>
+								<div>You simply need a measure tape and 10 minutes to finish this guide.</div>
+								<div>Get started by entering your height and weight below.</div>
+					    	</div>
+					    	<div>&nbsp;</div>
+					    	<div>
+						        <?php
+						        $height = array(4=>4,5=>5,6=>6,7=>7,8=>8);
+						        $feet = array(0=>0,1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7,8=>8,9=>9,10=>10,11=>11);
+								echo $form->textFieldRow($model,'umr_name',array('class'=>'span5','maxlength'=>200));
+								echo $form->dropDownListRow($model,'umr_height',$height,array('class'=>'span5','empty' => 'Select'));
+								echo "Feet";
+								echo $form->dropDownListRow($model,'umr_feet',$feet,array('class'=>'span5','empty' => 'Select','label' => false));
+								echo "Inches";
+								?>
+								<div style="clear:both;"></div>
+								<?php
+								echo $form->textFieldRow($model,'umr_weight',array('class'=>'span5'));
+								echo "Kgs";
+								?>
+							</div>
 					    </section>
 					    <h3></h3>
 					    <section>
+					    	<div>What type of shirt fit do you prefer?</div>
 					    	<?php 
-					    	echo $form->hiddenField($model,'umr_feet'); 
+					    	echo $form->hiddenField($model,'umr_fit'); 
 					    	$umr_feet_select = '';
-					    	if(!empty($model->umr_feet)){
-					    		$umr_feet_select = $model->umr_feet;
+					    	if(!empty($model->umr_fit)){
+					    		$umr_feet_select = $model->umr_fit;
 					    	}
 					    	?>
-					    	<ul class="bodyFits">
-					    		<li class="<?php echo ($umr_feet_select==1) ? 'selected' : ''; ?>">
-					    			<a href="javascript:void(0);" rel="1">
-								        <div>
-								        	<div align="center">SLIM</div>
-								        	<div><img src="<?php echo Yii::app()->baseUrl; ?>/images/slim-preview.png"></div>
-								        	<div>A fit neither skinny nor loose; be prepared for some tightness around the arms.</div>
-								        </div>
-							        </a>
-					        	</li>
-					        	<li class="<?php echo ($umr_feet_select==2) ? 'selected' : ''; ?>">
-					        		<a href="javascript:void(0);" rel="2">
-								        <div>
-								        	<div align="center">REGULAR</div>
-								        	<div><img src="<?php echo Yii::app()->baseUrl; ?>/images/regular-preview.png"></div>
-								        	<div>A balanced fit with some excess fabric for ease of movement, without being baggy.</div>
-								        </div>
-							        </a>
-					        	</li>
-					        	<li class="<?php echo ($umr_feet_select==3) ? 'selected' : ''; ?>">
-					        		<a href="javascript:void(0);" rel="3">
-								        <div>
-								        	<div align="center">LOOSE</div>
-								        	<div><img src="<?php echo Yii::app()->baseUrl; ?>/images/loose-preview.png"></div>
-								        	<div>A relaxed fit for those who value comfort and don't mind some excess fabric.</div>
-								        </div>
-							        </a>
-					        	</li>
-					        </ul>
+					    	<div>&nbsp;</div>
+					    	<div>
+						    	<ul class="bodyFits">
+						    		<li class="<?php echo ($umr_feet_select==1) ? 'selected' : ''; ?>">
+						    			<a href="javascript:void(0);" rel="1">
+									        <div>
+									        	<div align="center">SLIM</div>
+									        	<div><img src="<?php echo Yii::app()->baseUrl; ?>/images/slim-preview.png"></div>
+									        	<div>A fit neither skinny nor loose; be prepared for some tightness around the arms.</div>
+									        </div>
+								        </a>
+						        	</li>
+						        	<li class="<?php echo ($umr_feet_select==2) ? 'selected' : ''; ?>">
+						        		<a href="javascript:void(0);" rel="2">
+									        <div>
+									        	<div align="center">REGULAR</div>
+									        	<div><img src="<?php echo Yii::app()->baseUrl; ?>/images/regular-preview.png"></div>
+									        	<div>A balanced fit with some excess fabric for ease of movement, without being baggy.</div>
+									        </div>
+								        </a>
+						        	</li>
+						        	<li class="<?php echo ($umr_feet_select==3) ? 'selected' : ''; ?>">
+						        		<a href="javascript:void(0);" rel="3">
+									        <div>
+									        	<div align="center">LOOSE</div>
+									        	<div><img src="<?php echo Yii::app()->baseUrl; ?>/images/loose-preview.png"></div>
+									        	<div>A relaxed fit for those who value comfort and don't mind some excess fabric.</div>
+									        </div>
+								        </a>
+						        	</li>
+						        </ul>
+					        </div>
 					    </section>
 					    <h3></h3>
 					    <section>
+					    	<div>Please select below the option that suits you best</div>
+					    	<div>&nbsp;</div>
 					        <div>
 					        	<div>How would you describe your arms?</div>
 					        	<div>
@@ -302,6 +321,8 @@
 					    </section>
 					    <h3></h3>
 					    <section>
+					    	<div>How do you like to wear your short sleeves?</div>
+					    	<div>&nbsp;</div>
 					        <div>
 				        		<?php 
 				        		echo $form->radioButtonListRow(
@@ -319,6 +340,8 @@
 					    </section>
 					    <h3></h3>
 					    <section>
+					    	<div>Measure your Stomach.</div>
+					    	<div>&nbsp;</div>
 					        <div>
 					        	<div>
 					        		<div style="float:left;width:50%;">
@@ -339,12 +362,15 @@
 					        	<div>
 					        		<?php
 					        		echo $form->textFieldRow($model,'umr_stomach',array('class'=>'span5'));
+					        		echo 'Inches';
 					        		?>
 					        	</div>
 					        </div>
 					    </section>
 					    <h3></h3>
 					    <section>
+					    	<div>Measure your Hip.</div>
+					    	<div>&nbsp;</div>
 					        <div>
 					        	<div>
 					        		<div style="float:left;width:50%;">
@@ -365,12 +391,14 @@
 					        	<div>
 					        		<?php
 					        		echo $form->textFieldRow($model,'umr_hip',array('class'=>'span5'));
+					        		echo 'Inches';
 					        		?>
 					        	</div>
 					        </div>
 					    </section>
 					    <h3></h3>
 					    <section>
+					    	<div>Measure your Chest.</div>
 					        <div>
 					        	<div>
 					        		<div style="float:left;width:50%;">
@@ -389,12 +417,21 @@
 					        		It is quite easy to manage this measurement on your own. Raise your arms. Place the measuring tape around the fullest part of your chest, typically one inch below the armpit. Ensure that the measuring tape is not placed too tight around the chest and levels at the back. Now note the measurement. 
 					        	</div>
 					        	<div>
-					        		<?php echo $form->textFieldRow($model,'umr_chest',array('class'=>'span5')); ?>
+					        		<?php 
+					        		echo $form->textFieldRow($model,'umr_chest',array('class'=>'span5')); 
+					        		echo 'Inches';
+					        		?>
 					        	</div>
 					        </div>
 					    </section>
 					    <h3></h3>
 					    <section>
+					    	<div>Measure your Collar.</div>
+					    	<div>&nbsp;</div>
+					    	<div>
+					    		From your chest measurement we have estimated your collar size as 11.25 inches. You can proceed with our estimate or measure yourself. However, if you wear a tie we recommend you cross check this measurement.
+					    	</div>
+					    	<div>&nbsp;</div>
 					        <div>
 					        	<div>
 					        		<div style="float:left;width:50%;">
@@ -413,12 +450,17 @@
 									This is the only non-body measurement in this list. For the sake of accuracy, we prefer collar measurement to neck measurement. Take a shirt that fits you well at the collar. To measure the collar, unbutton the collar and the shirt buttons. Spread the collar flat and pull it tight so that curve of the collar is stretched straight. Measure from the center of the button to the center of the button hole.
 					        	</div>
 					        	<div>
-					        		<?php echo $form->textFieldRow($model,'umr_collor_measurment',array('class'=>'span5')); ?>
+					        		<?php 
+					        		echo $form->textFieldRow($model,'umr_collor_measurment',array('class'=>'span5')); 
+					        		echo 'Inches';
+					        		?>
 					        	</div>
 					        </div>
 					    </section>
 					    <h3></h3>
 					    <section>
+					    	<div>Describe your shoulder structure in comparison to your chest.</div>
+					    	<div>&nbsp;</div>
 					        <div> 
 					        	<?php 
 					        	echo $form->hiddenField($model,'umr_shoulder_structure'); 
@@ -510,7 +552,7 @@
 			var val = $(this).attr('rel');
 			$('.bodyFits li').removeClass('selected');
 			$(this).parent().addClass('selected');
-			$(this).parent().parent().parent().find('#UserMeasurements_umr_feet').val(val);
+			$(this).parent().parent().parent().parent().find('#UserMeasurements_umr_fit').val(val);
 		});
 		$('.shoulderFit a').click(function(event) {
 			var val = $(this).attr('rel');
