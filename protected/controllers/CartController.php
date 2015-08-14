@@ -180,9 +180,13 @@ class CartController extends Controller
 					foreach ($cartData['fabrics'] as $key => $arrObj) {
 						$cartItemsModel = new CartItems;
 						$fabId = $arrObj->fab_id;
-						$customizations = array(
-							'product' => $arrObj->fab_for,
-							'shirt' => array(
+						
+						$shirtArr = array();
+						$trouserArr = array();
+						$suitArr = array();
+						$blazerArr = array();
+						if($arrObj->fab_for==1){
+							$shirtArr = array(
 								'sleeve' => $cart_items['fabric'][$fabId]['txt_sleeve'],
 								'collor' => $cart_items['fabric'][$fabId]['txt_collor'],
 								'cuff' => $cart_items['fabric'][$fabId]['txt_cuff'],
@@ -193,10 +197,28 @@ class CartController extends Controller
 								'button' => $cart_items['fabric'][$fabId]['txt_button'],
 								'monogram' => $cart_items['fabric'][$fabId]['txt_monogram'],
 								'fabid' => $cart_items['fabric'][$fabId]['txt_fabric']
-							),
-							'trouser' => array(),
-							'blazer' => array(),
-							'suit' => array()
+							);							
+						}else if($arrObj->fab_for==2){
+							$trouserArr = array(
+								'belt' => $cart_items['fabric'][$fabId]['txt_belt'],
+								'pleated' => $cart_items['fabric'][$fabId]['txt_pleated'],
+								'sidepocket' => $cart_items['fabric'][$fabId]['txt_sidepocket'],
+								'backpocket' => $cart_items['fabric'][$fabId]['txt_backpocket'],
+								'bottomstyle' => $cart_items['fabric'][$fabId]['txt_bottomstyle'],
+								'back_lining' => $cart_items['fabric'][$fabId]['txt_lining'],
+								'button' => $cart_items['fabric'][$fabId]['txt_button'],
+								'fabid' => $cart_items['fabric'][$fabId]['txt_fabric']
+							);
+						}else if($arrObj->fab_for==3){
+							$blazerArr = array();
+						}
+
+						$customizations = array(
+							'product' => $arrObj->fab_for,
+							'shirt' => $shirtArr,
+							'trouser' => $trouserArr,
+							'blazer' => $blazerArr,
+							'suit' => $suitArr
 						);
 						$customization_json = json_encode($customizations);
 
@@ -212,7 +234,7 @@ class CartController extends Controller
 						$cartItemsModel->citm_qty = $cart_items['fabric'][$fabId]['qty'];							
 						//$cartItemsModel->citm_rental	
 						//$errors = $cartItemsModel->getErrors();
-						//pr($errors);
+						//prd($errors);
 						if(!empty($cart_items['fabric'][$fabId]['user_measurement_id'])){
 							$cartItemsModel->citm_user_measurement_id = $cart_items['fabric'][$fabId]['user_measurement_id'];
 						}

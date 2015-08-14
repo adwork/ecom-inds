@@ -547,6 +547,11 @@
                 <span id="lining"></span>
                 <input type="hidden" name="txt_lining" id="txt_lining">
               </li>
+              <li>
+                <span><b>Button:</b></span>
+                <span id="button"></span>
+                <input type="hidden" name="txt_button" id="txt_button">
+              </li>
             </ul>
           </div>
         </form>
@@ -711,7 +716,7 @@ function setTrouserDefaultOptions(){
 
     val = $("input[type='radio'][name='pleated']:checked").val();
     $('.view_summery_details #pleated').text(val);
-    $('.view_summery_details #txt_txt_pleated').val(val);
+    $('.view_summery_details #txt_pleated').val(val);
 
     val = $("input[type='radio'][name='sidepocket']:checked").val();
     $('.view_summery_details #sidepocket').text(val);

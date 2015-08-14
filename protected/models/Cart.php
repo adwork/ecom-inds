@@ -86,11 +86,15 @@ class Cart extends CActiveRecord
 			$criteria->params = array(':cart_payment_status' => 2);
 		}
 		$criteria->with = array('userCart'=>array('select' => array('u_email')));
+		$criteria->order = 'cart_id DESC';
 		$criteria->compare('u_email',$this->u_email,true);
 		$criteria->compare('cart_user_id',$this->cart_user_id);
 		$criteria->compare('cart_created',$this->cart_created,true);
 		$data = new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'pagination'=>array(
+		        'pageSize'=>20,
+		    ),
 		));
 		return $data; 
 	}

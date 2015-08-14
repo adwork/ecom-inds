@@ -100,6 +100,7 @@ class CartItems extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 		//$criteria->condition = '';
+		$criteria->order = 'citm_cart_id DESC';
 		$criteria->compare('citm_cart_id',$this->citm_cart_id);
 		$criteria->compare('citm_item_id',$this->citm_item_id);
 		$criteria->compare('citm_price',$this->citm_price);
@@ -115,6 +116,21 @@ class CartItems extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+
+		/*$dataProvider=new CActiveDataProvider('Post', array(
+		    'criteria'=>array(
+		        'condition'=>'status=1',
+		        'order'=>'create_time DESC',
+		        'with'=>array('author'),
+		    ),
+		    'countCriteria'=>array(
+		        'condition'=>'status=1',
+		        // 'order' and 'with' clauses have no meaning for the count query
+		    ),
+		    'pagination'=>array(
+		        'pageSize'=>20,
+		    ),
+		));*/
 	}
 
 	/**
