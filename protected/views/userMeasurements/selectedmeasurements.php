@@ -45,7 +45,10 @@
       					}
       					?>      					
       					<div align="right">
-      						<?php /*echo CHtml::link('Add New',array('userMeasurements/create','type' => 1),array('data-toggle' => 'modal' ,'data-target' => '#measurementModal1'));*/ ?>
+                                          <!-- <a href="<?php echo Yii::app()->baseUrl; ?>/userMeasurements/create/?type=1" id="measurementModal1" data-toggle="modal" data-target="measurementModal1"></a> -->
+      						<?php 
+                                          echo CHtml::link('Add New','javascript:void(0);',array('class' => 'measurementModal1')); 
+                                          ?>
       					</div>
       				</div>
       				<div class="tabsSelectedMeasurement">
@@ -62,7 +65,10 @@
       					}
       					?>
       					<div align="right">
-      						<?php /*echo CHtml::link('Create New Profile',array('userMeasurements/create','type' => 3),array('data-toggle' => 'modal' ,'data-target' => '#measurementModal3'));*/ ?>
+      						<?php 
+                                          //echo CHtml::link('Create New Profile',array('userMeasurements/create','type' => 3),array('data-toggle' => 'modal' ,'data-target' => '#measurementModal3')); 
+                                          echo CHtml::link('Create New Profile','javascript:void(0);',array('class' => 'measurementModal3')); 
+                                          ?>
       					</div>
       				</div>
       				<div style="clear:both;"></div>
@@ -82,7 +88,10 @@
       					}
       					?>
       					<div align="right">
-      						<?php /*echo CHtml::link('Create New Profile',array('userMeasurements/create','type' => 4),array('data-toggle' => 'modal' ,'data-target' => '#measurementModal4'));*/ ?>
+      						<?php 
+                                          //echo CHtml::link('Create New Profile',array('userMeasurements/create','type' => 4),array('data-toggle' => 'modal' ,'data-target' => '#measurementModal4')); 
+                                          echo CHtml::link('Create New Profile','javascript:void(0);',array('class' => 'measurementModal4')); 
+                                          ?>
       					</div>
       				</div>
       				<div class="tabsSelectedMeasurement">
@@ -99,7 +108,10 @@
       					}
       					?>
       					<div align="right">
-      						<?php /*echo CHtml::link('Add New',array('userMeasurements/create','type' => 6),array('data-toggle' => 'modal' ,'data-target' => '#measurementModal6'));*/ ?>
+      						<?php 
+                                          //echo CHtml::link('Add New',array('userMeasurements/create','type' => 6),array('data-toggle' => 'modal' ,'data-target' => '#measurementModal6')); 
+                                          echo CHtml::link('Add New','javascript:void(0);',array('class' => 'measurementModal6'));
+                                          ?>
       					</div>
       				</div>
       				<div style="clear:both;"></div>
@@ -110,6 +122,22 @@
 </div>
 <script type="text/javascript">
 	$(document).ready(function($) {
+            $('.measurementModal1').click(function(event) {
+                  location.hash = 'measurementModal1';
+                  location.reload();
+            });
+            $('.measurementModal3').click(function(event) {
+                  location.hash = 'measurementModal3';
+                  location.reload();
+            });
+            $('.measurementModal4').click(function(event) {
+                  location.hash = 'measurementModal4';
+                  location.reload();
+            });
+            $('.measurementModal6').click(function(event) {
+                  location.hash = 'measurementModal6';
+                  location.reload();
+            });
 		$('.tabsSelectedMeasurement a.select').click(function(event) {
 			event.preventDefault();
 			var name = $(this).attr('rel');

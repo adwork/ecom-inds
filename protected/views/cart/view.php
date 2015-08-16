@@ -130,9 +130,6 @@ $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.steps.min.js',C
       </div>
    </div>
 </div>
-<?php
-$this->renderPartial('/userMeasurements/_measurementModals');
-?>
 <script type="text/javascript">
    $(document).ready(function(){
       $('body').on('click','.removeItem',function(e){

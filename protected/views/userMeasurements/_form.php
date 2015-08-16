@@ -1,3 +1,10 @@
+<?php
+$cs = Yii::app()->clientScript;		
+$cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.steps.min.js',CClientScript::POS_HEAD)
+->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.bxslider.min.js',CClientScript::POS_HEAD)
+->registerCssFile(Yii::app()->request->baseUrl.'/css/jquery.steps.css')
+->registerCssFile(Yii::app()->request->baseUrl.'/css/jquery.bxslider.css');
+?>
 <style type="text/css">
 	.customSTD{
 		display: none;
@@ -574,8 +581,11 @@
 					if(data){
 						if(data.error==0){
 							alert(data.msg);
-							//window.location = '<?php echo Yii::app()->baseUrl; ?>/user/profile/#myMeasurmentTab';
-							location.reload();
+							var hash = location.hash;
+							if(hash=='#measurementModal1' || hash=='#measurementModal3' || hash=='#measurementModal4' || hash=='#measurementModal6'){
+								location.hash = 'cartModal';								
+						    }
+							location.reload();							
 						}
 					}
 				}
